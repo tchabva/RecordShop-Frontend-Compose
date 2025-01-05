@@ -8,7 +8,7 @@ data class Album(
     var releaseDate: String,
     var stock: Int,
     var price: Double,
-    var artworkUrl: String,
-    var dateCreated: String,
-    var dateModified: String,
+    var artworkUrl: String?,
+    var dateCreated: String?,
+    var dateModified: String?,
 )
