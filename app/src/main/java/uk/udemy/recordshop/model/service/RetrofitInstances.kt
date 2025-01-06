@@ -5,7 +5,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL_ALBUMS = "http://10.0.2.2:8080/api/v1/"
+private const val BASE_URL_ALBUMS = "http://192.168.50.167:8080/api/v1/"
 private const val BASE_URL_ITUNES = "https://itunes.apple.com/"
 
 
