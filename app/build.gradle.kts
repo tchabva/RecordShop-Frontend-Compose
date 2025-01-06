@@ -68,6 +68,6 @@ dependencies {
     // Compose Navigation
     implementation(libs.androidx.navigation.compose)
 
-    // Compose Coin Image Loading
-    implementation(libs.coil.compose)
+    // Glide Compose
+    implementation(libs.compose)
 }
