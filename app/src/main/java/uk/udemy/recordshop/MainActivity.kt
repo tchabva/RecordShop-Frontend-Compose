@@ -1,7 +1,6 @@
 package uk.udemy.recordshop
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,9 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import kotlinx.coroutines.runBlocking
 import uk.udemy.recordshop.model.Album
-import uk.udemy.recordshop.model.service.albumService
 import uk.udemy.recordshop.ui.home.HomeScreen
 import uk.udemy.recordshop.ui.theme.RecordShopTheme
 
