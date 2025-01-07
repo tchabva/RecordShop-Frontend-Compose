@@ -23,15 +23,6 @@ class MainActivity : ComponentActivity() {
 
         var albums: List<Album> = emptyList()
 
-        runBlocking {
-            try{
-                albums = albumService.getAllInStockAlbums()
-            }catch (e : Exception){
-                albums = emptyList()
-                Log.e("Error", e.message.toString())
-            }
-        }
-
         enableEdgeToEdge()
         setContent {
 
