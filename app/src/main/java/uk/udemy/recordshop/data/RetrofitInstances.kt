@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import uk.udemy.recordshop.data.remote.RecordsApiService
 
 private const val BASE_URL_ALBUMS = "http://192.168.50.167:8080/api/v1/"
 private const val BASE_URL_ITUNES = "https://itunes.apple.com/"
@@ -19,4 +20,4 @@ private val retrofitAlbums = Retrofit
     .client(clientAlbums)
     .build();
 
-val albumService = retrofitAlbums.create(AlbumApiService::class.java)
+val albumService = retrofitAlbums.create(RecordsApiService::class.java)
