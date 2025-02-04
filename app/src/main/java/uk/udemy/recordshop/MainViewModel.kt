@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import uk.udemy.recordshop.model.RecordShopState
-import uk.udemy.recordshop.model.service.albumService
+import uk.udemy.recordshop.data.albumService
 
 class MainViewModel : ViewModel() {
 

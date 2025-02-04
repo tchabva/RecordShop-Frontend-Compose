@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.model.service
+package uk.udemy.recordshop.data
 
 import retrofit2.http.GET
 import uk.udemy.recordshop.model.Album
