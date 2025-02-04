@@ -8,7 +8,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import uk.udemy.recordshop.data.RecordShopApiService
+import uk.udemy.recordshop.data.remote.RecordsApiService
+import uk.udemy.recordshop.data.repository.RecordsRepositoryImpl
+import uk.udemy.recordshop.domain.repository.RecordsRepository
 import javax.inject.Singleton
 
 @Module
@@ -22,13 +24,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAlbumApi(): RecordShopApiService {
+    fun provideRecordsApi(): RecordsApiService {
         return Retrofit
             .Builder()
             .baseUrl(BASE_URL_RECORDS)
             .addConverterFactory(GsonConverterFactory.create())
             .client(clientAlbums)
             .build()
-            .create(RecordShopApiService::class.java)
+            .create(RecordsApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesRecordsRepository(api: RecordsApiService): RecordsRepository{
+        return RecordsRepositoryImpl(api)
     }
 }
