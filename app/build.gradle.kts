@@ -69,5 +69,5 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     // Glide Compose
-    implementation(libs.compose)
+    implementation(libs.compose.glide)
 }
