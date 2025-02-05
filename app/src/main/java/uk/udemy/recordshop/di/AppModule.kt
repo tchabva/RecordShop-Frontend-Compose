@@ -9,8 +9,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uk.udemy.recordshop.data.remote.RecordsApiService
-import uk.udemy.recordshop.data.repository.RecordsRepositoryImpl
-import uk.udemy.recordshop.domain.repository.RecordsRepository
 import javax.inject.Singleton
 
 @Module
@@ -34,9 +32,9 @@ object AppModule {
             .create(RecordsApiService::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun providesRecordsRepository(api: RecordsApiService): RecordsRepository{
-        return RecordsRepositoryImpl(api)
-    }
+//    @Provides
+//    @Singleton
+//    fun providesRecordsRepository(api: RecordsApiService, app: Application): RecordsRepository{
+//        return RecordsRepositoryImpl(api, app)
+//    }
 }
