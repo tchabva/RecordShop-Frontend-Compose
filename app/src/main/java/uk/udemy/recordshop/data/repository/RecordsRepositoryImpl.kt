@@ -2,12 +2,12 @@ package uk.udemy.recordshop.data.repository
 
 import android.app.Application
 import uk.udemy.recordshop.R
-import uk.udemy.recordshop.data.remote.RecordsApiService
+import uk.udemy.recordshop.data.remote.RecordsApi
 import uk.udemy.recordshop.domain.repository.RecordsRepository
 import javax.inject.Inject
 
 class RecordsRepositoryImpl @Inject constructor(
-    private val api: RecordsApiService,
+    private val api: RecordsApi,
     private val appContext: Application
 ): RecordsRepository {
 
