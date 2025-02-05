@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.home
+package uk.udemy.recordshop.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
