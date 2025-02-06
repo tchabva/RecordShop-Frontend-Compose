@@ -10,25 +10,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import dagger.hilt.android.AndroidEntryPoint
 import uk.udemy.recordshop.model.Album
 import uk.udemy.recordshop.ui.home.HomeScreen
 import uk.udemy.recordshop.ui.theme.RecordShopTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var albums: List<Album> = emptyList()
-
         enableEdgeToEdge()
         setContent {
-
 
             RecordShopTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     HomeScreen(
-                        paddingValues = innerPadding,
-                        albums = albums
+                        paddingValues = innerPadding
                     )
                 }
             }

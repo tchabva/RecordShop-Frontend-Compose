@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import uk.udemy.recordshop.data.repository.RecordsRepositoryImpl
-import uk.udemy.recordshop.domain.repository.RecordsRepository
+import uk.udemy.recordshop.data.repository.RecordsRepository
 import javax.inject.Singleton
 
 @Module
