@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.model
+package uk.udemy.recordshop.data.model
 
 /*
 NOTE: Called

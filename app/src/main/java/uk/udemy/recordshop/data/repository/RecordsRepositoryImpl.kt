@@ -3,7 +3,7 @@ package uk.udemy.recordshop.data.repository
 import android.util.Log
 import uk.udemy.recordshop.data.remote.RecordsApi
 import uk.udemy.recordshop.data.remote.Result
-import uk.udemy.recordshop.model.Album
+import uk.udemy.recordshop.data.model.Album
 import javax.inject.Inject
 
 class RecordsRepositoryImpl @Inject constructor(

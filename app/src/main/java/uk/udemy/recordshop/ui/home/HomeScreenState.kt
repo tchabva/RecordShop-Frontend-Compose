@@ -1,6 +1,6 @@
 package uk.udemy.recordshop.ui.home
 
-import uk.udemy.recordshop.model.Album
+import uk.udemy.recordshop.data.model.Album
 
 //open class HomeScreenState{
 //

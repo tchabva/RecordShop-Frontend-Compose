@@ -14,7 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import uk.udemy.recordshop.model.Album
+import uk.udemy.recordshop.data.model.Album
 import uk.udemy.recordshop.ui.common.AlbumItem
 
 // The Home Screen that the app will open to

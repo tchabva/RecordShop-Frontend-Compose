@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import uk.udemy.recordshop.data.remote.Result
 import uk.udemy.recordshop.data.repository.RecordsRepository
-import uk.udemy.recordshop.model.Album
+import uk.udemy.recordshop.data.model.Album
 import javax.inject.Inject
 
 @HiltViewModel

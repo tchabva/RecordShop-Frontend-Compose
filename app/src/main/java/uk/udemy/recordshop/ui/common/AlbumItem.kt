@@ -20,7 +20,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import uk.udemy.recordshop.R
-import uk.udemy.recordshop.model.Album
+import uk.udemy.recordshop.data.model.Album
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
