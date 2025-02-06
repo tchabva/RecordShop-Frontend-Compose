@@ -12,7 +12,7 @@ import uk.udemy.recordshop.data.model.Album
 @Composable
 fun AlbumsList(
     albums: List<Album>,
-    navigateToAlbumDetail: (Int) -> Unit
+    navigateToAlbumDetail: (Long) -> Unit
 ){
     LazyColumn (
         modifier = Modifier
@@ -20,7 +20,7 @@ fun AlbumsList(
             .padding(16.dp)
     ){
         items(albums){
-
+            AlbumItem(it, navigateToAlbumDetail)
         }
     }
 }
