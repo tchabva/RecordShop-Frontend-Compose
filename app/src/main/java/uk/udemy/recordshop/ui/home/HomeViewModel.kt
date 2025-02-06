@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import uk.udemy.recordshop.data.remote.NetworkResponse
 import uk.udemy.recordshop.data.remote.Result
 import uk.udemy.recordshop.data.repository.RecordsRepository
 import uk.udemy.recordshop.model.Album
