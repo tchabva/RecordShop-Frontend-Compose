@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -68,6 +70,15 @@ dependencies {
     // Compose Navigation
     implementation(libs.androidx.navigation.compose)
 
-    // Compose Coin Image Loading
-    implementation(libs.coil.compose)
+    // Glide Compose
+    implementation(libs.compose.glide)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+}
+
+kapt {
+    correctErrorTypes = true
 }
