@@ -24,7 +24,10 @@ import uk.udemy.recordshop.data.model.Album
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun AlbumItem(album: Album){
+fun AlbumItem(
+    album: Album,
+    navigateToAlbumDetail: (Long) -> Unit
+){
 
     ElevatedCard(
         modifier = Modifier
@@ -37,7 +40,7 @@ fun AlbumItem(album: Album){
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color =  Color.LightGray)
-                .clickable {  },
+                .clickable { navigateToAlbumDetail(album.id) },
             verticalAlignment = Alignment.CenterVertically
 
         ){
@@ -68,7 +71,7 @@ fun AlbumItem(album: Album){
 @Composable
 fun AlbumItemPreview(){
     AlbumItem(
-        Album(
+        album = Album(
             id = 1,
             title = "Timeless",
             artist = "Davido",
@@ -80,6 +83,5 @@ fun AlbumItemPreview(){
             dateModified = null,
             artworkUrl = null,
         )
-    )
+    ){}
 }
-
