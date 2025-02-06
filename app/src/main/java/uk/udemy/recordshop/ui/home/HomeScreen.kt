@@ -1,21 +1,23 @@
 package uk.udemy.recordshop.ui.home
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import uk.udemy.recordshop.data.model.Album
-import uk.udemy.recordshop.ui.common.AlbumItem
+import uk.udemy.recordshop.R
+import uk.udemy.recordshop.ui.common.AlbumsList
 
 // The Home Screen that the app will open to
 @Composable
@@ -30,49 +32,39 @@ fun HomeScreen(paddingValues: PaddingValues){
             .padding(paddingValues)
     ){
 
-        when (viewState.isLoading){
-            true-> {
-                CircularProgressIndicator(
-                    modifier = Modifier.width(64.dp),
-                    color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                )
-            }
-            false -> {
-                if (viewState.error == null){
-                    LazyColumn(
+        when{
+            viewState.isLoading ->{
+
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)){
+                    CircularProgressIndicator(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                    ) {
-//                    items((viewState as HomeScreenState.Loaded).list){
-//                            album ->
-//                        AlbumItem(album)
-//                    }
-                        items(viewState.data){
-                            album ->
-                            AlbumItem(album)
-                        }
-                    }
+                            .width(64.dp)
+                            .align(Alignment.Center),
+                        color = MaterialTheme.colorScheme.secondary,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
                 }
-
             }
-        }
-    }
-}
+            viewState.error != null ->{
 
-@Composable
-fun AlbumsList(
-    albums: List<Album>,
-    navigateToAlbumDetail: (Int) -> Unit
-){
-    LazyColumn (
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ){
-        items(albums){
-
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)){
+                    Text(
+                        modifier = Modifier.align(Alignment.Center),
+                        text = stringResource(R.string.error_occurred)
+                    )
+                }
+            }
+            else ->{
+                AlbumsList(
+                    viewState.data
+                ) {
+                    viewModel.navigateToAlbumDetail(it)
+                }
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RecordShop</string>
+    <string name="error_occurred">Error Occurred!</string>
 </resources>
