@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import uk.udemy.recordshop.ui.artists.ArtistsScreen
 import uk.udemy.recordshop.ui.home.HomeScreen
 
 @Composable
@@ -59,6 +60,7 @@ fun NavRoot(){
             startDestination = Home,
             ){
             composable<Home>{ HomeScreen(innerPadding) }
+            composable<Artists>{ ArtistsScreen(innerPadding) }
         }
     }
 }
