@@ -1,7 +1,6 @@
 package uk.udemy.recordshop.ui.navigation
 
 import kotlinx.serialization.Serializable
-import java.io.Serial
 
 /*
 Note: This ensures that we are always consistent route names for the Screens
