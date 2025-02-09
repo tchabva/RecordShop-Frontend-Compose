@@ -16,15 +16,37 @@ class RecordsRepositoryImpl @Inject constructor(
             val responseCode = response.code()
 
             return if(responseCode == 200){
-                Log.i(TAG, "Successful Album Retrieval: ${response.body()!!.size} Albums")
+                Log.i(TAG, "Successful Retrieval of Albums: ${response.body()!!.size} Albums")
                 Result.Success(response.body()!!)
             }else{
-                Log.e(TAG, "Failed Album Retrieval: Code = $responseCode")
+                Log.e(TAG, "Failed Retrieval of Albums: Code = $responseCode")
                 Result.Failed(
                     response.message() ?: "",
                     code = responseCode,
                 )
             }
+        }catch (e : Throwable){
+            Log.wtf(TAG, "Network Error", e)
+            return Result.Exception(e)
+        }
+    }
+
+    override suspend fun getAlbumById(albumId: Long): Result<Album> {
+        try {
+            val response = api.getAlbumById(albumId)
+            val responseCode = response.code()
+
+            return if(responseCode == 200){
+                Log.i(TAG, "Successful Album Retrieval By ID: ${response.body()}")
+                Result.Success(response.body()!!)
+            }else{
+                Log.e(TAG, "Failed Album Retrieval By Id: Code = $responseCode")
+                Result.Failed(
+                    response.message() ?: "",
+                    code = responseCode,
+                )
+            }
+
         }catch (e : Throwable){
             Log.wtf(TAG, "Network Error", e)
             return Result.Exception(e)
