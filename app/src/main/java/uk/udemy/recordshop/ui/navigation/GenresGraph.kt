@@ -10,7 +10,7 @@ fun NavGraphBuilder.genresGraph(
     navController: NavController
 ) {
     navigation<Tabs.Genres>(startDestination = Screens.Genres) {
-        composable<Screens.Genres>() {
+        composable<Screens.Genres> {
             GenresScreen()
         }
     }
