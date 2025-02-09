@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import uk.udemy.recordshop.R
+import uk.udemy.recordshop.data.model.Album
 import uk.udemy.recordshop.ui.common.AlbumsList
 import uk.udemy.recordshop.ui.common.FloatingActionButtonTemplate
 
@@ -80,4 +81,30 @@ fun HomeScreenContent(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenContentPreview() {
+    HomeScreenContent(
+        state = HomeScreenState(
+            false,
+            listOf(
+                Album(
+                    id = 1,
+                    title = "Test",
+                    artist = "Test",
+                    genre = "Rap",
+                    releaseDate = "2025-01-11",
+                    stock = 4,
+                    price = 10.99,
+                    artworkUrl = null,
+                    dateCreated = null,
+                    dateModified = null
+                )
+            )
+        ),
+        onAddAlbumClick = {},
+        onAlbumClicked = {},
+    ) 
 }
