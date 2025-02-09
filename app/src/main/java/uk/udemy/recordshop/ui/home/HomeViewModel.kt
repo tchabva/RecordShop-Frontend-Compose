@@ -24,9 +24,9 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private fun getAlbums(){
+    fun getAlbums(){
         viewModelScope.launch {
-
+            _homeScreenState.value = HomeScreenState()
             when (val networkResponse = repository.getAllAlbums()){
 
                 is Result.Exception -> {
