@@ -1,5 +1,6 @@
 package uk.udemy.recordshop.ui.navigation
 
+import android.util.Log
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -26,52 +27,50 @@ fun NavRoot(){
         bottomBar = {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
-            NavigationBar {
-                topLevelRoute.forEach{topLevelRoute ->
-                    val isSelected =
-                        currentDestination?.hierarchy?.any {
-                            it.hasRoute(topLevelRoute.route::class)
-                        } == true
-                    NavigationBarItem(
 
-                        icon = { Icon(topLevelRoute.icon, contentDescription = topLevelRoute.name) },
-                        label = { Text(topLevelRoute.name) },
-                        selected = isSelected,
-                        onClick = {
-                            navController.navigate(topLevelRoute.route){
-                                // Pop up to the start destination of the graph to
-                                // avoid building up a large stack of destinations
-                                // on the back stack as users select items
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+            val hideBottomNav = Screens.screensWithoutBottomNav.any{
+                currentDestination?.hasRoute(it) == true
+            }
+
+            if (!hideBottomNav){
+                NavigationBar {
+                    topLevelRoute.forEach{topLevelRoute ->
+                        val isSelected =
+                            currentDestination?.hierarchy?.any {
+                                it.hasRoute(topLevelRoute.route::class)
+                            } == true
+                        Log.i("NavRoot", currentDestination?.hierarchy?.joinToString { it.toString() } ?: "")
+                        NavigationBarItem(
+
+                            icon = { Icon(topLevelRoute.icon, contentDescription = topLevelRoute.name) },
+                            label = { Text(topLevelRoute.name) },
+                            selected = isSelected,
+                            onClick = {
+                                navController.navigate(topLevelRoute.route){
+                                    Log.i("NavRootNav", topLevelRoute.route.toString())
+                                    // Pop up to the start destination of the graph to
+                                    // avoid building up a large stack of destinations
+                                    // on the back stack as users select items
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    // Avoid multiple copies of the same destination when
+                                    // re-selecting the same item
+                                    launchSingleTop = true
+                                    // Restore state when re-selecting a previously selected item
+                                    restoreState = true
                                 }
-                                // Avoid multiple copies of the same destination when
-                                // reselecting the same item
-                                launchSingleTop = true
-                                // Restore state when reselecting a previously selected item
-                                restoreState = true
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
     ) { innerPadding ->
-//        NavHost(
-//            navController = navController,
-//            startDestination = Home,
-//            ){
-//
-//            homeGraph(innerPadding)
-////            composable<Home>{ HomeScreen(innerPadding) }
-//            composable<Artists>{ ArtistsScreen(innerPadding) }
-//            composable<Genres>{ GenresScreen(innerPadding) }
-//        }
 
         NavigationGraph(
             modifier = Modifier,
             navController = navController,
-            startDestination = Home,
             innerPadding = innerPadding
         )
     }
