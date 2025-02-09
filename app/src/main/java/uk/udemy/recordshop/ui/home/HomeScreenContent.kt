@@ -5,11 +5,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshState
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,9 +27,12 @@ import uk.udemy.recordshop.data.model.Album
 import uk.udemy.recordshop.ui.common.AlbumsList
 import uk.udemy.recordshop.ui.common.FloatingActionButtonTemplate
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenContent(
     state: HomeScreenState,
+    pullToRefreshState: PullToRefreshState,
+    onRefresh: () -> Unit,
     onAddAlbumClick: () -> Unit,
     onAlbumClicked: (Long) -> Unit
 ) {
@@ -49,6 +58,13 @@ fun HomeScreenContent(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .pullToRefresh(
+                        isRefreshing = state.isLoading,
+                        state = pullToRefreshState,
+                        onRefresh = onRefresh
+                    )
+                    .verticalScroll(rememberScrollState()),
+
             ) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
@@ -61,6 +77,12 @@ fun HomeScreenContent(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .pullToRefresh(
+                        isRefreshing = state.isLoading,
+                        state = pullToRefreshState,
+                        onRefresh = onRefresh
+                    ),
+
             ) {
                 AlbumsList(
                     state.data
@@ -83,6 +105,7 @@ fun HomeScreenContent(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenContentPreview() {
@@ -106,5 +129,7 @@ fun HomeScreenContentPreview() {
         ),
         onAddAlbumClick = {},
         onAlbumClicked = {},
+        pullToRefreshState = rememberPullToRefreshState(),
+        onRefresh = {},
     ) 
 }
