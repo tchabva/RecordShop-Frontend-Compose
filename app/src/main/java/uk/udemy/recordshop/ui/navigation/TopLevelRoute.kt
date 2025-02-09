@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 data class TopLevelRoute<T: Any> (val name: String, val route: T, val icon: ImageVector)
 
 val topLevelRoute = listOf(
-    TopLevelRoute("Home", Home, Icons.Default.Home),
-    TopLevelRoute("Artists", Artists, Icons.Default.Person),
-    TopLevelRoute("Genres", Genres, Icons.Default.Info),
+    TopLevelRoute("Home", Tabs.Home, Icons.Default.Home),
+    TopLevelRoute("Artists", Tabs.Artists, Icons.Default.Person),
+    TopLevelRoute("Genres", Tabs.Genres, Icons.Default.Info),
 )
