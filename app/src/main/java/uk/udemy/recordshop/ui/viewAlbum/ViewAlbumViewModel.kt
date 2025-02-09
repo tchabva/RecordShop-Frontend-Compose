@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import uk.udemy.recordshop.data.remote.Result
+import uk.udemy.recordshop.data.remote.NetworkResponse
 import uk.udemy.recordshop.data.repository.RecordsRepository
 import javax.inject.Inject
 
@@ -20,21 +20,21 @@ class ViewAlbumViewModel @Inject constructor(
     private fun getAlbumById(albumId: Long) {
         viewModelScope.launch {
             when (val networkResponse = repository.getAlbumById(albumId)) {
-                is Result.Exception -> {
+                is NetworkResponse.Exception -> {
                     _viewAlbumScreenState.value = _viewAlbumScreenState.value.copy(
                         isLoading = false,
                         error = networkResponse.exception.message
                     )
                 }
 
-                is Result.Failed -> {
+                is NetworkResponse.Failed -> {
                     _viewAlbumScreenState.value = _viewAlbumScreenState.value.copy(
                         isLoading = false,
                         error = networkResponse.message
                     )
                 }
 
-                is Result.Success -> {
+                is NetworkResponse.Success -> {
                     _viewAlbumScreenState.value = _viewAlbumScreenState.value.copy(
                         isLoading = false,
                         data = networkResponse.data
