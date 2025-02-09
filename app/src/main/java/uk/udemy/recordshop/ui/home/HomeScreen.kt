@@ -10,7 +10,8 @@ import androidx.compose.runtime.getValue
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
-    onAddAlbumClick: () -> Unit
+    onAddAlbumClick: () -> Unit,
+    onAlbumClicked: (Long) -> Unit
 ) {
 
     val viewState by viewModel.homeScreenState
@@ -23,7 +24,8 @@ fun HomeScreen(
         state = viewState,
         onAddAlbumClick = onAddAlbumClick,
         pullToRefreshState = pullToRefreshState,
-        onRefresh = onRefresh
-    ) { }
+        onRefresh = onRefresh,
+        onAlbumClicked = onAlbumClicked
+    )
 }
 
