@@ -17,7 +17,7 @@ class ViewAlbumViewModel @Inject constructor(
     private val _viewAlbumScreenState = mutableStateOf(ViewAlbumScreenState())
     val viewAlbumScreenState: State<ViewAlbumScreenState> = _viewAlbumScreenState
 
-    private fun getAlbumById(albumId: Long) {
+    fun getAlbumById(albumId: Long) {
         viewModelScope.launch {
             when (val networkResponse = repository.getAlbumById(albumId)) {
                 is NetworkResponse.Exception -> {

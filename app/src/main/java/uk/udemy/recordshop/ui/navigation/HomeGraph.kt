@@ -9,6 +9,7 @@ import androidx.navigation.toRoute
 import uk.udemy.recordshop.ui.home.HomeScreen
 import uk.udemy.recordshop.ui.home.HomeViewModel
 import uk.udemy.recordshop.ui.viewAlbum.ViewAlbumScreen
+import uk.udemy.recordshop.ui.viewAlbum.ViewAlbumViewModel
 
 fun NavGraphBuilder.homeGraph(
     navController: NavController
@@ -30,7 +31,10 @@ fun NavGraphBuilder.homeGraph(
         composable<Screens.ViewAlbum> { backStackEntry ->
             // TODO ADD VIEWMODEL
             val viewAlbum: Screens.ViewAlbum = backStackEntry.toRoute()
-            ViewAlbumScreen(viewAlbum)
+            ViewAlbumScreen(
+                viewAlbum = viewAlbum,
+                viewModel = hiltViewModel<ViewAlbumViewModel>(),
+            )
         }
     }
 }
