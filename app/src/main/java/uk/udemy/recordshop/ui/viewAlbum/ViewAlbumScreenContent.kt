@@ -33,7 +33,9 @@ import uk.udemy.recordshop.ui.common.FloatingActionButtonTemplate
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ViewAlbumScreenContent(
-    state: ViewAlbumScreenState
+    state: ViewAlbumScreenState,
+    onDeleteFabClicked: (Long) -> Unit,
+    onEditFabClicked: (Long) -> Unit
 ) {
     when {
         state.isLoading -> {
@@ -162,14 +164,18 @@ fun ViewAlbumScreenContent(
                         modifier = Modifier,
                         icon = Icons.Default.Delete,
                         stringRes = R.string.delete_album_fab
-                    ) { }
+                    ) {
+                        onDeleteFabClicked(state.data!!.id)
+                    }
 
                     // Edit Album FAB
                     FloatingActionButtonTemplate(
                         modifier = Modifier,
                         icon = Icons.Default.Edit,
                         stringRes = R.string.delete_album_fab
-                    ) { }
+                    ) {
+                        onEditFabClicked(state.data!!.id)
+                    }
                 }
             }
         }
@@ -194,6 +200,8 @@ fun ViewAlbumScreenContentPreview() {
                 dateCreated = null,
                 dateModified = null,
             ),
-        )
+        ),
+        onDeleteFabClicked = {},
+        onEditFabClicked = {}
     )
 }

@@ -13,9 +13,15 @@ import uk.udemy.recordshop.ui.navigation.Screens
 fun ViewAlbumScreen(
     viewAlbum: Screens.ViewAlbum,
     viewModel: ViewAlbumViewModel,
+    onDeleteFabClicked: (Long) -> Unit,
+    onEditFabClicked: (Long) -> Unit
 ){
     viewModel.getAlbumById(viewAlbum.albumId)
     val viewState by viewModel.viewAlbumScreenState
 
-    ViewAlbumScreenContent(viewState)
+    ViewAlbumScreenContent(
+        viewState,
+        onDeleteFabClicked = onDeleteFabClicked,
+        onEditFabClicked = onEditFabClicked
+    )
 }

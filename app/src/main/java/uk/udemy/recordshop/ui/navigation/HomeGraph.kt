@@ -22,7 +22,7 @@ fun NavGraphBuilder.homeGraph(
                 },
                 viewModel = hiltViewModel<HomeViewModel>(),
                 // Navigates to the ViewAlbum With the AlbumId
-                onAlbumClicked = {albumId ->
+                onAlbumClicked = { albumId ->
                     navController.navigate(Screens.ViewAlbum(albumId))
                 }
             )
@@ -34,6 +34,12 @@ fun NavGraphBuilder.homeGraph(
             ViewAlbumScreen(
                 viewAlbum = viewAlbum,
                 viewModel = hiltViewModel<ViewAlbumViewModel>(),
+                onDeleteFabClicked = {albumId ->
+
+                },
+                onEditFabClicked = {albumID ->
+                    navController.navigate(Screens.AddOrEditAlbum(albumId = albumID))
+                },
             )
         }
     }
