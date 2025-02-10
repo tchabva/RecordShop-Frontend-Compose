@@ -44,7 +44,7 @@ class ViewAlbumViewModel @Inject constructor(
         }
     }
 
-    companion object{
+    companion object {
         private const val TAG = "ViewAlbumViewModel"
     }
 }
