@@ -58,10 +58,10 @@ class RecordsRepositoryImpl @Inject constructor(
             val response = api.deleteAlbumById(albumId)
             val responseCode = response.code()
             return if (responseCode == 204) {
-                Log.i(TAG, "Successfully Deleted Album, ID: $albumId")
+                Log.i(TAG, "Successfully Deleted Album ID: $albumId")
                 NetworkResponse.Success(Unit)
             } else {
-                Log.e(TAG, "Failed Album Retrieval By Id: Code = $responseCode")
+                Log.e(TAG, "Failed To Delete Album: Code = $responseCode")
                 NetworkResponse.Failed(
                     response.message() ?: "",
                     code = responseCode,
