@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">RecordShop</string>
-    <string name="error_occurred">Error Occurred!</string>
     <string name="fab_add_new_album_txt">Add New Album</string>
     <string name="album_artwork">%1$s Album Artwork</string>
     <string name="release_date">Release Date: %1$s</string>
@@ -11,4 +10,6 @@
     <string name="delete_album_dialog_txt">Are you sure you want to delete this album?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="network_error_occurred">Network Error Occurred!: %1$s</string>
+    <string name="error_occurred">Error Occurred\nCode: %1$s\n%2$s</string>
 </resources>

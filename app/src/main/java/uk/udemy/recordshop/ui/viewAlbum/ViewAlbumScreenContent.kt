@@ -41,8 +41,8 @@ fun ViewAlbumScreenContent(
     onDismiss: () -> Unit,
     onDeleteAlbumConfirmed: (Long) -> Unit
 ) {
-    when {
-        state.isLoading -> {
+    when (state) {
+        is ViewAlbumScreenState.Loading -> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -57,7 +57,7 @@ fun ViewAlbumScreenContent(
             }
         }
 
-        state.error != null -> {
+        is ViewAlbumScreenState.Error -> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -65,12 +65,30 @@ fun ViewAlbumScreenContent(
             ) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = stringResource(R.string.error_occurred)
+                    text = stringResource(
+                        R.string.error_occurred,
+                        state.responseCode,
+                        state.error ?: ""
+                    )
                 )
             }
         }
 
-        else -> {
+        is ViewAlbumScreenState.NetworkError -> {
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    modifier = Modifier.align(Alignment.Center),
+                    text = stringResource(
+                        R.string.network_error_occurred,
+                        state.error ?: ""
+                    )
+                )
+            }
+        }
+
+        is ViewAlbumScreenState.Loaded -> {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -81,8 +99,8 @@ fun ViewAlbumScreenContent(
                 // Album Artwork if not null
                 GlideImage(
                     modifier = Modifier.size(400.dp),
-                    model = state.data?.artworkUrl,
-                    contentDescription = state.data?.title?.let {
+                    model = state.data.artworkUrl,
+                    contentDescription = state.data.title.let {
                         stringResource(
                             R.string.album_artwork,
                             it
@@ -100,7 +118,7 @@ fun ViewAlbumScreenContent(
                     // Album Title
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = state.data!!.title,
+                        text = state.data.title,
                         textAlign = TextAlign.Center,
                         fontSize = 40.sp,
                         fontWeight = FontWeight.ExtraBold
@@ -178,7 +196,7 @@ fun ViewAlbumScreenContent(
                         icon = Icons.Default.Edit,
                         stringRes = R.string.delete_album_fab
                     ) {
-                        onEditFabClicked(state.data!!.id)
+                        onEditFabClicked(state.data.id)
                     }
                 }
             }
@@ -187,10 +205,12 @@ fun ViewAlbumScreenContent(
             if (showDialog) {
                 DeleteAlbumDialog(
                     onDismiss = { onDismiss() },
-                    onDeleteAlbumConfirmed = { onDeleteAlbumConfirmed(state.data!!.id) }
+                    onDeleteAlbumConfirmed = { onDeleteAlbumConfirmed(state.data.id) }
                 )
             }
         }
+
+        is ViewAlbumScreenState.AlbumDeleted -> TODO()
     }
 }
 
@@ -198,8 +218,7 @@ fun ViewAlbumScreenContent(
 @Composable
 fun ViewAlbumScreenContentPreview() {
     ViewAlbumScreenContent(
-        state = ViewAlbumScreenState(
-            isLoading = false,
+        state = ViewAlbumScreenState.Loaded(
             data = Album(
                 id = 1,
                 title = "Test Album",
