@@ -14,7 +14,7 @@ import uk.udemy.recordshop.R
 @Composable
 fun DeleteAlbumDialog(
     onDismiss: () -> Unit,
-    onDeleteAlbumConfirmed: (Long) -> Unit
+    onDeleteAlbumConfirmed: () -> Unit
 ) {
 
     AlertDialog(
@@ -26,12 +26,12 @@ fun DeleteAlbumDialog(
             Text(text = stringResource(R.string.delete_album_dialog_txt))
         },
         onDismissRequest = {
-            onDismiss
+            onDismiss()
         },
         confirmButton = {
             Button(
                 onClick = {
-                    onDeleteAlbumConfirmed
+                    onDeleteAlbumConfirmed()
                 }
             ) {
                 Text(stringResource(R.string.confirm))
@@ -40,7 +40,7 @@ fun DeleteAlbumDialog(
         dismissButton = {
             Button(
                 onClick = {
-                    onDismiss
+                    onDismiss()
                 }
             ) {
                 Text(stringResource(R.string.cancel))

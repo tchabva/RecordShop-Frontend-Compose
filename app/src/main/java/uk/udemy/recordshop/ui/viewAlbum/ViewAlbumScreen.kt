@@ -1,12 +1,11 @@
 package uk.udemy.recordshop.ui.viewAlbum
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import uk.udemy.recordshop.ui.navigation.Screens
 
 @Composable
@@ -15,13 +14,24 @@ fun ViewAlbumScreen(
     viewModel: ViewAlbumViewModel,
     onDeleteFabClicked: (Long) -> Unit,
     onEditFabClicked: (Long) -> Unit
-){
+) {
     viewModel.getAlbumById(viewAlbum.albumId)
     val viewState by viewModel.viewAlbumScreenState
+    var showDialog by remember { mutableStateOf(false) }
 
     ViewAlbumScreenContent(
-        viewState,
-        onDeleteFabClicked = onDeleteFabClicked,
-        onEditFabClicked = onEditFabClicked
+        state = viewState,
+        onDeleteFabClicked = {
+            showDialog = true
+            Log.i("ViewAlbumScreen", "Delete FAB clicked: $showDialog")
+        },
+        onEditFabClicked = onEditFabClicked,
+        showDialog = showDialog,
+        onDismiss = { showDialog = false },
+        onDeleteAlbumConfirmed = { albumId ->
+
+            showDialog = false
+            viewModel.deleteAlbum(albumId)
+        }
     )
 }

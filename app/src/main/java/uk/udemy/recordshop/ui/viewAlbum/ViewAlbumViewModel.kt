@@ -1,5 +1,6 @@
 package uk.udemy.recordshop.ui.viewAlbum
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -42,6 +43,11 @@ class ViewAlbumViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun deleteAlbum(albumId: Long) {
+        // TODO FINISH IMPL
+        Log.i(TAG, "Deleted Album of ID: $albumId")
     }
 
     companion object {

@@ -28,14 +28,18 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import uk.udemy.recordshop.R
 import uk.udemy.recordshop.data.model.Album
+import uk.udemy.recordshop.ui.common.DeleteAlbumDialog
 import uk.udemy.recordshop.ui.common.FloatingActionButtonTemplate
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ViewAlbumScreenContent(
     state: ViewAlbumScreenState,
-    onDeleteFabClicked: (Long) -> Unit,
-    onEditFabClicked: (Long) -> Unit
+    onDeleteFabClicked: () -> Unit,
+    onEditFabClicked: (Long) -> Unit,
+    showDialog: Boolean,
+    onDismiss: () -> Unit,
+    onDeleteAlbumConfirmed: (Long) -> Unit
 ) {
     when {
         state.isLoading -> {
@@ -165,7 +169,7 @@ fun ViewAlbumScreenContent(
                         icon = Icons.Default.Delete,
                         stringRes = R.string.delete_album_fab
                     ) {
-                        onDeleteFabClicked(state.data!!.id)
+                        onDeleteFabClicked()
                     }
 
                     // Edit Album FAB
@@ -177,6 +181,14 @@ fun ViewAlbumScreenContent(
                         onEditFabClicked(state.data!!.id)
                     }
                 }
+            }
+
+            // Delete Album
+            if (showDialog) {
+                DeleteAlbumDialog(
+                    onDismiss = { onDismiss() },
+                    onDeleteAlbumConfirmed = { onDeleteAlbumConfirmed(state.data!!.id) }
+                )
             }
         }
     }
@@ -202,6 +214,9 @@ fun ViewAlbumScreenContentPreview() {
             ),
         ),
         onDeleteFabClicked = {},
-        onEditFabClicked = {}
+        onEditFabClicked = {},
+        showDialog = false,
+        onDismiss = {},
+        onDeleteAlbumConfirmed = {}
     )
 }
