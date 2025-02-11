@@ -29,7 +29,6 @@ fun NavGraphBuilder.homeGraph(
         }
 
         composable<Screens.ViewAlbum> { backStackEntry ->
-            // TODO ADD VIEWMODEL
             val viewAlbum: Screens.ViewAlbum = backStackEntry.toRoute()
             ViewAlbumScreen(
                 viewAlbum = viewAlbum,
