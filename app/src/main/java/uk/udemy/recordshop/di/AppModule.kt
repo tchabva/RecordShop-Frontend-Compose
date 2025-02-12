@@ -15,8 +15,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-//    private const val BASE_URL_RECORDS = "http://192.168.50.167:8080/api/v1/"
-    private const val BASE_URL_RECORDS = "http://10.0.2.2:8080/api/v1/"
+    private const val BASE_URL_RECORDS = "http://192.168.50.167:8080/api/v1/"
+//    private const val BASE_URL_RECORDS = "http://10.0.2.2:8080/api/v1/"
     private val interceptorAlbums = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val clientAlbums = OkHttpClient.Builder().addInterceptor(interceptorAlbums).build()
 
