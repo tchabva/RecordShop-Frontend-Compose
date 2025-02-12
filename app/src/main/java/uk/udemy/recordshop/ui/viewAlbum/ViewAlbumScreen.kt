@@ -8,15 +8,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import uk.udemy.recordshop.ui.navigation.Screens
 
 @Composable
 fun ViewAlbumScreen(
     viewModel: ViewAlbumViewModel,
-    onDeleteFabClicked: (Long) -> Unit,
-    onEditFabClicked: (Long) -> Unit
+    onDeleteAlbumConfirmed: (Long) -> Boolean,
+    onEditFabClicked: (Long) -> Unit,
+    onAlbumDeleted: () -> Unit
 ) {
-//    viewModel.getAlbumById(viewAlbum.albumId)
+
     val viewState by viewModel.viewAlbumScreenState
     var showDialog by remember { mutableStateOf(false) }
 
@@ -31,8 +31,8 @@ fun ViewAlbumScreen(
         onDismiss = { showDialog = false },
         onDeleteAlbumConfirmed = { albumId ->
 
-            showDialog = false
-            viewModel.deleteAlbum(albumId)
-        }
+            showDialog = onDeleteAlbumConfirmed(albumId)
+        },
+        onAlbumDeleted = onAlbumDeleted
     )
 }

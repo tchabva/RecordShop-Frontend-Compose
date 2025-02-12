@@ -39,7 +39,8 @@ fun ViewAlbumScreenContent(
     onEditFabClicked: (Long) -> Unit,
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onDeleteAlbumConfirmed: (Long) -> Unit
+    onDeleteAlbumConfirmed: (Long) -> Unit,
+    onAlbumDeleted: () -> Unit
 ) {
     when (state) {
         is ViewAlbumScreenState.Loading -> {
@@ -210,7 +211,9 @@ fun ViewAlbumScreenContent(
             }
         }
 
-        is ViewAlbumScreenState.AlbumDeleted -> TODO()
+        is ViewAlbumScreenState.AlbumDeleted -> {
+            onAlbumDeleted()
+        }
     }
 }
 
@@ -236,6 +239,7 @@ fun ViewAlbumScreenContentPreview() {
         onEditFabClicked = {},
         showDialog = false,
         onDismiss = {},
-        onDeleteAlbumConfirmed = {}
+        onDeleteAlbumConfirmed = {},
+        onAlbumDeleted = {}
     )
 }
