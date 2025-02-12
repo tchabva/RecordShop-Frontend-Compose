@@ -27,41 +27,62 @@ import uk.udemy.recordshop.data.model.Album
 fun AlbumItem(
     album: Album,
     navigateToAlbumDetail: (Long) -> Unit
-){
+) {
 
     ElevatedCard(
         modifier = Modifier
-            .padding(vertical = 8.dp),
+            .padding(vertical = 16.dp),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 8.dp)
+            defaultElevation = 8.dp
+        )
     ) {
 
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color =  Color.LightGray)
+                .background(color = Color.LightGray)
                 .clickable { navigateToAlbumDetail(album.id) },
             verticalAlignment = Alignment.CenterVertically
 
-        ){
+        ) {
 
             GlideImage(
                 model = album.artworkUrl,
                 contentDescription = "Album Artwork",
                 loading = placeholder(R.drawable.holder_album_artwork),
                 failure = placeholder(R.drawable.holder_album_artwork),
-                modifier = Modifier.padding(8.dp).size(120.dp)
+                modifier = Modifier
+                    .padding(8.dp)
+                    .size(120.dp)
             )
 
             Column(
                 Modifier.fillMaxWidth()
             ) {
-                Text(album.title)
-                Text(album.artist)
-                Text(album.genre)
-                Text("Release Date: ${album.releaseDate}")
-                Text("Price: £${album.price}")
-                Text("Stock: ${album.stock}")
+                Text(
+                    color = Color.Black,
+                    text = album.title
+                )
+                Text(
+                    color = Color.Black,
+                    text = album.artist
+                )
+                Text(
+                    color = Color.Black,
+                    text = album.genre
+                )
+                Text(
+                    color = Color.Black,
+                    text = "Release Date: ${album.releaseDate}"
+                )
+                Text(
+                    color = Color.Black,
+                    text = "Price: £${album.price}"
+                )
+                Text(
+                    color = Color.Black,
+                    text = "Stock: ${album.stock}"
+                )
             }
         }
     }
@@ -69,7 +90,7 @@ fun AlbumItem(
 
 @Preview
 @Composable
-fun AlbumItemPreview(){
+fun AlbumItemPreview() {
     AlbumItem(
         album = Album(
             id = 1,
@@ -83,5 +104,5 @@ fun AlbumItemPreview(){
             dateModified = null,
             artworkUrl = null,
         )
-    ){}
+    ) {}
 }
