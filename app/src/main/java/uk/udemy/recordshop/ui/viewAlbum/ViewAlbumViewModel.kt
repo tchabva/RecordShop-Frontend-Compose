@@ -1,6 +1,7 @@
 package uk.udemy.recordshop.ui.viewAlbum
 
 import android.util.Log
+import android.view.View
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -49,27 +50,31 @@ class ViewAlbumViewModel @Inject constructor(
     }
 
     fun deleteAlbum(albumId: Long) {
-        viewModelScope.launch {
+        _viewAlbumScreenState.value = ViewAlbumScreenState.Loading
+
+//        viewModelScope.launch {
 //            when (val networkResponse = repository.deleteAlbumById(albumId)) {
 //                is NetworkResponse.Exception -> {
-//                    _viewAlbumScreenState.value = _viewAlbumScreenState.value.copy(
-//                        isLoading = false,
-//                        error = networkResponse.exception.message
-//                    )
+//                    _viewAlbumScreenState.value =
+//                        ViewAlbumScreenState.NetworkError(
+//                            error = networkResponse.exception.message ?: ""
+//                        )
 //                }
 //
 //                is NetworkResponse.Failed -> {
-//                    _viewAlbumScreenState.value = _viewAlbumScreenState.value.copy(
-//                        isLoading = false,
-//                        error = networkResponse.message
-//                    )
+//                    _viewAlbumScreenState.value =
+//                        ViewAlbumScreenState.Error(
+//                            responseCode = networkResponse.code!!,
+//                            error = networkResponse.message
+//                        )
 //                }
 //
 //                is NetworkResponse.Success -> {
-//                    TODO()
+//                    _viewAlbumScreenState.value =
+//                        ViewAlbumScreenState.AlbumDeleted
 //                }
 //            }
-        }
+//        }
         Log.i(TAG, "Deleted Album of ID: $albumId")
     }
 

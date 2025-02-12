@@ -30,9 +30,10 @@ fun NavGraphBuilder.homeGraph(
 
         composable<Screens.ViewAlbum> { backStackEntry ->
             val viewAlbum: Screens.ViewAlbum = backStackEntry.toRoute()
+            val viewModel = hiltViewModel<ViewAlbumViewModel>() // Initiate the ViewModel
+            viewModel.getAlbumById(albumId = viewAlbum.albumId) // Get the album call in the process
             ViewAlbumScreen(
-                viewAlbum = viewAlbum,
-                viewModel = hiltViewModel<ViewAlbumViewModel>(),
+                viewModel = viewModel,
                 onDeleteFabClicked = {albumId ->
 
                 },

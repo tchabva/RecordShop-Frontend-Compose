@@ -1,3 +1,5 @@
+@file:Suppress("KotlinConstantConditions")
+
 package uk.udemy.recordshop.ui.viewAlbum
 
 import android.util.Log
@@ -10,12 +12,11 @@ import uk.udemy.recordshop.ui.navigation.Screens
 
 @Composable
 fun ViewAlbumScreen(
-    viewAlbum: Screens.ViewAlbum,
     viewModel: ViewAlbumViewModel,
     onDeleteFabClicked: (Long) -> Unit,
     onEditFabClicked: (Long) -> Unit
 ) {
-    viewModel.getAlbumById(viewAlbum.albumId)
+//    viewModel.getAlbumById(viewAlbum.albumId)
     val viewState by viewModel.viewAlbumScreenState
     var showDialog by remember { mutableStateOf(false) }
 
