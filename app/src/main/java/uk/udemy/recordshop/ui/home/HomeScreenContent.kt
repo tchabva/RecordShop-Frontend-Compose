@@ -1,3 +1,5 @@
+@file:Suppress("KotlinConstantConditions")
+
 package uk.udemy.recordshop.ui.home
 
 import android.util.Log
@@ -111,9 +113,9 @@ fun HomeScreenContent(
 fun HomeScreenContentPreview() {
     HomeScreenContent(
         state = HomeScreenState(
-            false,
-            listOf(
-                Album(
+            isLoading = false,
+            data = listOf(
+                element = Album(
                     id = 1,
                     title = "Test",
                     artist = "Test",
@@ -125,7 +127,7 @@ fun HomeScreenContentPreview() {
                     dateCreated = null,
                     dateModified = null
                 )
-            )
+            ),
         ),
         onAddAlbumClick = {},
         onAlbumClicked = {},

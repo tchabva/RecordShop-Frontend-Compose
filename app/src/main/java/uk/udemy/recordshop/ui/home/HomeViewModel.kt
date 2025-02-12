@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import uk.udemy.recordshop.data.remote.Result
+import uk.udemy.recordshop.data.remote.NetworkResponse
 import uk.udemy.recordshop.data.repository.RecordsRepository
 import javax.inject.Inject
 
@@ -29,20 +29,20 @@ class HomeViewModel @Inject constructor(
             _homeScreenState.value = HomeScreenState()
             when (val networkResponse = repository.getAllAlbums()){
 
-                is Result.Exception -> {
+                is NetworkResponse.Exception -> {
                     _homeScreenState.value = _homeScreenState.value.copy(
                         isLoading = false,
                         error = networkResponse.exception.message
                     )
 
                 }
-                is Result.Failed -> {
+                is NetworkResponse.Failed -> {
                     _homeScreenState.value = _homeScreenState.value.copy(
                         isLoading = false,
                         error = networkResponse.message
                         )
                 }
-                is Result.Success -> {
+                is NetworkResponse.Success -> {
                     _homeScreenState.value =  _homeScreenState.value.copy(
                         isLoading = false,
                         data = networkResponse.data

@@ -1,21 +1,38 @@
+@file:Suppress("KotlinConstantConditions")
+
 package uk.udemy.recordshop.ui.viewAlbum
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import uk.udemy.recordshop.ui.navigation.Screens
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 @Composable
 fun ViewAlbumScreen(
-    viewAlbum: Screens.ViewAlbum
-){
+    viewModel: ViewAlbumViewModel,
+    onDeleteAlbumConfirmed: (Long) -> Boolean,
+    onEditFabClicked: (Long) -> Unit,
+    onAlbumDeleted: () -> Unit
+) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Text("View Album Screen\n The Album ID is ${viewAlbum.albumId}")
-    }
+    val viewState by viewModel.viewAlbumScreenState
+    var showDialog by remember { mutableStateOf(false) }
+
+    ViewAlbumScreenContent(
+        state = viewState,
+        onDeleteFabClicked = {
+            showDialog = true
+            Log.i("ViewAlbumScreen", "Delete FAB clicked: $showDialog")
+        },
+        onEditFabClicked = onEditFabClicked,
+        showDialog = showDialog,
+        onDismiss = { showDialog = false },
+        onDeleteAlbumConfirmed = { albumId ->
+
+            showDialog = onDeleteAlbumConfirmed(albumId)
+        },
+        onAlbumDeleted = onAlbumDeleted
+    )
 }
