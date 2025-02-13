@@ -1,18 +1,32 @@
 package uk.udemy.recordshop.ui.addOrEditAlbum
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun AddOrEditAlbumScreen(){
+fun AddOrEditAlbumScreen(
+    viewModel: AddOrEditAlbumViewModel
+){
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Text("Add Or Edit Album Screen Screen")
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.events.collect{ event ->
+            when(event){
+                AddOrEditAlbumViewModel.Event.AlbumAdded -> {
+                    TODO()
+                }
+                AddOrEditAlbumViewModel.Event.AlbumNotAdded -> {
+                    TODO()
+                }
+            }
+        }
     }
+
+    val state = viewModel.state.collectAsStateWithLifecycle()
+    AddOrEditAlbumScreenContent(
+        state = state.value
+    )
 }

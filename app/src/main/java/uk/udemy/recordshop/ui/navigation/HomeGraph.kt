@@ -10,6 +10,7 @@ import androidx.navigation.toRoute
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import uk.udemy.recordshop.ui.addOrEditAlbum.AddOrEditAlbumScreen
+import uk.udemy.recordshop.ui.addOrEditAlbum.AddOrEditAlbumViewModel
 import uk.udemy.recordshop.ui.home.HomeScreen
 import uk.udemy.recordshop.ui.home.HomeViewModel
 import uk.udemy.recordshop.ui.viewAlbum.ViewAlbumScreen
@@ -65,7 +66,9 @@ fun NavGraphBuilder.homeGraph(
 
         // For navigating to the Add Album Screen from the HomeTab
         composable<Screens.AddOrEditAlbum> {
-            AddOrEditAlbumScreen()
+            AddOrEditAlbumScreen(
+                viewModel = hiltViewModel<AddOrEditAlbumViewModel>()
+            )
         }
     }
 }
