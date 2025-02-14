@@ -27,6 +27,7 @@ fun AddOrEditAlbumScreen(
 
     val state = viewModel.state.collectAsStateWithLifecycle()
     AddOrEditAlbumScreenContent(
-        state = state.value
+        state = state.value,
+
     )
 }

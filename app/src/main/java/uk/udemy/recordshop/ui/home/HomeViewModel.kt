@@ -23,7 +23,6 @@ class HomeViewModel @Inject constructor(
         getAlbums()
     }
 
-
     fun getAlbums(){
         viewModelScope.launch {
             _homeScreenState.value = HomeScreenState()
