@@ -7,21 +7,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.math.RoundingMode
 import java.util.Locale
 
-
 @Composable
 fun AddOrEditAlbumScreenContent(
     state: AddOrEditAlbumViewModel.State,
+    addAlbum: () -> Unit
 ) {
 
     when (state) {
@@ -54,7 +57,8 @@ fun AddOrEditAlbumScreenContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
                 // Title TextField
@@ -116,7 +120,7 @@ fun AddOrEditAlbumScreenContent(
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
                     singleLine = true,
-                    label = { Text("Artwork URL") }
+                    label = { Text("Artwork URL (Optional)") }
                 )
                 // Price TextField
                 OutlinedTextField(
@@ -183,7 +187,25 @@ fun AddOrEditAlbumScreenContent(
                     label = { Text("Stock") },
                     placeholder = { Text("0") }
                 )
+                // Add Button
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .padding(top = 8.dp),
+                    onClick = { addAlbum() }
+                ) {
+                    Text("Add Album")
+                }
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AddAlbumPreview() {
+    AddOrEditAlbumScreenContent(
+        state = AddOrEditAlbumViewModel.State.AddAlbum(),
+        addAlbum = {}
+    )
 }
