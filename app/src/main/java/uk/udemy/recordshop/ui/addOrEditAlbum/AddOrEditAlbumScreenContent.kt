@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
+import java.math.RoundingMode
 import java.util.Locale
 
 
@@ -126,29 +128,53 @@ fun AddOrEditAlbumScreenContent(
                         price.value.toDouble()
                     ) else "",
                     onValueChange = { priceString ->
-//
-//                        if (it.isNotBlank()) {
-//                            val formattedString = String.format(Locale.UK, "%.2f", it)
-//                            price.value = formattedString
-//                            state.price = price.value.toDouble()
-//                        }
-                        if (priceString.isEmpty() && !priceString.matches(Regex("^0\\d+$"))) {
-                            if (price.value == ".00"){
-                                price.value = ""
-                            } else {
-                                price.value = priceString
-                            }
 
-                        }
-                        else {
+//                        if (priceString.isEmpty() && !priceString.matches(Regex("^0\\d+$"))) {
+//                            if (price.value == ".00"){
+//                                price.value = ""
+//                            } else {
+//                                price.value = priceString
+//                            }
+//
+//                        }
+//                        else {
+//                            price.value = when (priceString.toDoubleOrNull()) {
+//                                null -> price.value
+//                                else -> {
+//                                    state.price = priceString.toDouble()
+//                                    priceString
+//                                }
+//                            }
+//                        }
+
+
+                        if (
+                            priceString.isEmpty()
+                            && priceString.matches(Regex("^0\\d+$"))
+                        ) {
+                            price.value = priceString
+                        } else {
                             price.value = when (priceString.toDoubleOrNull()) {
                                 null -> price.value
+                                0.0 -> {
+                                    state.price = 0.0
+                                    ""
+                                }
+
                                 else -> {
-                                    state.price = priceString.toDouble()
+                                    val doubleValue = priceString.toDouble()
+                                    state.price = doubleValue.toBigDecimal()
+                                            .setScale(2, RoundingMode.HALF_UP)
+                                            .toDouble()
                                     priceString
                                 }
                             }
                         }
+
+//                        if (priceString.isNotBlank()){
+//                            price.value = priceString
+//                            state.price = priceString.toDouble()
+//                        }
                         Log.i("AddAlbumScreen", "String Value ${price.value}")
                         Log.i("AddAlbumScreen", "State Double Value ${state.price}")
                     },
