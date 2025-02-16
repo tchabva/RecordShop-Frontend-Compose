@@ -105,7 +105,7 @@ fun AddOrEditAlbumScreenContent(
                         state.releaseDate = releaseDate.value
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
                     label = { Text("Release Date") },
                     placeholder = { Text("YYYY-MM-DD") }

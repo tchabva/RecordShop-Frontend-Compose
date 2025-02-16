@@ -41,7 +41,7 @@ fun AlbumItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = Color.LightGray)
-                .clickable { navigateToAlbumDetail(album.id) },
+                .clickable { navigateToAlbumDetail(album.id!!) },
             verticalAlignment = Alignment.CenterVertically
 
         ) {
