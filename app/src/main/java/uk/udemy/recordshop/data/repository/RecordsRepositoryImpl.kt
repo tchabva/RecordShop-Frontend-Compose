@@ -77,17 +77,38 @@ class RecordsRepositoryImpl @Inject constructor(
         try {
             val response = api.addAlbum(album)
             val responseCode = response.code()
-            return if (responseCode == 201){
+            return if (responseCode == 201) {
                 Log.i(TAG, "Successfully Added Album: ${response.body()}")
                 NetworkResponse.Success(response.body()!!)
-            }else{
+            } else {
                 Log.e(TAG, "Failed To Add Album: Code = $responseCode")
                 NetworkResponse.Failed(
                     response.message() ?: "",
                     code = responseCode,
                 )
             }
-        }catch (e: Throwable){
+        } catch (e: Throwable) {
+            Log.wtf(TAG, "Network Error", e)
+            return NetworkResponse.Exception(e)
+        }
+    }
+
+    override suspend fun updateAlbum(albumId: Long, updatedAlbum: Album): NetworkResponse<Album> {
+        try {
+            val response = api.updateAlbum(albumId = albumId, updatedAlbum = updatedAlbum)
+            val responseCode = response.code()
+            return if (responseCode == 201) {
+                Log.i(TAG, "Successfully Updated Album: ${response.body()}")
+                NetworkResponse.Success(response.body()!!)
+            } else {
+                Log.e(TAG, "Failed To Update Album: Code = $responseCode")
+                NetworkResponse.Failed(
+                    response.message() ?: "",
+                    code = responseCode,
+                )
+            }
+
+        } catch (e: Throwable) {
             Log.wtf(TAG, "Network Error", e)
             return NetworkResponse.Exception(e)
         }

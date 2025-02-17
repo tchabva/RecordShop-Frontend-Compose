@@ -5,6 +5,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import uk.udemy.recordshop.data.model.Album
 
@@ -21,4 +22,7 @@ interface RecordsApi {
 
     @POST("albums/add")
     suspend fun addAlbum(@Body album: Album): Response<Album>
+
+    @PUT("albums/{id}")
+    suspend fun updateAlbum(@Path("id") albumId: Long, @Body updatedAlbum: Album): Response<Album>
 }
