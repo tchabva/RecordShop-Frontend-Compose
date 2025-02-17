@@ -7,9 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
 import kotlinx.coroutines.CoroutineScope
-import uk.udemy.recordshop.ui.addOrEditAlbum.AddOrEditAlbumScreen
 
 // The Root NavGraph
 @Composable
@@ -43,9 +41,4 @@ fun NavigationGraph(
     genresGraph(
         navController = navController
     )
-
-    // For navigating to the Add Album Screen from the HomeTab
-    composable<Screens.AddOrEditAlbum> {
-        AddOrEditAlbumScreen()
-    }
 }

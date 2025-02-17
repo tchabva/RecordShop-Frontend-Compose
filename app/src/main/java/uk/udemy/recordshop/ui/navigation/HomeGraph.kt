@@ -9,6 +9,8 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import uk.udemy.recordshop.ui.addOrEditAlbum.AddOrEditAlbumScreen
+import uk.udemy.recordshop.ui.addOrEditAlbum.AddOrEditAlbumViewModel
 import uk.udemy.recordshop.ui.home.HomeScreen
 import uk.udemy.recordshop.ui.home.HomeViewModel
 import uk.udemy.recordshop.ui.viewAlbum.ViewAlbumScreen
@@ -40,8 +42,6 @@ fun NavGraphBuilder.homeGraph(
             ViewAlbumScreen(
                 viewModel = viewModel,
                 onDeleteAlbumConfirmed = { albumId ->
-
-
                     viewModel.deleteAlbum(albumId)
                     false
                 },
@@ -59,6 +59,26 @@ fun NavGraphBuilder.homeGraph(
                     // Launches a snackbar informing the user that the album has been deleted
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar("Album Deleted")
+                    }
+                }
+            )
+        }
+
+        // For navigating to the Add Album Screen from the HomeTab
+        composable<Screens.AddOrEditAlbum> {
+            AddOrEditAlbumScreen(
+                viewModel = hiltViewModel<AddOrEditAlbumViewModel>(),
+                navigateToHomeGraph = {
+                    /*
+                    Pop everything up to and including the Home Screen from the backstack and then
+                    navigate to then navigate to the Home Screen
+                     */
+                    navController.navigate(Screens.Home) {
+                        popUpTo(Screens.Home) { inclusive = true }
+                    }
+                    // Launches a snackbar informing the user that the album has been added
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar("Album Added Successfully")
                     }
                 }
             )

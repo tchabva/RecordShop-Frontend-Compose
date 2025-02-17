@@ -1,5 +1,6 @@
 package uk.udemy.recordshop.ui.common
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +18,8 @@ fun AlbumsList(
     LazyColumn (
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy((-20).dp)
     ){
         items(albums){
             AlbumItem(it, navigateToAlbumDetail)

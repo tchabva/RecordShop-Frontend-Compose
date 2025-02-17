@@ -197,7 +197,7 @@ fun ViewAlbumScreenContent(
                         icon = Icons.Default.Edit,
                         stringRes = R.string.delete_album_fab
                     ) {
-                        onEditFabClicked(state.data.id)
+                        onEditFabClicked(state.data.id!!)
                     }
                 }
             }
@@ -206,7 +206,7 @@ fun ViewAlbumScreenContent(
             if (showDialog) {
                 DeleteAlbumDialog(
                     onDismiss = { onDismiss() },
-                    onDeleteAlbumConfirmed = { onDeleteAlbumConfirmed(state.data.id) }
+                    onDeleteAlbumConfirmed = { onDeleteAlbumConfirmed(state.data.id!!) }
                 )
             }
         }
