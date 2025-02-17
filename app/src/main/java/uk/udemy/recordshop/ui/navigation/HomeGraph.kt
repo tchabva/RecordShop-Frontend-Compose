@@ -67,7 +67,20 @@ fun NavGraphBuilder.homeGraph(
         // For navigating to the Add Album Screen from the HomeTab
         composable<Screens.AddOrEditAlbum> {
             AddOrEditAlbumScreen(
-                viewModel = hiltViewModel<AddOrEditAlbumViewModel>()
+                viewModel = hiltViewModel<AddOrEditAlbumViewModel>(),
+                navigateToHomeGraph = {
+                    /*
+                    Pop everything up to and including the Home Screen from the backstack and then
+                    navigate to then navigate to the Home Screen
+                     */
+                    navController.navigate(Screens.Home) {
+                        popUpTo(Screens.Home) { inclusive = true }
+                    }
+                    // Launches a snackbar informing the user that the album has been added
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar("Album Added Successfully")
+                    }
+                }
             )
         }
     }

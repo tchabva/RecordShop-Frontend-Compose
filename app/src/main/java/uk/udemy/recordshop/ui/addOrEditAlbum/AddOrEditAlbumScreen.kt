@@ -8,7 +8,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun AddOrEditAlbumScreen(
-    viewModel: AddOrEditAlbumViewModel
+    viewModel: AddOrEditAlbumViewModel,
+    navigateToHomeGraph: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -17,17 +18,21 @@ fun AddOrEditAlbumScreen(
         viewModel.events.collect { event ->
             when (event) {
                 AddOrEditAlbumViewModel.Event.AlbumAdded -> {
-                    TODO()
-                }
-
-                AddOrEditAlbumViewModel.Event.AlbumNotAdded -> {
-                    TODO()
+                    navigateToHomeGraph()
                 }
 
                 is AddOrEditAlbumViewModel.Event.MandatoryTextFieldEmpty -> {
                     Toast.makeText(
                         context,
                         event.attribute,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is AddOrEditAlbumViewModel.Event.AlbumNotAdded -> {
+                    Toast.makeText(
+                        context,
+                        "Code: ${event.responseCode} \n${event.message}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

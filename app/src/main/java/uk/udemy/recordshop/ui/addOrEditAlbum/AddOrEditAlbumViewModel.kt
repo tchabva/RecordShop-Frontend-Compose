@@ -47,7 +47,7 @@ class AddOrEditAlbumViewModel @Inject constructor(
                 val itunesAlbumArtist = networkResponse.data.artistName
 
                 artworkUrl =
-                    if (itunesAlbumArtist.lowercase().contains(Regex(artist.lowercase()))) {
+                    if (itunesAlbumArtist.contains(other = artist.trim(), ignoreCase = true)) {
                         networkResponse.data.artworkUrl100
                     } else {
                         Log.i(
@@ -77,32 +77,92 @@ class AddOrEditAlbumViewModel @Inject constructor(
             } else if (currentState.stock == null) {
                 emitEvent(Event.MandatoryTextFieldEmpty("Please enter the Stock quantity for the album"))
             } else {
-//                val artistName = currentState.artist!!.trim()
-//                val albumTitle = currentState.title!!.trim()
-//
-//                when (val networkResponse =
-//                    itunesRepository.getAlbumArtwork("$artistName $albumTitle")) {
-//                    is NetworkResponse.Exception -> {
-//                        TODO()
-//                    }
-//
-//                    is NetworkResponse.Failed -> {
-//                        TODO()
-//                    }
-//
-//                    is NetworkResponse.Success -> {
-//                        Log.i(TAG, networkResponse.data.toString())
-//                    }
-//                }
+
+                _state.value = currentState.copy(
+                    isLoading = true
+                )
+
                 val artworkUrl = getItunesAlbum(
                     artist = currentState.artist!!,
                     albumTitle = currentState.title!!
                 )
                 Log.i(TAG, "Artwork URL: $artworkUrl")
+
+                if (artworkUrl != null) {
+                    val updatedURL = artworkUrl.replace(
+                        "100x100bb.jpg",
+                        "1000x1000bb.jpg"
+                    )
+                    val album = Album(
+                        id = null,
+                        title = currentState.title!!.trim(),
+                        artist = currentState.artist!!.trim(),
+                        genre = currentState.genre!!.trim(),
+                        releaseDate = currentState.releaseDate!!,
+                        stock = currentState.stock!!,
+                        price = currentState.price!!,
+                        artworkUrl = updatedURL,
+                        dateCreated = null,
+                        dateModified = null
+                    )
+                    Log.i(TAG, "Album with updated Artwork URL: $album")
+                    postAlbum(album = album, currentState = currentState)
+                } else {
+                    val album = Album(
+                        id = null,
+                        title = currentState.title!!,
+                        artist = currentState.artist!!,
+                        genre = currentState.genre!!,
+                        releaseDate = currentState.releaseDate!!,
+                        stock = currentState.stock!!,
+                        price = currentState.price!!,
+                        artworkUrl = null,
+                        dateCreated = null,
+                        dateModified = null
+                    )
+                    Log.i(TAG, "Album with updated Artwork URL: $album")
+                    postAlbum(album = album, currentState = currentState)
+                }
             }
         }
 
         Log.i(TAG, "Add Album Button Clicked")
+    }
+
+    private suspend fun postAlbum(album: Album, currentState: State) {
+        when (val networkResponse = repository.addAlbum(album)) {
+            is NetworkResponse.Exception -> {
+                _state.value = (currentState as State.AddAlbum).copy(
+                    isLoading = false
+                )
+                emitEvent(
+                    Event.AlbumNotAdded(
+                        message = networkResponse.exception.message ?: "Unknown Exception Occurred"
+                    )
+                )
+            }
+
+            is NetworkResponse.Failed -> {
+                _state.value = (currentState as State.AddAlbum).copy(
+                    isLoading = false
+                )
+                emitEvent(
+                    Event.AlbumNotAdded(
+                        message = networkResponse.message ?: "Unknown Error Message",
+                        responseCode = networkResponse.code
+                    )
+                )
+
+            }
+
+            is NetworkResponse.Success -> {
+                _state.value = (currentState as State.AddAlbum).copy(
+                    isLoading = false
+                )
+                emitEvent(Event.AlbumAdded)
+                Log.i(TAG, "Album Successfully Posted: ${networkResponse.data}")
+            }
+        }
     }
 
     private suspend fun emitEvent(event: Event) {
@@ -120,7 +180,8 @@ class AddOrEditAlbumViewModel @Inject constructor(
             var releaseDate: String? = null,
             var artworkUrl: String? = null,
             var price: Double? = null,
-            var stock: Int? = null
+            var stock: Int? = null,
+            var isLoading: Boolean = false
 
         ) : State
 
@@ -133,7 +194,7 @@ class AddOrEditAlbumViewModel @Inject constructor(
 
     sealed interface Event {
         data object AlbumAdded : Event
-        data object AlbumNotAdded : Event
+        data class AlbumNotAdded(val message: String, val responseCode: Int? = null) : Event
         data class MandatoryTextFieldEmpty(val attribute: String) : Event
     }
 
