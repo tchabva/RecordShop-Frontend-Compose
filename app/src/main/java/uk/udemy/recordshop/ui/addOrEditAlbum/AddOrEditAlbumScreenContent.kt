@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import uk.udemy.recordshop.ui.common.DefaultProgressIndicator
 import java.math.RoundingMode
 import java.util.Locale
 
@@ -37,7 +38,7 @@ fun AddOrEditAlbumScreenContent(
         }
 
         AddOrEditAlbumViewModel.State.Loading -> {
-            TODO()
+            DefaultProgressIndicator()
         }
 
         is AddOrEditAlbumViewModel.State.NetworkError -> {
@@ -195,6 +196,10 @@ fun AddOrEditAlbumScreenContent(
                 ) {
                     Text("Add Album")
                 }
+            }
+
+            if(state.isLoading){
+                DefaultProgressIndicator()
             }
         }
     }
