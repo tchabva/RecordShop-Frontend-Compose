@@ -13,6 +13,8 @@ import uk.udemy.recordshop.data.model.Album
 import uk.udemy.recordshop.data.remote.NetworkResponse
 import uk.udemy.recordshop.data.repository.ItunesRepository
 import uk.udemy.recordshop.data.repository.RecordsRepository
+import java.time.DateTimeException
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,9 +63,12 @@ class AddOrEditAlbumViewModel @Inject constructor(
         return artworkUrl
     }
 
+    // The addAlbum method that is called when the Add Album Button is selected
     fun addAlbum() {
         viewModelScope.launch {
             val currentState = _state.value as State.AddAlbum
+
+            // TextField Inputs Validation
             if (currentState.title.isNullOrBlank()) {
                 emitEvent(Event.MandatoryTextFieldEmpty("Please enter an Album Title!"))
             } else if (currentState.artist.isNullOrBlank()) {
@@ -71,8 +76,10 @@ class AddOrEditAlbumViewModel @Inject constructor(
             } else if (currentState.genre.isNullOrBlank()) {
                 emitEvent(Event.MandatoryTextFieldEmpty("Please enter a Genre for the Album"))
             } else if (currentState.releaseDate.isNullOrBlank()) {
-                emitEvent(Event.MandatoryTextFieldEmpty("Please enter a valid Release Date!"))
-            } else if (currentState.price == null) {
+                emitEvent(Event.MandatoryTextFieldEmpty("Please enter a Release Date!"))
+            } else if (!isReleaseDateValid(currentState.releaseDate!!)) {
+                emitEvent(Event.MandatoryTextFieldEmpty("Please enter a valid Release Date!"))}
+            else if (currentState.price == null) {
                 emitEvent(Event.MandatoryTextFieldEmpty("Please enter a Price for the Album"))
             } else if (currentState.stock == null) {
                 emitEvent(Event.MandatoryTextFieldEmpty("Please enter the Stock quantity for the album"))
@@ -88,6 +95,7 @@ class AddOrEditAlbumViewModel @Inject constructor(
                 )
                 Log.i(TAG, "Artwork URL: $artworkUrl")
 
+                // Adapts the URL for a higher resolution image from the Itunes API
                 if (artworkUrl != null) {
                     val updatedURL = artworkUrl.replace(
                         "100x100bb.jpg",
@@ -129,6 +137,7 @@ class AddOrEditAlbumViewModel @Inject constructor(
         Log.i(TAG, "Add Album Button Clicked")
     }
 
+    // Sends the Album object to the backend for persistence
     private suspend fun postAlbum(album: Album, currentState: State) {
         when (val networkResponse = repository.addAlbum(album)) {
             is NetworkResponse.Exception -> {
@@ -152,7 +161,6 @@ class AddOrEditAlbumViewModel @Inject constructor(
                         responseCode = networkResponse.code
                     )
                 )
-
             }
 
             is NetworkResponse.Success -> {
@@ -167,6 +175,20 @@ class AddOrEditAlbumViewModel @Inject constructor(
 
     private suspend fun emitEvent(event: Event) {
         _events.emit(event)
+    }
+
+    // The Validation for the Release Date TextField input
+    private fun isReleaseDateValid(releaseDate: String) : Boolean {
+        return if (releaseDate.matches(Regex("^\\d{4}-\\d{2}-\\d{2}"))){
+            try {
+                LocalDate.parse(releaseDate)
+                true
+            } catch (e: DateTimeException){
+                false
+            }
+        } else{
+            false
+        }
     }
 
     sealed interface State {
