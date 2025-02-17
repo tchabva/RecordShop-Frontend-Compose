@@ -133,7 +133,6 @@ fun AddOrEditAlbumScreenContent(
 
                         if (
                             priceString.isEmpty()
-                            && priceString.matches(Regex("^0\\d+$"))
                         ) {
                             price.value = priceString
                         } else {
@@ -141,7 +140,7 @@ fun AddOrEditAlbumScreenContent(
                                 null -> price.value
                                 0.0 -> {
                                     state.price = 0.0
-                                    ""
+                                    "0."
                                 }
 
                                 else -> {
