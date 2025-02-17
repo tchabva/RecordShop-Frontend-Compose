@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import uk.udemy.recordshop.R
 
+// TODO add to other screens
 @Composable
 fun DefaultNetworkErrorScreen(errorMessage: String?) {
     Box(
