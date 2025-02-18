@@ -36,6 +36,14 @@ fun AddOrEditAlbumScreen(
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
+                AddOrEditAlbumViewModel.Event.AlbumUnchanged -> {
+                    Toast.makeText(
+                        context,
+                        "No changes made to Album!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
