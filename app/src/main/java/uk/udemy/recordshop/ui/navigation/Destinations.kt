@@ -47,5 +47,9 @@ sealed interface Screens {
             ViewAlbum::class,
             AddOrEditAlbum::class
         )
+
+        val screensWithTopAppBar = listOf(
+            AddOrEditAlbum::class
+        )
     }
 }
