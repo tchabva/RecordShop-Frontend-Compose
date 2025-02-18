@@ -39,7 +39,10 @@ fun NavGraphBuilder.homeGraph(
         composable<Screens.ViewAlbum> { backStackEntry ->
             val viewAlbum: Screens.ViewAlbum = backStackEntry.toRoute()
             val viewModel = hiltViewModel<ViewAlbumViewModel>() // Initiate the ViewModel
-            viewModel.getAlbumById(albumId = viewAlbum.albumId) // Get the album call in the process
+            LaunchedEffect(viewAlbum.albumId) {
+                viewModel.getAlbumById(albumId = viewAlbum.albumId)
+            }
+             // Get the album call in the process
             ViewAlbumScreen(
                 viewModel = viewModel,
                 onDeleteAlbumConfirmed = { albumId ->
@@ -73,7 +76,6 @@ fun NavGraphBuilder.homeGraph(
                 LaunchedEffect(editAlbum.albumId) {
                     viewModel.getAlbumById(editAlbum.albumId)
                 }
-
             }
             AddOrEditAlbumScreen(
                 viewModel = viewModel,
@@ -89,7 +91,8 @@ fun NavGraphBuilder.homeGraph(
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar("Album Added Successfully")
                     }
-                }
+                },
+                albumId = editAlbum.albumId
             )
         }
     }
