@@ -9,7 +9,6 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,12 +20,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -46,8 +45,19 @@ fun NavRoot() {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
 
+            // Determines whether the topAppBar is shown based on the Destination
             val showTopAppBar = Screens.screensWithTopAppBar.any {
                 currentDestination?.hasRoute(it) == true
+            }
+
+            // Determines what the what the title of the TopAppBar will be
+            val title = when {
+                currentDestination?.hasRoute(Screens.AddOrEditAlbum::class) == true -> {
+                    val albumId = (navBackStackEntry?.arguments?.getLong("albumId"))
+                    Log.i("NavRoot", albumId.toString())
+                    if (albumId != 0L) "Edit Album" else "Add Album"
+                }
+                else -> ""
             }
 
             AnimatedVisibility(
@@ -58,7 +68,8 @@ fun NavRoot() {
                 CenterAlignedTopAppBar(
                     title = {
                         Text(
-                            "Centered Top App Bar",
+                            fontWeight = FontWeight.SemiBold,
+                            text = title,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -97,9 +108,6 @@ fun NavRoot() {
                             currentDestination?.hierarchy?.any {
                                 it.hasRoute(topLevelRoute.route::class)
                             } == true
-                        Log.i(
-                            "NavRoot",
-                            currentDestination?.hierarchy?.joinToString { it.toString() } ?: "")
                         NavigationBarItem(
 
                             icon = {
