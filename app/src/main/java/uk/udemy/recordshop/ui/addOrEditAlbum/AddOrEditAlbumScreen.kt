@@ -44,5 +44,6 @@ fun AddOrEditAlbumScreen(
     AddOrEditAlbumScreenContent(
         state = state.value,
         addAlbum = viewModel::addAlbum,
+        updateAlbum = viewModel::updateAlbum
     )
 }
