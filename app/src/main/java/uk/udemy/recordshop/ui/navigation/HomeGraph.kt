@@ -1,6 +1,7 @@
 package uk.udemy.recordshop.ui.navigation
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -65,9 +66,17 @@ fun NavGraphBuilder.homeGraph(
         }
 
         // For navigating to the Add Album Screen from the HomeTab
-        composable<Screens.AddOrEditAlbum> {
+        composable<Screens.AddOrEditAlbum> { backStackEntry ->
+            val editAlbum: Screens.AddOrEditAlbum = backStackEntry.toRoute()
+            val viewModel = hiltViewModel<AddOrEditAlbumViewModel>()
+            if (editAlbum.albumId != null){
+                LaunchedEffect(editAlbum.albumId) {
+                    viewModel.getAlbumById(editAlbum.albumId)
+                }
+
+            }
             AddOrEditAlbumScreen(
-                viewModel = hiltViewModel<AddOrEditAlbumViewModel>(),
+                viewModel = viewModel,
                 navigateToHomeGraph = {
                     /*
                     Pop everything up to and including the Home Screen from the backstack and then
