@@ -92,7 +92,11 @@ fun NavGraphBuilder.homeGraph(
                         snackbarHostState.showSnackbar("Album Added Successfully")
                     }
                 },
-                albumId = editAlbum.albumId
+                albumSuccessfullyUpdated = {
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar("Album Updated Successfully")
+                    }
+                }
             )
         }
     }
