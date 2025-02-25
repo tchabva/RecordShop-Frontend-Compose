@@ -9,11 +9,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun AddOrEditAlbumScreen(
     viewModel: AddOrEditAlbumViewModel,
-    navigateToHomeGraph: () -> Unit
+    navigateToHomeGraph: () -> Unit,
+    albumSuccessfullyUpdated: () -> Unit
 ) {
 
     val context = LocalContext.current
 
+    // Events observer
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
@@ -36,6 +38,36 @@ fun AddOrEditAlbumScreen(
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
+                AddOrEditAlbumViewModel.Event.AlbumUnchanged -> {
+                    Toast.makeText(
+                        context,
+                        "No changes made to Album!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is AddOrEditAlbumViewModel.Event.AlbumUpdateFailed -> {
+                    Toast.makeText(
+                        context,
+                        "Album Updated Failed" +
+                                "\nCode: $event.responseCode" +
+                                "\n${event.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                AddOrEditAlbumViewModel.Event.AlbumUpdatedSuccessfully -> {
+                    albumSuccessfullyUpdated()
+                }
+
+                is AddOrEditAlbumViewModel.Event.NetworkErrorOccurred -> {
+                    Toast.makeText(
+                        context,
+                        "Network Error: ${event.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
@@ -44,5 +76,6 @@ fun AddOrEditAlbumScreen(
     AddOrEditAlbumScreenContent(
         state = state.value,
         addAlbum = viewModel::addAlbum,
+        updateAlbum = viewModel::updateAlbum
     )
 }

@@ -20,30 +20,28 @@ class ViewAlbumViewModel @Inject constructor(
         mutableStateOf(ViewAlbumScreenState.Loading)
     val viewAlbumScreenState: State<ViewAlbumScreenState> = _viewAlbumScreenState
 
-    fun getAlbumById(albumId: Long) {
-        viewModelScope.launch {
-            when (val networkResponse = repository.getAlbumById(albumId)) {
-                is NetworkResponse.Exception -> {
-                    _viewAlbumScreenState.value =
-                        ViewAlbumScreenState.NetworkError(
-                            error = networkResponse.exception.message ?: ""
-                        )
-                }
+    suspend fun getAlbumById(albumId: Long) {
+        when (val networkResponse = repository.getAlbumById(albumId)) {
+            is NetworkResponse.Exception -> {
+                _viewAlbumScreenState.value =
+                    ViewAlbumScreenState.NetworkError(
+                        error = networkResponse.exception.message ?: ""
+                    )
+            }
 
-                is NetworkResponse.Failed -> {
-                    _viewAlbumScreenState.value =
-                        ViewAlbumScreenState.Error(
-                            responseCode = networkResponse.code!!,
-                            error = networkResponse.message
-                        )
-                }
+            is NetworkResponse.Failed -> {
+                _viewAlbumScreenState.value =
+                    ViewAlbumScreenState.Error(
+                        responseCode = networkResponse.code!!,
+                        error = networkResponse.message
+                    )
+            }
 
-                is NetworkResponse.Success -> {
-                    _viewAlbumScreenState.value =
-                        ViewAlbumScreenState.Loaded(
-                            data = networkResponse.data
-                        )
-                }
+            is NetworkResponse.Success -> {
+                _viewAlbumScreenState.value =
+                    ViewAlbumScreenState.Loaded(
+                        data = networkResponse.data
+                    )
             }
         }
     }

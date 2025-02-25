@@ -78,8 +78,8 @@ class AddOrEditAlbumViewModel @Inject constructor(
             } else if (currentState.releaseDate.isNullOrBlank()) {
                 emitEvent(Event.MandatoryTextFieldEmpty("Please enter a Release Date!"))
             } else if (!isReleaseDateValid(currentState.releaseDate!!)) {
-                emitEvent(Event.MandatoryTextFieldEmpty("Please enter a valid Release Date!"))}
-            else if (currentState.price == null) {
+                emitEvent(Event.MandatoryTextFieldEmpty("Please enter a valid Release Date!"))
+            } else if (currentState.price == null) {
                 emitEvent(Event.MandatoryTextFieldEmpty("Please enter a Price for the Album"))
             } else if (currentState.stock == null) {
                 emitEvent(Event.MandatoryTextFieldEmpty("Please enter the Stock quantity for the album"))
@@ -173,20 +173,131 @@ class AddOrEditAlbumViewModel @Inject constructor(
         }
     }
 
+    suspend fun getAlbumById(albumId: Long) {
+        _state.value = State.Loading
+        Log.i(TAG, "getAlbumById Method Called")
+
+        _state.value = State.Loading
+        when (val networkResponse = repository.getAlbumById(albumId)) {
+            is NetworkResponse.Exception -> {
+                _state.value =
+                    State.NetworkError(
+                        error = networkResponse.exception.message ?: ""
+                    )
+            }
+
+            is NetworkResponse.Failed -> {
+                _state.value =
+                    State.Error(
+                        responseCode = networkResponse.code!!,
+                        error = networkResponse.message
+                    )
+            }
+
+            is NetworkResponse.Success -> {
+                _state.value =
+                    State.EditAlbum(
+                        data = networkResponse.data,
+                        unmodifiedAlbum = networkResponse.data.copy(),
+                        isLoading = false
+                    )
+            }
+        }
+    }
+
+    fun updateAlbum() {
+        val currentState = state.value as State.EditAlbum
+        val currentAlbum = currentState.data.copy(
+            title = currentState.data.title.trim(),
+            artist = currentState.data.artist.trim(),
+            genre = currentState.data.genre.trim(),
+            artworkUrl = currentState.data.artworkUrl?.trim()
+        )
+        val unmodifiedAlbum = currentState.unmodifiedAlbum
+
+        viewModelScope.launch {
+            Log.i(TAG, "Current Album = $currentAlbum")
+            Log.i(TAG, "Unmodified Album = $unmodifiedAlbum")
+
+            if (currentAlbum.title.isBlank()) {
+                emitEvent(Event.MandatoryTextFieldEmpty("Please enter an Album Title!"))
+            } else if (currentAlbum.artist.isBlank()) {
+                emitEvent(Event.MandatoryTextFieldEmpty("Please enter an the Artist's name!"))
+            } else if (currentAlbum.genre.isBlank()) {
+                emitEvent(Event.MandatoryTextFieldEmpty("Please enter a Genre for the Album"))
+            } else if (currentAlbum.releaseDate.isBlank()) {
+                emitEvent(Event.MandatoryTextFieldEmpty("Please enter a Release Date!"))
+            } else if (!isReleaseDateValid(currentAlbum.releaseDate)) {
+                emitEvent(Event.MandatoryTextFieldEmpty("Please enter a valid Release Date!"))
+            } else if (currentAlbum == unmodifiedAlbum) {
+                emitEvent(Event.AlbumUnchanged)
+            } else {
+                updateAlbum(currentAlbum)
+            }
+        }
+        Log.i(TAG, "Update Button Clicked")
+    }
+
+    // Updates the album using coroutines when invoked
+    private suspend fun updateAlbum(updatedAlbum: Album) {
+        val albumId = updatedAlbum.id!!
+        _state.value = (_state.value as State.EditAlbum).copy(
+            isLoading = true
+        )
+        when (val networkResponse = repository.updateAlbum(
+            albumId = albumId,
+            updatedAlbum = updatedAlbum
+        )) {
+            is NetworkResponse.Exception -> {
+                _state.value = (_state.value as State.EditAlbum).copy(
+                    isLoading = false
+                )
+                emitEvent(
+                    Event.NetworkErrorOccurred(
+                        message = networkResponse.exception.message ?: "No Error Message",
+                    )
+                )
+            }
+
+            is NetworkResponse.Failed -> {
+                _state.value = (_state.value as State.EditAlbum).copy(
+                    isLoading = false
+                )
+                emitEvent(
+                    Event.AlbumUpdateFailed(
+                        message = networkResponse.message ?: "No Error Message",
+                        responseCode = networkResponse.code
+                    )
+                )
+            }
+
+            is NetworkResponse.Success -> {
+                _state.value = State.EditAlbum(
+                    data = networkResponse.data,
+                    unmodifiedAlbum = networkResponse.data.copy()
+                )
+
+                emitEvent(
+                    Event.AlbumUpdatedSuccessfully
+                )
+            }
+        }
+    }
+
     private suspend fun emitEvent(event: Event) {
         _events.emit(event)
     }
 
     // The Validation for the Release Date TextField input
-    private fun isReleaseDateValid(releaseDate: String) : Boolean {
-        return if (releaseDate.matches(Regex("^\\d{4}-\\d{2}-\\d{2}"))){
+    private fun isReleaseDateValid(releaseDate: String): Boolean {
+        return if (releaseDate.matches(Regex("^\\d{4}-\\d{2}-\\d{2}"))) {
             try {
                 LocalDate.parse(releaseDate)
                 true
-            } catch (e: DateTimeException){
+            } catch (e: DateTimeException) {
                 false
             }
-        } else{
+        } else {
             false
         }
     }
@@ -207,7 +318,11 @@ class AddOrEditAlbumViewModel @Inject constructor(
 
         ) : State
 
-        data class EditAlbum(val data: Album) : State
+        data class EditAlbum(
+            val data: Album,
+            val unmodifiedAlbum: Album,
+            val isLoading: Boolean = false
+        ) : State
 
         data class Error(val responseCode: Int, val error: String?) : State
 
@@ -218,6 +333,10 @@ class AddOrEditAlbumViewModel @Inject constructor(
         data object AlbumAdded : Event
         data class AlbumNotAdded(val message: String, val responseCode: Int? = null) : Event
         data class MandatoryTextFieldEmpty(val attribute: String) : Event
+        data object AlbumUnchanged : Event
+        data object AlbumUpdatedSuccessfully : Event
+        data class AlbumUpdateFailed(val message: String, val responseCode: Int? = null) : Event
+        data class NetworkErrorOccurred(val message: String) : Event
     }
 
     companion object {
