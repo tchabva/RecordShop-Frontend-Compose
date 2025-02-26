@@ -60,15 +60,23 @@ class HomeViewModel @Inject constructor(
         _events.emit(event)
     }
 
-    fun addAlbum(){
+    fun addAlbumFabClicked(){
         viewModelScope.launch {
             emitEvent(
                 Event.AddAlbumClicked
             )
         }
+        Log.i(TAG, "Add Album FAB Clicked")
     }
 
-    fun navigateToAlbumDetail(albumId: Long) {
+    fun onAlbumItemClicked(albumId: Long) {
+        viewModelScope.launch {
+            emitEvent(
+                Event.AlbumItemClicked(
+                    albumId = albumId
+                )
+            )
+        }
         Log.i(TAG, "Clicked on Album with the Id $albumId")
     }
 

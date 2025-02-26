@@ -32,7 +32,7 @@ fun HomeScreenContent(
     pullToRefreshState: PullToRefreshState,
     onRefresh: () -> Unit,
     onAddAlbumClick: () -> Unit,
-    onAlbumClicked: (Long) -> Unit
+    onAlbumItemClicked: (Long) -> Unit
 ) {
     when(state){
         is HomeViewModel.State.Error -> {
@@ -55,7 +55,7 @@ fun HomeScreenContent(
                 AlbumsList(
                     state.data
                 ) {
-                    onAlbumClicked(it)
+                    onAlbumItemClicked(it)
                 }
 
                 FloatingActionButtonTemplate(
@@ -103,7 +103,7 @@ fun HomeScreenContentPreview() {
             ),
         ),
         onAddAlbumClick = {},
-        onAlbumClicked = {},
+        onAlbumItemClicked = {},
         pullToRefreshState = rememberPullToRefreshState(),
         onRefresh = {},
     )
