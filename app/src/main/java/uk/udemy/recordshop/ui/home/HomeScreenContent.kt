@@ -1,5 +1,3 @@
-@file:Suppress("KotlinConstantConditions")
-
 package uk.udemy.recordshop.ui.home
 
 import android.util.Log
@@ -34,15 +32,16 @@ fun HomeScreenContent(
     onAddAlbumClick: () -> Unit,
     onAlbumItemClicked: (Long) -> Unit
 ) {
-    when(state){
+    when (state) {
         is HomeViewModel.State.Error -> {
             DefaultErrorScreen(
                 responseCode = state.responseCode ?: 0,
                 errorMessage = state.errorMessage
             )
         }
+
         is HomeViewModel.State.Loaded -> {
-                        Box(
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .pullToRefresh(
@@ -51,7 +50,7 @@ fun HomeScreenContent(
                         onRefresh = onRefresh
                     ),
 
-            ) {
+                ) {
                 AlbumsList(
                     state.data
                 ) {
@@ -70,9 +69,11 @@ fun HomeScreenContent(
                 }
             }
         }
+
         HomeViewModel.State.Loading -> {
             DefaultProgressIndicator()
         }
+
         is HomeViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
                 errorMessage = state.errorMessage
