@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import uk.udemy.recordshop.data.model.Album
@@ -19,6 +21,9 @@ class HomeViewModel @Inject constructor(
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     val state: StateFlow<State> = _state
+
+    private val _events: MutableSharedFlow<Event> = MutableSharedFlow()
+    val events: SharedFlow<Event> = _events
 
     init {
         getAlbums()
@@ -51,6 +56,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private suspend fun emitEvent(event: Event) {
+        _events.emit(event)
+    }
+
+    fun addAlbum(){
+        viewModelScope.launch {
+            emitEvent(
+                Event.AddAlbumClicked
+            )
+        }
+    }
+
     fun navigateToAlbumDetail(albumId: Long) {
         Log.i(TAG, "Clicked on Album with the Id $albumId")
     }
@@ -66,6 +83,11 @@ class HomeViewModel @Inject constructor(
         data class Error(val responseCode: Int?, val errorMessage: String) : State
 
         data class NetworkError(val errorMessage: String) : State
+    }
+
+    sealed interface Event{
+        data object AddAlbumClicked : Event
+        data class AlbumItemClicked(val albumId: Long) : Event
     }
 
     companion object {
