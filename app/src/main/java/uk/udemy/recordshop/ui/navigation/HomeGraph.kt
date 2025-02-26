@@ -45,10 +45,6 @@ fun NavGraphBuilder.homeGraph(
              // Get the album call in the process
             ViewAlbumScreen(
                 viewModel = viewModel,
-                onDeleteAlbumConfirmed = { albumId ->
-                    viewModel.deleteAlbum(albumId)
-                    false
-                },
                 onEditFabClicked = { albumID ->
                     navController.navigate(Screens.AddOrEditAlbum(albumId = albumID))
                 },

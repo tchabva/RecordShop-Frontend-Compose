@@ -124,7 +124,6 @@ class ViewAlbumViewModel @Inject constructor(
     }
 
     sealed interface Event {
-        data class EditAlbumFabClicked(val albumId: Long) : Event
         data object DeleteAlbumSuccessful : Event
         data class DeleteAlbumFailed(val responseCode: Int?, val error: String) : Event
     }
