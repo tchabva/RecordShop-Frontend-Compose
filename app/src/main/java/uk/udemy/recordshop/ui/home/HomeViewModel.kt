@@ -1,7 +1,6 @@
 package uk.udemy.recordshop.ui.home
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,9 +17,6 @@ class HomeViewModel @Inject constructor(
     private val repository: RecordsRepository
 ) : ViewModel() {
 
-//    private val _homeScreenState = mutableStateOf(HomeScreenState())
-//    val homeScreenState: State<HomeScreenState> = _homeScreenState
-
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     val state: StateFlow<State> = _state
 
@@ -30,25 +26,16 @@ class HomeViewModel @Inject constructor(
 
     fun getAlbums() {
         viewModelScope.launch {
-//            _homeScreenState.value = HomeScreenState()
             _state.value = State.Loading
             when (val networkResponse = repository.getAllAlbums()) {
 
                 is NetworkResponse.Exception -> {
-//                    _homeScreenState.value = _homeScreenState.value.copy(
-//                        isLoading = false,
-//                        error = networkResponse.exception.message
-//                    )
                     _state.value = State.NetworkError(
                         errorMessage = networkResponse.exception.message ?: "Unknown Exception"
                     )
                 }
 
                 is NetworkResponse.Failed -> {
-//                    _homeScreenState.value = _homeScreenState.value.copy(
-//                        isLoading = false,
-//                        error = networkResponse.message
-//                    )
                     _state.value = State.Error(
                         responseCode = networkResponse.code,
                         errorMessage = networkResponse.message ?: "Unknown Error"
@@ -56,10 +43,6 @@ class HomeViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.Success -> {
-//                    _homeScreenState.value = _homeScreenState.value.copy(
-//                        isLoading = false,
-//                        data = networkResponse.data
-//                    )
                     _state.value = State.Loaded(
                         data = networkResponse.data,
                     )
