@@ -1,18 +1,14 @@
 package uk.udemy.recordshop.ui.viewAlbum
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +24,8 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import uk.udemy.recordshop.R
 import uk.udemy.recordshop.data.model.Album
+import uk.udemy.recordshop.ui.common.DefaultErrorScreen
+import uk.udemy.recordshop.ui.common.DefaultNetworkErrorScreen
 import uk.udemy.recordshop.ui.common.DefaultProgressIndicator
 import uk.udemy.recordshop.ui.common.DeleteAlbumDialog
 import uk.udemy.recordshop.ui.common.FloatingActionButtonTemplate
@@ -43,49 +41,20 @@ fun ViewAlbumScreenContent(
 ) {
     when (state) {
         is ViewAlbumViewModel.State.Loading -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .width(64.dp)
-                        .align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                )
-            }
+            DefaultProgressIndicator()
         }
 
         is ViewAlbumViewModel.State.Error -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-
-            ) {
-                Text(
-                    modifier = Modifier.align(Alignment.Center),
-                    text = stringResource(
-                        R.string.error_occurred,
-                        state.responseCode,
-                        state.error ?: ""
-                    )
-                )
-            }
+            DefaultErrorScreen(
+                responseCode = state.responseCode,
+                errorMessage = state.error
+            )
         }
 
         is ViewAlbumViewModel.State.NetworkError -> {
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Text(
-                    modifier = Modifier.align(Alignment.Center),
-                    text = stringResource(
-                        R.string.network_error_occurred,
-                        state.error ?: ""
-                    )
-                )
-            }
+            DefaultNetworkErrorScreen(
+                errorMessage = state.error
+            )
         }
 
         is ViewAlbumViewModel.State.Loaded -> {
@@ -209,7 +178,7 @@ fun ViewAlbumScreenContent(
                 )
             }
 
-            if (state.isLoading){
+            if (state.isLoading) {
                 DefaultProgressIndicator()
             }
         }
