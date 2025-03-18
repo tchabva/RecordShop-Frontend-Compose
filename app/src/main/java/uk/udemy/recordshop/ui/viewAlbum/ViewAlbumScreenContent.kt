@@ -1,18 +1,14 @@
 package uk.udemy.recordshop.ui.viewAlbum
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,68 +24,40 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import uk.udemy.recordshop.R
 import uk.udemy.recordshop.data.model.Album
+import uk.udemy.recordshop.ui.common.DefaultErrorScreen
+import uk.udemy.recordshop.ui.common.DefaultNetworkErrorScreen
+import uk.udemy.recordshop.ui.common.DefaultProgressIndicator
 import uk.udemy.recordshop.ui.common.DeleteAlbumDialog
 import uk.udemy.recordshop.ui.common.FloatingActionButtonTemplate
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ViewAlbumScreenContent(
-    state: ViewAlbumScreenState,
+    state: ViewAlbumViewModel.State,
     onDeleteFabClicked: () -> Unit,
     onEditFabClicked: (Long) -> Unit,
-    showDialog: Boolean,
     onDismiss: () -> Unit,
-    onDeleteAlbumConfirmed: (Long) -> Unit,
-    onAlbumDeleted: () -> Unit
+    onDeleteAlbumConfirmed: (Long) -> Unit
 ) {
     when (state) {
-        is ViewAlbumScreenState.Loading -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .width(64.dp)
-                        .align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                )
-            }
+        is ViewAlbumViewModel.State.Loading -> {
+            DefaultProgressIndicator()
         }
 
-        is ViewAlbumScreenState.Error -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-
-            ) {
-                Text(
-                    modifier = Modifier.align(Alignment.Center),
-                    text = stringResource(
-                        R.string.error_occurred,
-                        state.responseCode,
-                        state.error ?: ""
-                    )
-                )
-            }
+        is ViewAlbumViewModel.State.Error -> {
+            DefaultErrorScreen(
+                responseCode = state.responseCode,
+                errorMessage = state.error
+            )
         }
 
-        is ViewAlbumScreenState.NetworkError -> {
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Text(
-                    modifier = Modifier.align(Alignment.Center),
-                    text = stringResource(
-                        R.string.network_error_occurred,
-                        state.error ?: ""
-                    )
-                )
-            }
+        is ViewAlbumViewModel.State.NetworkError -> {
+            DefaultNetworkErrorScreen(
+                errorMessage = state.error
+            )
         }
 
-        is ViewAlbumScreenState.Loaded -> {
+        is ViewAlbumViewModel.State.Loaded -> {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -202,17 +170,17 @@ fun ViewAlbumScreenContent(
                 }
             }
 
-            // Delete Album
-            if (showDialog) {
+            // Delete Album Dialog
+            if (state.showDeleteAlbumDialog) {
                 DeleteAlbumDialog(
                     onDismiss = { onDismiss() },
                     onDeleteAlbumConfirmed = { onDeleteAlbumConfirmed(state.data.id!!) }
                 )
             }
-        }
 
-        is ViewAlbumScreenState.AlbumDeleted -> {
-            onAlbumDeleted()
+            if (state.isLoading) {
+                DefaultProgressIndicator()
+            }
         }
     }
 }
@@ -221,7 +189,7 @@ fun ViewAlbumScreenContent(
 @Composable
 fun ViewAlbumScreenContentPreview() {
     ViewAlbumScreenContent(
-        state = ViewAlbumScreenState.Loaded(
+        state = ViewAlbumViewModel.State.Loaded(
             data = Album(
                 id = 1,
                 title = "Test Album",
@@ -237,9 +205,7 @@ fun ViewAlbumScreenContentPreview() {
         ),
         onDeleteFabClicked = {},
         onEditFabClicked = {},
-        showDialog = false,
         onDismiss = {},
         onDeleteAlbumConfirmed = {},
-        onAlbumDeleted = {}
     )
 }

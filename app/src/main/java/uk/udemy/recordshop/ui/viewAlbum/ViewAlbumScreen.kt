@@ -2,37 +2,51 @@
 
 package uk.udemy.recordshop.ui.viewAlbum
 
-import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun ViewAlbumScreen(
     viewModel: ViewAlbumViewModel,
-    onDeleteAlbumConfirmed: (Long) -> Boolean,
     onEditFabClicked: (Long) -> Unit,
     onAlbumDeleted: () -> Unit
 ) {
 
-    val viewState by viewModel.viewAlbumScreenState
-    var showDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    // Events observer
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                is ViewAlbumViewModel.Event.DeleteAlbumFailed -> {
+                    Toast.makeText(
+                        context,
+                        "Failed to delete Album\nResponse Code${event.responseCode}, ${event.error}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                ViewAlbumViewModel.Event.DeleteAlbumSuccessful -> {
+                    onAlbumDeleted()
+                }
+            }
+        }
+    }
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     ViewAlbumScreenContent(
-        state = viewState,
-        onDeleteFabClicked = {
-            showDialog = true
-            Log.i("ViewAlbumScreen", "Delete FAB clicked: $showDialog")
-        },
+        state = state,
+        onDeleteFabClicked = viewModel::showDeleteAlbumDialog,
         onEditFabClicked = onEditFabClicked,
-        showDialog = showDialog,
-        onDismiss = { showDialog = false },
+        onDismiss = viewModel::dismissDeleteAlbumDialog,
         onDeleteAlbumConfirmed = { albumId ->
-
-            showDialog = onDeleteAlbumConfirmed(albumId)
+            viewModel.deleteAlbum(albumId)
+            viewModel.dismissDeleteAlbumDialog()
         },
-        onAlbumDeleted = onAlbumDeleted
     )
 }
