@@ -15,11 +15,11 @@ This application provides a digital platform for browsing, searching, and managi
   <!-- Row 1 -->
   <tr>
     <td style="text-align:center">
-      <img src="screenshots/home_screen.png" alt="Home Screen" width="540"/>
+      <img src="screenshots/home_screen.png" alt="Home Screen" width="1080"/>
       <p><em>Record Shop Home Screen</em></p>
     </td>
     <td style="text-align:center">
-      <img src="screenshots/home_screen_dark.png" alt="Add Album Screen" width="540"/>
+      <img src="screenshots/home_screen_dark.png" alt="Add Album Screen" width="1080"/>
       <p><em>Record Shop Home Screen Dark Mode</em></p>
     </td>
   </tr>
