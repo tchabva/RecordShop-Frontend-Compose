@@ -10,9 +10,44 @@ This application provides a digital platform for browsing, searching, and managi
 - Responsive UI for different screen sizes
 - Smooth animations and transitions
 
-%%
-TO DO ADD SCREENSHOTS
-%%
+## Screenshots
+<table>
+  <!-- Row 1 -->
+  <tr>
+    <td style="text-align:center">
+      <img src="screenshots/home_screen.png" alt="Home Screen" width="540"/>
+      <p><em>Record Shop Home Screen</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="screenshots/home_screen_dark.png" alt="Add Album Screen" width="540"/>
+      <p><em>Record Shop Home Screen Dark Mode</em></p>
+    </td>
+  </tr>
+
+  <!-- Row 2 -->
+  <tr>
+    <td style="text-align:center">
+      <img src="screenshots/view_album.png" alt="View Album Screen" width="1080"/>
+      <p><em>View Album Screen Screen</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="screenshots/view_album_delete_dialog.png" alt="View Album Delete Album Dialog" width="1080"/>
+      <p><em>View Album Screen Delete Album Dialog </em></p>
+    </td>
+  </tr>
+
+  <!-- Row 3 -->
+  <tr>
+    <td style="text-align:center">
+      <img src="screenshots/edit_album.png" alt="Edit Album Screen" width="1080"/>
+      <p><em>Edit Album Screen</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="screenshots/edit_album_delete_dialog.png" alt="Edit Album Screen Delete Album Dialog" width="1080"/>
+      <p><em>Edit Album Screen Delete Album Dialog</em></p>
+    </td>
+  </tr>
+</table>
 
 ## Tech Stack 🛠️
 ### Frontend:
