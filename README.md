@@ -19,7 +19,7 @@ This application provides a digital platform for browsing, searching, and managi
       <p><em>Record Shop Home Screen</em></p>
     </td>
     <td style="text-align:center">
-      <img src="screenshots/home_screen_dark.png" alt="Add Album Screen" width="1080"/>
+      <img src="screenshots/home_screen_dark.png" alt="Home Screen Dark Mode" width="1080"/>
       <p><em>Record Shop Home Screen Dark Mode</em></p>
     </td>
   </tr>
@@ -27,24 +27,48 @@ This application provides a digital platform for browsing, searching, and managi
   <!-- Row 2 -->
   <tr>
     <td style="text-align:center">
-      <img src="screenshots/view_album.png" alt="View Album Screen" width="1080"/>
-      <p><em>View Album Screen Screen</em></p>
+      <img src="screenshots/add_album_screen.png" alt="Add Album Screen" width="1080"/>
+      <p><em>Add Album Screen</em></p>
     </td>
     <td style="text-align:center">
-      <img src="screenshots/view_album_delete_dialog.png" alt="View Album Delete Album Dialog" width="1080"/>
-      <p><em>View Album Screen Delete Album Dialog </em></p>
+      <img src="screenshots/add_album_screen_dark.png" alt="Add Album Screen Dark Mode" width="1080"/>
+      <p><em>Add Album Screen Dark Mode</em></p>
     </td>
   </tr>
 
-  <!-- Row 3 -->
+<!-- Row 3 -->
   <tr>
     <td style="text-align:center">
-      <img src="screenshots/edit_album.png" alt="Edit Album Screen" width="1080"/>
+      <img src="screenshots/view_album.png" alt="View Album Screen" width="1080"/>
+      <p><em>View Album Screen</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="screenshots/view_album_dark.png" alt="View Album Screen Dark Mode" width="1080"/>
+      <p><em>View Album Screen Dark Mode</em></p>
+    </td>
+  </tr>
+
+  <!-- Row 4 -->
+  <tr>
+    <td style="text-align:center">
+      <img src="screenshots/view_album_delete_album_dialog.png" alt="View Album Screen Delete Dialog" width="1080"/>
+      <p><em>View Album Screen Delete Album Dialog</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="screenshots/view_album_delete_album_dialog_dark.png" alt="View Album Screen Delete Album Dialog" width="1080"/>
+      <p><em>View Album Screen Delete Album Dialog Dark Mode</em></p>
+    </td>
+  </tr>
+
+<!-- Row 5 -->
+  <tr>
+    <td style="text-align:center">
+      <img src="screenshots/edit_album_screen.png" alt="Edit Album Screen " width="1080"/>
       <p><em>Edit Album Screen</em></p>
     </td>
     <td style="text-align:center">
-      <img src="screenshots/edit_album_delete_dialog.png" alt="Edit Album Screen Delete Album Dialog" width="1080"/>
-      <p><em>Edit Album Screen Delete Album Dialog</em></p>
+      <img src="screenshots/edit_album_screen_dark.png" alt="Edit Album Screen Dark Mode" width="1080"/>
+      <p><em>Edit Album Screen Dark Mode</em></p>
     </td>
   </tr>
 </table>
