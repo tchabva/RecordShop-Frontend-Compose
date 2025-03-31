@@ -30,7 +30,7 @@ fun HomeScreenContent(
     pullToRefreshState: PullToRefreshState,
     onRefresh: () -> Unit,
     onAddAlbumClick: () -> Unit,
-    onAlbumItemClicked: (Long) -> Unit
+    onAlbumItemClick: (Long) -> Unit
 ) {
     when (state) {
         is HomeViewModel.State.Error -> {
@@ -46,7 +46,7 @@ fun HomeScreenContent(
                 pullToRefreshState = pullToRefreshState,
                 onRefresh = onRefresh,
                 onAddAlbumClick = onAddAlbumClick,
-                onAlbumItemClicked = onAlbumItemClicked
+                onAlbumItemClick = onAlbumItemClick
             )
         }
 
@@ -69,7 +69,7 @@ fun HomeScreenLoaded(
     pullToRefreshState: PullToRefreshState,
     onRefresh: () -> Unit,
     onAddAlbumClick: () -> Unit,
-    onAlbumItemClicked: (Long) -> Unit
+    onAlbumItemClick: (Long) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -84,7 +84,7 @@ fun HomeScreenLoaded(
         AlbumsList(
             state.data
         ) {
-            onAlbumItemClicked(it)
+            onAlbumItemClick(it)
         }
 
         FloatingActionButtonTemplate(
@@ -122,7 +122,7 @@ fun HomeScreenContentPreview() {
             ),
         ),
         onAddAlbumClick = {},
-        onAlbumItemClicked = {},
+        onAlbumItemClick = {},
         pullToRefreshState = rememberPullToRefreshState(),
         onRefresh = {},
     )

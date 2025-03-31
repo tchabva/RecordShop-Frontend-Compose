@@ -30,7 +30,7 @@ fun NavGraphBuilder.homeGraph(
                 },
                 viewModel = hiltViewModel<HomeViewModel>(),
                 // Navigates to the View Album Screen With the AlbumId
-                onAlbumItemClicked = { albumId ->
+                onAlbumItemClick = { albumId ->
                     navController.navigate(Screens.ViewAlbum(albumId))
                 }
             )

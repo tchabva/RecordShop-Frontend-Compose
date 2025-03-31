@@ -12,7 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun HomeScreen(
     viewModel: HomeViewModel,
     onAddAlbumClick: () -> Unit,
-    onAlbumItemClicked: (Long) -> Unit
+    onAlbumItemClick: (Long) -> Unit
 ) {
 
     val state = viewModel.state.collectAsStateWithLifecycle()
@@ -27,7 +27,7 @@ fun HomeScreen(
             when (event){
                 HomeViewModel.Event.AddAlbumClicked -> onAddAlbumClick()
                 is HomeViewModel.Event.AlbumItemClicked -> {
-                    onAlbumItemClicked(event.albumId)
+                    onAlbumItemClick(event.albumId)
                 }
             }
         }
@@ -38,6 +38,6 @@ fun HomeScreen(
         onAddAlbumClick = viewModel::addAlbumFabClicked,
         pullToRefreshState = pullToRefreshState,
         onRefresh = onRefresh,
-        onAlbumItemClicked = viewModel::onAlbumItemClicked
+        onAlbumItemClick = viewModel::onAlbumItemClicked
     )
 }
