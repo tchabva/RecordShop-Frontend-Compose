@@ -30,7 +30,7 @@ fun HomeScreenContent(
     pullToRefreshState: PullToRefreshState,
     onRefresh: () -> Unit,
     onAddAlbumClick: () -> Unit,
-    onAlbumItemClicked: (Long) -> Unit
+    onAlbumItemClick: (Long) -> Unit
 ) {
     when (state) {
         is HomeViewModel.State.Error -> {
@@ -41,33 +41,13 @@ fun HomeScreenContent(
         }
 
         is HomeViewModel.State.Loaded -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .pullToRefresh(
-                        isRefreshing = state.isLoading,
-                        state = pullToRefreshState,
-                        onRefresh = onRefresh
-                    ),
-
-                ) {
-                AlbumsList(
-                    state.data
-                ) {
-                    onAlbumItemClicked(it)
-                }
-
-                FloatingActionButtonTemplate(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(16.dp),
-                    Icons.Default.Add,
-                    R.string.fab_add_new_album_txt
-                ) {
-                    Log.i("HomeScreen", "Add New Button Clicked")
-                    onAddAlbumClick()
-                }
-            }
+            HomeScreenLoaded(
+                state = state,
+                pullToRefreshState = pullToRefreshState,
+                onRefresh = onRefresh,
+                onAddAlbumClick = onAddAlbumClick,
+                onAlbumItemClick = onAlbumItemClick
+            )
         }
 
         HomeViewModel.State.Loading -> {
@@ -78,6 +58,44 @@ fun HomeScreenContent(
             DefaultNetworkErrorScreen(
                 errorMessage = state.errorMessage
             )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreenLoaded(
+    state: HomeViewModel.State.Loaded,
+    pullToRefreshState: PullToRefreshState,
+    onRefresh: () -> Unit,
+    onAddAlbumClick: () -> Unit,
+    onAlbumItemClick: (Long) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pullToRefresh(
+                isRefreshing = state.isLoading,
+                state = pullToRefreshState,
+                onRefresh = onRefresh
+            ),
+
+        ) {
+        AlbumsList(
+            state.data
+        ) {
+            onAlbumItemClick(it)
+        }
+
+        FloatingActionButtonTemplate(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            Icons.Default.Add,
+            R.string.fab_add_new_album_txt
+        ) {
+            Log.i("HomeScreen", "Add New Button Clicked")
+            onAddAlbumClick()
         }
     }
 }
@@ -104,7 +122,7 @@ fun HomeScreenContentPreview() {
             ),
         ),
         onAddAlbumClick = {},
-        onAlbumItemClicked = {},
+        onAlbumItemClick = {},
         pullToRefreshState = rememberPullToRefreshState(),
         onRefresh = {},
     )

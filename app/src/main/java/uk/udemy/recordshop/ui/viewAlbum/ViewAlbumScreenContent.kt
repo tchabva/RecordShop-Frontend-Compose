@@ -30,7 +30,6 @@ import uk.udemy.recordshop.ui.common.DefaultProgressIndicator
 import uk.udemy.recordshop.ui.common.DeleteAlbumDialog
 import uk.udemy.recordshop.ui.common.FloatingActionButtonTemplate
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ViewAlbumScreenContent(
     state: ViewAlbumViewModel.State,
@@ -58,130 +57,150 @@ fun ViewAlbumScreenContent(
         }
 
         is ViewAlbumViewModel.State.Loaded -> {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+            ViewAlbumScreenLoaded(
+                state = state,
+                onDeleteFabClicked = onDeleteFabClicked,
+                onEditFabClicked = onEditFabClicked,
+                onDismiss = onDismiss,
+                onDeleteAlbumConfirmed = onDeleteAlbumConfirmed
+            )
+        }
+    }
+}
+
+// Composable for the View Album Screen Loaded State
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun ViewAlbumScreenLoaded(
+    state: ViewAlbumViewModel.State.Loaded,
+    onDeleteFabClicked: () -> Unit,
+    onEditFabClicked: (Long) -> Unit,
+    onDismiss: () -> Unit,
+    onDeleteAlbumConfirmed: (Long) -> Unit
+
+){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        // Album Artwork if not null
+        GlideImage(
+            modifier = Modifier.size(400.dp),
+            model = state.data.artworkUrl,
+            contentDescription = state.data.title.let {
+                stringResource(
+                    R.string.album_artwork,
+                    it
+                )
+            },
+            loading = placeholder(R.drawable.holder_album_artwork),
+            failure = placeholder(R.drawable.holder_album_artwork),
+        )
+
+        // Text Column
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            // Album Title
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = state.data.title,
+                textAlign = TextAlign.Center,
+                fontSize = 40.sp,
+                fontWeight = FontWeight.ExtraBold
+            )
+
+            // Album Artist
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = state.data.artist,
+                textAlign = TextAlign.Center,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            // Album Genre
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = state.data.genre,
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Medium
+            )
+
+            // Album Release Date
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.release_date, state.data.releaseDate),
+                textAlign = TextAlign.Center,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.W500
+            )
+
+            // Album Price
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.price_text, state.data.price),
+                textAlign = TextAlign.Start,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.W500
+            )
+
+            // Album Stock
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.stock_text, state.data.stock),
+                textAlign = TextAlign.Start,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.W500
+            )
+        }
+
+        // FAB Column
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(
+                16.dp,
+                Alignment.Bottom
+            ),
+            horizontalAlignment = Alignment.End
+        ) {
+            // Delete Album FAB
+            FloatingActionButtonTemplate(
+                modifier = Modifier,
+                icon = Icons.Default.Delete,
+                stringRes = R.string.delete_album_fab
             ) {
-
-                // Album Artwork if not null
-                GlideImage(
-                    modifier = Modifier.size(400.dp),
-                    model = state.data.artworkUrl,
-                    contentDescription = state.data.title.let {
-                        stringResource(
-                            R.string.album_artwork,
-                            it
-                        )
-                    },
-                    loading = placeholder(R.drawable.holder_album_artwork),
-                    failure = placeholder(R.drawable.holder_album_artwork),
-                )
-
-                // Text Column
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    // Album Title
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = state.data.title,
-                        textAlign = TextAlign.Center,
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.ExtraBold
-                    )
-
-                    // Album Artist
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = state.data.artist,
-                        textAlign = TextAlign.Center,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-
-                    // Album Genre
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = state.data.genre,
-                        textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-
-                    // Album Release Date
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(R.string.release_date, state.data.releaseDate),
-                        textAlign = TextAlign.Center,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.W500
-                    )
-
-                    // Album Price
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(R.string.price_text, state.data.price),
-                        textAlign = TextAlign.Start,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.W500
-                    )
-
-                    // Album Stock
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(R.string.stock_text, state.data.stock),
-                        textAlign = TextAlign.Start,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.W500
-                    )
-                }
-
-                // FAB Column
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(
-                        16.dp,
-                        Alignment.Bottom
-                    ),
-                    horizontalAlignment = Alignment.End
-                ) {
-                    // Delete Album FAB
-                    FloatingActionButtonTemplate(
-                        modifier = Modifier,
-                        icon = Icons.Default.Delete,
-                        stringRes = R.string.delete_album_fab
-                    ) {
-                        onDeleteFabClicked()
-                    }
-
-                    // Edit Album FAB
-                    FloatingActionButtonTemplate(
-                        modifier = Modifier,
-                        icon = Icons.Default.Edit,
-                        stringRes = R.string.delete_album_fab
-                    ) {
-                        onEditFabClicked(state.data.id!!)
-                    }
-                }
+                onDeleteFabClicked()
             }
 
-            // Delete Album Dialog
-            if (state.showDeleteAlbumDialog) {
-                DeleteAlbumDialog(
-                    onDismiss = { onDismiss() },
-                    onDeleteAlbumConfirmed = { onDeleteAlbumConfirmed(state.data.id!!) }
-                )
-            }
-
-            if (state.isLoading) {
-                DefaultProgressIndicator()
+            // Edit Album FAB
+            FloatingActionButtonTemplate(
+                modifier = Modifier,
+                icon = Icons.Default.Edit,
+                stringRes = R.string.delete_album_fab
+            ) {
+                onEditFabClicked(state.data.id!!)
             }
         }
+    }
+
+    // Delete Album Dialog
+    if (state.showDeleteAlbumDialog) {
+        DeleteAlbumDialog(
+            onDismiss = { onDismiss() },
+            onDeleteAlbumConfirmed = { onDeleteAlbumConfirmed(state.data.id!!) }
+        )
+    }
+
+    if (state.isLoading) {
+        DefaultProgressIndicator()
     }
 }
 

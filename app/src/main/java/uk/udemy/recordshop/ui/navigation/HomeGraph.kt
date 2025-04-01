@@ -30,7 +30,7 @@ fun NavGraphBuilder.homeGraph(
                 },
                 viewModel = hiltViewModel<HomeViewModel>(),
                 // Navigates to the View Album Screen With the AlbumId
-                onAlbumItemClicked = { albumId ->
+                onAlbumItemClick = { albumId ->
                     navController.navigate(Screens.ViewAlbum(albumId))
                 }
             )
@@ -42,7 +42,7 @@ fun NavGraphBuilder.homeGraph(
             LaunchedEffect(viewAlbum.albumId) {
                 viewModel.getAlbumById(albumId = viewAlbum.albumId)
             }
-             // Get the album call in the process
+            // Get the album call in the process
             ViewAlbumScreen(
                 viewModel = viewModel,
                 onEditFabClicked = { albumID ->
@@ -68,7 +68,11 @@ fun NavGraphBuilder.homeGraph(
         composable<Screens.AddOrEditAlbum> { backStackEntry ->
             val editAlbum: Screens.AddOrEditAlbum = backStackEntry.toRoute()
             val viewModel = hiltViewModel<AddOrEditAlbumViewModel>()
-            if (editAlbum.albumId != null){
+            if (editAlbum.albumId != null) {
+                /*
+                If albumId isn't null use Coroutine to invoke getAlbumById method in the ViewModel
+                and then proceed to the Edit Album State. Otherwise Load into the Add Album State
+                */
                 LaunchedEffect(editAlbum.albumId) {
                     viewModel.getAlbumById(editAlbum.albumId)
                 }
