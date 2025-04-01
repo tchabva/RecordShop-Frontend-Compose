@@ -34,159 +34,163 @@ fun AddOrEditAlbumScreenContent(
 
     when (state) {
         is AddOrEditAlbumViewModel.State.EditAlbum -> {
+            EditAlbumScreen(
+                state = state,
+                updateAlbum = updateAlbum
+            )
 
-            val title = remember { mutableStateOf(state.data.title) }
-            val artist = remember { mutableStateOf(state.data.artist) }
-            val genre = remember { mutableStateOf(state.data.genre) }
-            val releaseDate = remember { mutableStateOf(state.data.releaseDate) }
-            val artworkUrl = remember { mutableStateOf(state.data.artworkUrl) }
-            val price = remember { mutableStateOf(state.data.price.toString()) }
-            val stock = remember { mutableStateOf(state.data.stock.toString()) }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                // Title TextField
-                OutlinedTextField(
-                    value = title.value,
-                    onValueChange = {
-                        title.value = it
-                        state.data.title = title.value
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                    singleLine = true,
-                    label = { Text("Title") }
-                )
-                // Artist TextField
-                OutlinedTextField(
-                    value = artist.value,
-                    onValueChange = {
-                        artist.value = it
-                        state.data.artist = artist.value
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                    singleLine = true,
-                    label = { Text("Artist") }
-                )
-                // Genre TextField
-                OutlinedTextField(
-                    value = genre.value,
-                    onValueChange = {
-                        genre.value = it
-                        state.data.genre = genre.value
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                    singleLine = true,
-                    label = { Text("Genre") }
-                )
-                // Release Date TextField
-                OutlinedTextField(
-                    value = releaseDate.value,
-                    onValueChange = {
-                        releaseDate.value = it
-                        state.data.releaseDate = releaseDate.value
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true,
-                    label = { Text("Release Date") },
-                    placeholder = { Text("YYYY-MM-DD") }
-                )
-                // Artwork URL TextField
-                OutlinedTextField(
-                    value = artworkUrl.value ?: "",
-                    onValueChange = {
-                        artworkUrl.value = it
-                        state.data.artworkUrl = artworkUrl.value
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
-                    singleLine = true,
-                    label = { Text("Artwork URL (Optional)") }
-                )
-                // Price TextField
-                OutlinedTextField(
-                    value = if (price.value.isNotBlank()) String.format(
-                        Locale.UK,
-                        "%.2f",
-                        price.value.toDouble()
-                    ) else "",
-                    onValueChange = { priceString ->
-
-                        if (
-                            priceString.isEmpty()
-                        ) {
-                            price.value = priceString
-                        } else {
-                            price.value = when (priceString.toDoubleOrNull()) {
-                                null -> price.value
-                                0.0 -> {
-                                    state.data.price = 0.0
-                                    "0."
-                                }
-
-                                else -> {
-                                    val doubleValue = priceString.toDouble()
-                                    state.data.price = doubleValue.toBigDecimal()
-                                        .setScale(2, RoundingMode.HALF_UP)
-                                        .toDouble()
-                                    priceString
-                                }
-                            }
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true,
-                    label = { Text("Price") },
-                    placeholder = { Text("0.00") }
-                )
-                // Stock TextField
-                OutlinedTextField(
-                    value = stock.value,
-                    onValueChange = {
-                        if (
-                            it.isNotBlank() &&
-                            !it.matches(Regex("^0\\d+$")) &&
-                            it.length <= 9
-                        ) {
-                            stock.value = it.take(9)
-                            state.data.stock = stock.value.toInt()
-                        } else if (it.length > 9) {
-                            // Prevents the stock from resetting when the string is longer than 9
-                        } else {
-                            stock.value = ""
-                            state.data.stock = 0
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true,
-                    label = { Text("Stock") },
-                    placeholder = { Text("0") }
-                )
-                // Add Button
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                        .padding(top = 8.dp),
-                    onClick = { updateAlbum() }
-                ) {
-                    Text("Update Album")
-                }
-            }
-
-            if (state.isLoading) {
-                DefaultProgressIndicator()
-            }
+//            val title = remember { mutableStateOf(state.data.title) }
+//            val artist = remember { mutableStateOf(state.data.artist) }
+//            val genre = remember { mutableStateOf(state.data.genre) }
+//            val releaseDate = remember { mutableStateOf(state.data.releaseDate) }
+//            val artworkUrl = remember { mutableStateOf(state.data.artworkUrl) }
+//            val price = remember { mutableStateOf(state.data.price.toString()) }
+//            val stock = remember { mutableStateOf(state.data.stock.toString()) }
+//
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .padding(horizontal = 16.dp),
+//                verticalArrangement = Arrangement.spacedBy(8.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//
+//                // Title TextField
+//                OutlinedTextField(
+//                    value = title.value,
+//                    onValueChange = {
+//                        title.value = it
+//                        state.data.title = title.value
+//                    },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+//                    singleLine = true,
+//                    label = { Text("Title") }
+//                )
+//                // Artist TextField
+//                OutlinedTextField(
+//                    value = artist.value,
+//                    onValueChange = {
+//                        artist.value = it
+//                        state.data.artist = artist.value
+//                    },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+//                    singleLine = true,
+//                    label = { Text("Artist") }
+//                )
+//                // Genre TextField
+//                OutlinedTextField(
+//                    value = genre.value,
+//                    onValueChange = {
+//                        genre.value = it
+//                        state.data.genre = genre.value
+//                    },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+//                    singleLine = true,
+//                    label = { Text("Genre") }
+//                )
+//                // Release Date TextField
+//                OutlinedTextField(
+//                    value = releaseDate.value,
+//                    onValueChange = {
+//                        releaseDate.value = it
+//                        state.data.releaseDate = releaseDate.value
+//                    },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+//                    singleLine = true,
+//                    label = { Text("Release Date") },
+//                    placeholder = { Text("YYYY-MM-DD") }
+//                )
+//                // Artwork URL TextField
+//                OutlinedTextField(
+//                    value = artworkUrl.value ?: "",
+//                    onValueChange = {
+//                        artworkUrl.value = it
+//                        state.data.artworkUrl = artworkUrl.value
+//                    },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
+//                    singleLine = true,
+//                    label = { Text("Artwork URL (Optional)") }
+//                )
+//                // Price TextField
+//                OutlinedTextField(
+//                    value = if (price.value.isNotBlank()) String.format(
+//                        Locale.UK,
+//                        "%.2f",
+//                        price.value.toDouble()
+//                    ) else "",
+//                    onValueChange = { priceString ->
+//
+//                        if (
+//                            priceString.isEmpty()
+//                        ) {
+//                            price.value = priceString
+//                        } else {
+//                            price.value = when (priceString.toDoubleOrNull()) {
+//                                null -> price.value
+//                                0.0 -> {
+//                                    state.data.price = 0.0
+//                                    "0."
+//                                }
+//
+//                                else -> {
+//                                    val doubleValue = priceString.toDouble()
+//                                    state.data.price = doubleValue.toBigDecimal()
+//                                        .setScale(2, RoundingMode.HALF_UP)
+//                                        .toDouble()
+//                                    priceString
+//                                }
+//                            }
+//                        }
+//                    },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+//                    singleLine = true,
+//                    label = { Text("Price") },
+//                    placeholder = { Text("0.00") }
+//                )
+//                // Stock TextField
+//                OutlinedTextField(
+//                    value = stock.value,
+//                    onValueChange = {
+//                        if (
+//                            it.isNotBlank() &&
+//                            !it.matches(Regex("^0\\d+$")) &&
+//                            it.length <= 9
+//                        ) {
+//                            stock.value = it.take(9)
+//                            state.data.stock = stock.value.toInt()
+//                        } else if (it.length > 9) {
+//                            // Prevents the stock from resetting when the string is longer than 9
+//                        } else {
+//                            stock.value = ""
+//                            state.data.stock = 0
+//                        }
+//                    },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+//                    singleLine = true,
+//                    label = { Text("Stock") },
+//                    placeholder = { Text("0") }
+//                )
+//                // Add Button
+//                Button(
+//                    modifier = Modifier
+//                        .fillMaxWidth(0.8f)
+//                        .padding(top = 8.dp),
+//                    onClick = { updateAlbum() }
+//                ) {
+//                    Text("Update Album")
+//                }
+//            }
+//
+//            if (state.isLoading) {
+//                DefaultProgressIndicator()
+//            }
 
         }
 
@@ -538,7 +542,158 @@ fun EditAlbumScreen(
     state: AddOrEditAlbumViewModel.State.EditAlbum,
     updateAlbum: () -> Unit
 ) {
+    val title = remember { mutableStateOf(state.data.title) }
+    val artist = remember { mutableStateOf(state.data.artist) }
+    val genre = remember { mutableStateOf(state.data.genre) }
+    val releaseDate = remember { mutableStateOf(state.data.releaseDate) }
+    val artworkUrl = remember { mutableStateOf(state.data.artworkUrl) }
+    val price = remember { mutableStateOf(state.data.price.toString()) }
+    val stock = remember { mutableStateOf(state.data.stock.toString()) }
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        // Title TextField
+        OutlinedTextField(
+            value = title.value,
+            onValueChange = {
+                title.value = it
+                state.data.title = title.value
+            },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            singleLine = true,
+            label = { Text("Title") }
+        )
+        // Artist TextField
+        OutlinedTextField(
+            value = artist.value,
+            onValueChange = {
+                artist.value = it
+                state.data.artist = artist.value
+            },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            singleLine = true,
+            label = { Text("Artist") }
+        )
+        // Genre TextField
+        OutlinedTextField(
+            value = genre.value,
+            onValueChange = {
+                genre.value = it
+                state.data.genre = genre.value
+            },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            singleLine = true,
+            label = { Text("Genre") }
+        )
+        // Release Date TextField
+        OutlinedTextField(
+            value = releaseDate.value,
+            onValueChange = {
+                releaseDate.value = it
+                state.data.releaseDate = releaseDate.value
+            },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            singleLine = true,
+            label = { Text("Release Date") },
+            placeholder = { Text("YYYY-MM-DD") }
+        )
+        // Artwork URL TextField
+        OutlinedTextField(
+            value = artworkUrl.value ?: "",
+            onValueChange = {
+                artworkUrl.value = it
+                state.data.artworkUrl = artworkUrl.value
+            },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
+            singleLine = true,
+            label = { Text("Artwork URL (Optional)") }
+        )
+        // Price TextField
+        OutlinedTextField(
+            value = if (price.value.isNotBlank()) String.format(
+                Locale.UK,
+                "%.2f",
+                price.value.toDouble()
+            ) else "",
+            onValueChange = { priceString ->
+
+                if (
+                    priceString.isEmpty()
+                ) {
+                    price.value = priceString
+                } else {
+                    price.value = when (priceString.toDoubleOrNull()) {
+                        null -> price.value
+                        0.0 -> {
+                            state.data.price = 0.0
+                            "0."
+                        }
+
+                        else -> {
+                            val doubleValue = priceString.toDouble()
+                            state.data.price = doubleValue.toBigDecimal()
+                                .setScale(2, RoundingMode.HALF_UP)
+                                .toDouble()
+                            priceString
+                        }
+                    }
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            singleLine = true,
+            label = { Text("Price") },
+            placeholder = { Text("0.00") }
+        )
+        // Stock TextField
+        OutlinedTextField(
+            value = stock.value,
+            onValueChange = {
+                if (
+                    it.isNotBlank() &&
+                    !it.matches(Regex("^0\\d+$")) &&
+                    it.length <= 9
+                ) {
+                    stock.value = it.take(9)
+                    state.data.stock = stock.value.toInt()
+                } else if (it.length > 9) {
+                    // Prevents the stock from resetting when the string is longer than 9
+                } else {
+                    stock.value = ""
+                    state.data.stock = 0
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            singleLine = true,
+            label = { Text("Stock") },
+            placeholder = { Text("0") }
+        )
+        // Add Button
+        Button(
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .padding(top = 8.dp),
+            onClick = { updateAlbum() }
+        ) {
+            Text("Update Album")
+        }
+    }
+
+    if (state.isLoading) {
+        DefaultProgressIndicator()
+    }
 }
 
 @Preview(showBackground = true)
