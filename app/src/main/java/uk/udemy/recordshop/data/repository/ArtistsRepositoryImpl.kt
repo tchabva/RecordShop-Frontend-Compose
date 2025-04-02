@@ -26,14 +26,31 @@ class ArtistsRepositoryImpl @Inject constructor(
                     code = responseCode
                 )
             }
-        }catch (e: Throwable) {
+        } catch (e: Throwable) {
             Log.wtf(TAG, "Network Error", e)
             return NetworkResponse.Exception(e)
         }
     }
 
-    override suspend fun getArtistWithAlbums(): NetworkResponse<ArtistAndAlbums> {
-        TODO("Not yet implemented")
+    override suspend fun getArtistWithAlbums(artistId: Long): NetworkResponse<ArtistAndAlbums> {
+        try {
+            val response = api.getArtistWithAlbumsById(artistId)
+            val responseCode = response.code()
+
+            return if (responseCode == 200) {
+                Log.i(TAG, "Successful Artist With Albums Retrieval By ID: ${response.body()}")
+                NetworkResponse.Success(response.body()!!)
+            } else {
+                Log.e(TAG, "Failed Artist With Albums Retrieval By Id: Code = $responseCode")
+                NetworkResponse.Failed(
+                    response.message() ?: "",
+                    code = responseCode,
+                )
+            }
+        } catch (e: Throwable) {
+            Log.wtf(TAG, "Network Error", e)
+            return NetworkResponse.Exception(e)
+        }
     }
 
     companion object {
