@@ -21,8 +21,8 @@ Allows for creation of singletons for the APIs which can then be injected where 
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    private const val BASE_URL_RECORDS = "http://192.168.50.167:8080/api/v1/"
-    //    private const val BASE_URL_RECORDS = "http://10.0.2.2:8080/api/v1/"
+    private const val BASE_URL_RECORDSHOP_BACKEND = "http://192.168.50.167:8080/api/v1/"
+    //    private const val BASE_URL_RECORDSHOP_BACKEND = "http://10.0.2.2:8080/api/v1/"
     private const val BASE_URL_ITUNES = "https://itunes.apple.com/"
     private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
@@ -32,7 +32,7 @@ object AppModule {
     fun provideRecordsApi(): RecordsApi {
         return Retrofit
             .Builder()
-            .baseUrl(BASE_URL_RECORDS)
+            .baseUrl(BASE_URL_RECORDSHOP_BACKEND)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -56,7 +56,7 @@ object AppModule {
     fun providesArtistsApi(): ArtistsApi{
         return Retrofit
             .Builder()
-            .baseUrl(BASE_URL_RECORDS)
+            .baseUrl(BASE_URL_RECORDSHOP_BACKEND)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
