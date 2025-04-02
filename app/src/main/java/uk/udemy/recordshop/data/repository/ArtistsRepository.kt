@@ -6,5 +6,5 @@ import uk.udemy.recordshop.data.remote.NetworkResponse
 
 interface ArtistsRepository {
     suspend fun getAllArtists(): NetworkResponse<List<ArtistDTO>>
-    suspend fun getArtistWithAlbums(): NetworkResponse<ArtistAndAlbums>
+    suspend fun getArtistWithAlbums(artistId: Long): NetworkResponse<ArtistAndAlbums>
 }
