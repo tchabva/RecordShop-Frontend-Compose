@@ -13,6 +13,10 @@ import uk.udemy.recordshop.data.remote.ItunesApi
 import uk.udemy.recordshop.data.remote.RecordsApi
 import javax.inject.Singleton
 
+/*
+Allows for creation of singletons for the APIs which can then be injected where they are required
+ */
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
