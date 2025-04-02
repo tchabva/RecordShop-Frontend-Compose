@@ -1,5 +1,6 @@
 package uk.udemy.recordshop.ui.artists
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,12 +57,13 @@ class ArtistsViewModel @Inject constructor(
         _events.emit(event)
     }
 
-    fun onArtistItemClicked(albumId: Long){
+    fun onArtistItemClicked(artistId: Long){
         viewModelScope.launch {
             emitEvent(
-                Event.ArtistItemClicked(albumId)
+                Event.ArtistItemClicked(artistId)
             )
         }
+        Log.i(TAG, "Clicked on Artist with the Id $artistId")
     }
 
     sealed interface State {
@@ -78,7 +80,7 @@ class ArtistsViewModel @Inject constructor(
     }
 
     sealed interface Event{
-        data class ArtistItemClicked(val albumId: Long) : Event
+        data class ArtistItemClicked(val artistId: Long) : Event
     }
 
     companion object {
