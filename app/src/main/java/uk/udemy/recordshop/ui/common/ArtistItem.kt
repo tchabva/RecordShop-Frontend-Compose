@@ -30,7 +30,7 @@ fun ArtistItem(
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 8.dp),
-            text = artistDTO.name,
+            text = artistDTO.artistName,
             fontSize = 24.sp
         )
     }
@@ -42,7 +42,7 @@ fun ArtistItemPreview() {
     ArtistItem(
         artistDTO = ArtistDTO(
             id = 1,
-            name = "Davido"
+            artistName = "Davido"
         ),
         navigateToArtistAlbums = {}
     )
