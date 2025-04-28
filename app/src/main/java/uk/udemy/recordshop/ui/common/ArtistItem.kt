@@ -19,7 +19,7 @@ fun ArtistItem(
     artistDTO: ArtistDTO,
     navigateToArtistAlbums: (Long) -> Unit
 ) {
-    Row (
+    Row(
         modifier = Modifier
             .padding(vertical = 8.dp)
             .height(56.dp)
