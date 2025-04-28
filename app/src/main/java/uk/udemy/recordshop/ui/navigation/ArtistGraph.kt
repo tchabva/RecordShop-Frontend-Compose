@@ -1,5 +1,6 @@
 package uk.udemy.recordshop.ui.navigation
 
+import android.util.Log
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -15,7 +16,9 @@ fun NavGraphBuilder.artistGraph(
         composable<Screens.Artists> {
             ArtistsScreen(
                 viewModel = hiltViewModel<ArtistsViewModel>(),
-                onArtistItemClicked = { TODO() }
+                onArtistItemClicked = {
+                    // TODO
+                }
             )
         }
     }
