@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uk.udemy.recordshop.R
@@ -42,4 +43,13 @@ fun DefaultNetworkErrorScreen(errorMessage: String?, onTryAgainButtonClicked: ()
             Text(text = "Try Again")
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultNetworkErrorScreenPreview(){
+    DefaultNetworkErrorScreen(
+        errorMessage = "Unknown Error",
+        onTryAgainButtonClicked ={}
+    )
 }
