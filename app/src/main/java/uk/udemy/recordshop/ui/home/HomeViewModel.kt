@@ -88,6 +88,15 @@ class HomeViewModel @Inject constructor(
         Log.i(TAG, "Clicked on Album with the Id $albumId")
     }
 
+    fun onTryAgainButtonClicked(){
+        _state.value = State.Loading
+        viewModelScope.launch {
+            delay(400) // To allow time for Progress Indicator to display
+            Log.i(TAG, "Try Again Button Clicked")
+            getAlbums()
+        }
+    }
+
     sealed interface State {
         data object Loading : State
 
