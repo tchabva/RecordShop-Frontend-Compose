@@ -101,7 +101,7 @@ fun NavRoot() {
             ) {
                 NavigationBar(
                     modifier = Modifier.height(92.dp),
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = MaterialTheme.colorScheme.surface
                 ) {
                     topLevelRoute.forEach { topLevelRoute ->
                         val isSelected =
