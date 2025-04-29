@@ -1,12 +1,9 @@
 package uk.udemy.recordshop.ui.artists
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtistsScreen(
     viewModel: ArtistsViewModel,
@@ -14,7 +11,6 @@ fun ArtistsScreen(
 ) {
 
     val state = viewModel.state.collectAsStateWithLifecycle()
-    val pullToRefreshState = rememberPullToRefreshState()
     val onRefresh: () -> Unit = {
         viewModel.getArtists()
     }
@@ -30,7 +26,6 @@ fun ArtistsScreen(
 
     ArtistsScreenContent(
         state = state.value,
-        pullToRefreshState = pullToRefreshState,
         onRefresh = onRefresh,
         onArtistItemClick = viewModel::onArtistItemClicked,
         onTryAgainButtonClicked = viewModel::onTryAgainButtonClicked
