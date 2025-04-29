@@ -109,10 +109,9 @@ fun NavRoot() {
                                 it.hasRoute(topLevelRoute.route::class)
                             } == true
                         NavigationBarItem(
-
                             icon = {
                                 Icon(
-                                    topLevelRoute.icon,
+                                    imageVector = topLevelRoute.icon(isSelected),
                                     contentDescription = topLevelRoute.name
                                 )
                             },
