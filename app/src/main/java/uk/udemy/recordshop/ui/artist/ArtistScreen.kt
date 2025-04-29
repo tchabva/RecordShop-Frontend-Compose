@@ -1,17 +1,28 @@
 package uk.udemy.recordshop.ui.artist
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun ArtistScreen(){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Text("Artist Screen")
+fun ArtistScreen(
+    viewModel: ArtistViewModel,
+    onAlbumItemClick: (Long) -> Unit
+){
+
+    val state = viewModel.state.collectAsStateWithLifecycle()
+
+    // Events Observer
+    LaunchedEffect(Unit) {
+        viewModel.events.collect{ event ->
+            when (event) {
+                is ArtistViewModel.Event.AlbumItemClicked -> onAlbumItemClick(event.albumId)
+            }
+        }
     }
+
+    ArtistScreenContent(
+        state = state.value,
+        onAlbumItemClicked = viewModel::onAlbumItemClicked
+    )
 }
