@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -31,7 +32,14 @@ class HomeViewModel @Inject constructor(
 
     fun getAlbums() {
         viewModelScope.launch {
-            _state.value = State.Loading
+
+            // Checks the state prior for proceeding for the PullToRefreshIndicator
+            val currentState = _state.value
+            _state.value = when (currentState) {
+                is State.Loaded -> currentState.copy(isLoading = true)
+                else -> State.Loading
+            }
+
             when (val networkResponse = repository.getAllAlbums()) {
 
                 is NetworkResponse.Exception -> {
@@ -60,7 +68,7 @@ class HomeViewModel @Inject constructor(
         _events.emit(event)
     }
 
-    fun addAlbumFabClicked(){
+    fun addAlbumFabClicked() {
         viewModelScope.launch {
             emitEvent(
                 Event.AddAlbumClicked
@@ -93,7 +101,7 @@ class HomeViewModel @Inject constructor(
         data class NetworkError(val errorMessage: String) : State
     }
 
-    sealed interface Event{
+    sealed interface Event {
         data object AddAlbumClicked : Event
         data class AlbumItemClicked(val albumId: Long) : Event
     }
