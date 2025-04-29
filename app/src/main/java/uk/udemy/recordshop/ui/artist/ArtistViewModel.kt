@@ -1,11 +1,14 @@
 package uk.udemy.recordshop.ui.artist
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import uk.udemy.recordshop.data.model.ArtistAndAlbums
 import uk.udemy.recordshop.data.remote.NetworkResponse
 import uk.udemy.recordshop.data.repository.ArtistsRepository
@@ -46,6 +49,17 @@ class ArtistViewModel @Inject constructor(
                     )
             }
         }
+    }
+
+    fun onAlbumItemClicked(albumId: Long) {
+        viewModelScope.launch {
+            emitEvent(
+                Event.AlbumItemClicked(
+                    albumId = albumId
+                )
+            )
+        }
+        Log.i(TAG, "Clicked on Album with the Id $albumId")
     }
 
     private suspend fun emitEvent(event: Event) {
