@@ -33,6 +33,7 @@ fun HomeScreen(
         state = state.value ,
         onAddAlbumClick = viewModel::addAlbumFabClicked,
         onRefresh = onRefresh,
-        onAlbumItemClick = viewModel::onAlbumItemClicked
+        onAlbumItemClick = viewModel::onAlbumItemClicked,
+        onTryAgainButtonClicked = viewModel::onTryAgainButtonClicked
     )
 }

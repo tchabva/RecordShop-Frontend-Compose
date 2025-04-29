@@ -24,7 +24,8 @@ fun HomeScreenContent(
     state: HomeViewModel.State,
     onRefresh: () -> Unit,
     onAddAlbumClick: () -> Unit,
-    onAlbumItemClick: (Long) -> Unit
+    onAlbumItemClick: (Long) -> Unit,
+    onTryAgainButtonClicked: () -> Unit
 ) {
     when (state) {
         is HomeViewModel.State.Error -> {
@@ -49,7 +50,8 @@ fun HomeScreenContent(
 
         is HomeViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.errorMessage
+                errorMessage = state.errorMessage,
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
     }
@@ -111,5 +113,6 @@ fun HomeScreenContentPreview() {
         onAddAlbumClick = {},
         onAlbumItemClick = {},
         onRefresh = {},
+        onTryAgainButtonClicked = {},
     )
 }
