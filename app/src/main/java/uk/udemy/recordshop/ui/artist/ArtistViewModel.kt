@@ -1,5 +1,6 @@
 package uk.udemy.recordshop.ui.artist
 
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ArtistViewModel @Inject constructor(
     private val repository: ArtistsRepository
-) {
+) : ViewModel() {
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     val state: StateFlow<State> = _state
 
