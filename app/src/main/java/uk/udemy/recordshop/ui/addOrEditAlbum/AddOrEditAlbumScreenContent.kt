@@ -53,7 +53,8 @@ fun AddOrEditAlbumScreenContent(
 
         is AddOrEditAlbumViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.error
+                errorMessage = state.error,
+                onTryAgainButtonClicked = { /*TODO*/ }
             )
         }
 
