@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -71,15 +72,11 @@ fun HomeScreenLoaded(
     onAddAlbumClick: () -> Unit,
     onAlbumItemClick: (Long) -> Unit
 ) {
-    Box(
+    PullToRefreshBox(
+        isRefreshing = state.isLoading,
+        onRefresh = onRefresh,
         modifier = Modifier
-            .fillMaxSize()
-            .pullToRefresh(
-                isRefreshing = state.isLoading,
-                state = pullToRefreshState,
-                onRefresh = onRefresh
-            ),
-
+        
         ) {
         AlbumsList(
             state.data
