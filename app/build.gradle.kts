@@ -85,6 +85,9 @@ dependencies {
 
     //Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)
+
+    implementation(libs.androidx.material.icons.extended)
+
 }
 
 kapt {

@@ -101,7 +101,7 @@ fun NavRoot() {
             ) {
                 NavigationBar(
                     modifier = Modifier.height(92.dp),
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = MaterialTheme.colorScheme.surface
                 ) {
                     topLevelRoute.forEach { topLevelRoute ->
                         val isSelected =
@@ -109,10 +109,9 @@ fun NavRoot() {
                                 it.hasRoute(topLevelRoute.route::class)
                             } == true
                         NavigationBarItem(
-
                             icon = {
                                 Icon(
-                                    topLevelRoute.icon,
+                                    imageVector = topLevelRoute.icon(isSelected),
                                     contentDescription = topLevelRoute.name
                                 )
                             },
