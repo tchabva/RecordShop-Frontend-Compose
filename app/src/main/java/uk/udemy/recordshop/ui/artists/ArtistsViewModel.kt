@@ -32,7 +32,13 @@ class ArtistsViewModel @Inject constructor(
 
     fun getArtists(){
         viewModelScope.launch {
-            _state.value = State.Loading
+            // Checks the state prior for proceeding for the PullToRefreshIndicator
+            val currentState = _state.value
+            _state.value = when (currentState) {
+                is State.Loaded -> currentState.copy(isLoading = true)
+                else -> State.Loading
+            }
+
             when(val networkResponse = repository.getAllArtists()){
                 is NetworkResponse.Exception -> {
                     _state.value = State.NetworkError(
