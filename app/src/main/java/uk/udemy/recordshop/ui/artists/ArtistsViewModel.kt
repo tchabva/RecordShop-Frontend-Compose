@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -64,6 +65,15 @@ class ArtistsViewModel @Inject constructor(
             )
         }
         Log.i(TAG, "Clicked on Artist with the Id $artistId")
+    }
+
+    fun onTryAgainButtonClicked(){
+        _state.value = State.Loading
+        viewModelScope.launch {
+            delay(400) // To allow time for Progress Indicator to display
+            Log.i(TAG, "Try Again Button Clicked")
+            getArtists()
+        }
     }
 
     sealed interface State {
