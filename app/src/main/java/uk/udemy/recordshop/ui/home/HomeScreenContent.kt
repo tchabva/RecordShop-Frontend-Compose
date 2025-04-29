@@ -1,15 +1,11 @@
 package uk.udemy.recordshop.ui.home
 
 import android.util.Log
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.pulltorefresh.PullToRefreshState
-import androidx.compose.material3.pulltorefresh.pullToRefresh
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,14 +19,13 @@ import uk.udemy.recordshop.ui.common.DefaultNetworkErrorScreen
 import uk.udemy.recordshop.ui.common.DefaultProgressIndicator
 import uk.udemy.recordshop.ui.common.FloatingActionButtonTemplate
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenContent(
     state: HomeViewModel.State,
-    pullToRefreshState: PullToRefreshState,
     onRefresh: () -> Unit,
     onAddAlbumClick: () -> Unit,
-    onAlbumItemClick: (Long) -> Unit
+    onAlbumItemClick: (Long) -> Unit,
+    onTryAgainButtonClicked: () -> Unit
 ) {
     when (state) {
         is HomeViewModel.State.Error -> {
@@ -43,7 +38,6 @@ fun HomeScreenContent(
         is HomeViewModel.State.Loaded -> {
             HomeScreenLoaded(
                 state = state,
-                pullToRefreshState = pullToRefreshState,
                 onRefresh = onRefresh,
                 onAddAlbumClick = onAddAlbumClick,
                 onAlbumItemClick = onAlbumItemClick
@@ -56,7 +50,8 @@ fun HomeScreenContent(
 
         is HomeViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.errorMessage
+                errorMessage = state.errorMessage,
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
     }
@@ -66,21 +61,16 @@ fun HomeScreenContent(
 @Composable
 fun HomeScreenLoaded(
     state: HomeViewModel.State.Loaded,
-    pullToRefreshState: PullToRefreshState,
     onRefresh: () -> Unit,
     onAddAlbumClick: () -> Unit,
     onAlbumItemClick: (Long) -> Unit
 ) {
-    Box(
+    PullToRefreshBox(
+        isRefreshing = state.isLoading,
+        onRefresh = onRefresh,
         modifier = Modifier
-            .fillMaxSize()
-            .pullToRefresh(
-                isRefreshing = state.isLoading,
-                state = pullToRefreshState,
-                onRefresh = onRefresh
-            ),
 
-        ) {
+    ) {
         AlbumsList(
             state.data
         ) {
@@ -100,7 +90,6 @@ fun HomeScreenLoaded(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenContentPreview() {
@@ -123,7 +112,7 @@ fun HomeScreenContentPreview() {
         ),
         onAddAlbumClick = {},
         onAlbumItemClick = {},
-        pullToRefreshState = rememberPullToRefreshState(),
         onRefresh = {},
+        onTryAgainButtonClicked = {},
     )
 }
