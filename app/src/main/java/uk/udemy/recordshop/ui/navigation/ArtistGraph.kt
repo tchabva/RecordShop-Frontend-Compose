@@ -34,7 +34,10 @@ fun NavGraphBuilder.artistGraph(
                 viewModel.getArtistWithAlbums(artistId = artistScreen.artistId)
             }
 
-            ArtistScreen()
+            ArtistScreen(
+                viewModel = viewModel,
+                onAlbumItemClick = { /*TODO*/ }
+            )
         }
     }
 }
