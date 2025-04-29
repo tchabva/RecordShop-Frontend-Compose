@@ -25,7 +25,8 @@ fun ArtistsScreenContent(
     state: ArtistsViewModel.State,
     pullToRefreshState: PullToRefreshState,
     onRefresh: () -> Unit,
-    onArtistItemClick: (Long) -> Unit
+    onArtistItemClick: (Long) -> Unit,
+    onTryAgainButtonClicked: () -> Unit
 ) {
     when (state) {
         is ArtistsViewModel.State.Error -> {
@@ -50,7 +51,8 @@ fun ArtistsScreenContent(
 
         is ArtistsViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.errorMessage
+                errorMessage = state.errorMessage,
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
     }
@@ -91,6 +93,7 @@ fun ArtistScreenContentLoadedPreview() {
         state = ArtistsViewModel.State.Loaded(),
         pullToRefreshState = rememberPullToRefreshState(),
         onRefresh = {},
-        onArtistItemClick = {}
+        onArtistItemClick = {},
+        onTryAgainButtonClicked = {}
     )
 }
