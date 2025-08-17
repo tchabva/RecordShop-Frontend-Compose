@@ -18,7 +18,7 @@ lifecycleViewmodelCompose = "2.9.2"
 loggingInterceptor = "5.1.0"
 materialIconsExtended = "1.7.8"
 navigationCompose = "2.9.3"
-retrofit = "2.9.0"
+retrofit = "3.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
