@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.navigation
+package uk.udemy.recordshop.ui.navigation.navgraphs
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -8,9 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
-import uk.udemy.recordshop.ui.navigation.navgraphs.artistGraph
-import uk.udemy.recordshop.ui.navigation.navgraphs.genresGraph
-import uk.udemy.recordshop.ui.navigation.navgraphs.homeGraph
+import uk.udemy.recordshop.ui.navigation.Tabs
 
 // The Root NavGraph
 @Composable
