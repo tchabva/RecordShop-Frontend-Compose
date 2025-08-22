@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.home
+package uk.udemy.recordshop.ui.screens.artists
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import uk.udemy.recordshop.data.model.Album
+import uk.udemy.recordshop.data.model.ArtistDTO
 import uk.udemy.recordshop.data.remote.NetworkResponse
-import uk.udemy.recordshop.data.repository.RecordsRepository
+import uk.udemy.recordshop.data.repository.ArtistsRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val repository: RecordsRepository
+class ArtistsViewModel @Inject constructor(
+    private val repository: ArtistsRepository
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
@@ -27,12 +27,11 @@ class HomeViewModel @Inject constructor(
     val events: SharedFlow<Event> = _events
 
     init {
-        getAlbums()
+        getArtists()
     }
 
-    fun getAlbums() {
+    fun getArtists(){
         viewModelScope.launch {
-
             // Checks the state prior for proceeding for the PullToRefreshIndicator
             val currentState = _state.value
             _state.value = when (currentState) {
@@ -40,21 +39,18 @@ class HomeViewModel @Inject constructor(
                 else -> State.Loading
             }
 
-            when (val networkResponse = repository.getAllAlbums()) {
-
+            when(val networkResponse = repository.getAllArtists()){
                 is NetworkResponse.Exception -> {
                     _state.value = State.NetworkError(
                         errorMessage = networkResponse.exception.message ?: "Unknown Exception"
                     )
                 }
-
                 is NetworkResponse.Failed -> {
                     _state.value = State.Error(
                         responseCode = networkResponse.code,
                         errorMessage = networkResponse.message ?: "Unknown Error"
                     )
                 }
-
                 is NetworkResponse.Success -> {
                     _state.value = State.Loaded(
                         data = networkResponse.data,
@@ -64,28 +60,17 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun emitEvent(event: Event) {
+    private suspend fun emitEvent(event: Event){
         _events.emit(event)
     }
 
-    fun addAlbumFabClicked() {
+    fun onArtistItemClicked(artistId: Long){
         viewModelScope.launch {
             emitEvent(
-                Event.AddAlbumClicked
+                Event.ArtistItemClicked(artistId)
             )
         }
-        Log.i(TAG, "Add Album FAB Clicked")
-    }
-
-    fun onAlbumItemClicked(albumId: Long) {
-        viewModelScope.launch {
-            emitEvent(
-                Event.AlbumItemClicked(
-                    albumId = albumId
-                )
-            )
-        }
-        Log.i(TAG, "Clicked on Album with the Id $albumId")
+        Log.i(TAG, "Clicked on Artist with the Id $artistId")
     }
 
     fun onTryAgainButtonClicked(){
@@ -93,7 +78,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             delay(400) // To allow time for Progress Indicator to display
             Log.i(TAG, "Try Again Button Clicked")
-            getAlbums()
+            getArtists()
         }
     }
 
@@ -101,7 +86,7 @@ class HomeViewModel @Inject constructor(
         data object Loading : State
 
         data class Loaded(
-            val data: List<Album> = emptyList(),
+            val data: List<ArtistDTO> = emptyList(),
             val isLoading: Boolean = false
         ) : State
 
@@ -110,12 +95,11 @@ class HomeViewModel @Inject constructor(
         data class NetworkError(val errorMessage: String) : State
     }
 
-    sealed interface Event {
-        data object AddAlbumClicked : Event
-        data class AlbumItemClicked(val albumId: Long) : Event
+    sealed interface Event{
+        data class ArtistItemClicked(val artistId: Long) : Event
     }
 
     companion object {
-        private const val TAG = "HomeViewModel"
+        private const val TAG = "ArtistsViewModel"
     }
 }

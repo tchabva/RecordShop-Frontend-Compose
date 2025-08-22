@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.addOrEditAlbum
+package uk.udemy.recordshop.ui.screens.addOrEditAlbum
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable

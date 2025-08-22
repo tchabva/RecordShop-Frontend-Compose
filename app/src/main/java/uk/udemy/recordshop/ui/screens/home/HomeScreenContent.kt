@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.home
+package uk.udemy.recordshop.ui.screens.home
 
 import android.util.Log
 import androidx.compose.foundation.layout.padding

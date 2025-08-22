@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.addOrEditAlbum
+package uk.udemy.recordshop.ui.screens.addOrEditAlbum
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement

@@ -7,10 +7,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import uk.udemy.recordshop.ui.artist.ArtistScreen
-import uk.udemy.recordshop.ui.artist.ArtistViewModel
-import uk.udemy.recordshop.ui.artists.ArtistsScreen
-import uk.udemy.recordshop.ui.artists.ArtistsViewModel
+import uk.udemy.recordshop.ui.screens.artist.artist.ArtistScreen
+import uk.udemy.recordshop.ui.screens.artist.artist.ArtistViewModel
+import uk.udemy.recordshop.ui.screens.artists.ArtistsScreen
+import uk.udemy.recordshop.ui.screens.artists.ArtistsViewModel
 import uk.udemy.recordshop.ui.navigation.Screens
 import uk.udemy.recordshop.ui.navigation.Tabs
 

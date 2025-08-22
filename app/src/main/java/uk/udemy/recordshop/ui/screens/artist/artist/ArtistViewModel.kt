@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.artist
+package uk.udemy.recordshop.ui.screens.artist.artist
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

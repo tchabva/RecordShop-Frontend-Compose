@@ -10,14 +10,14 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import uk.udemy.recordshop.ui.addOrEditAlbum.AddOrEditAlbumScreen
-import uk.udemy.recordshop.ui.addOrEditAlbum.AddOrEditAlbumViewModel
-import uk.udemy.recordshop.ui.home.HomeScreen
-import uk.udemy.recordshop.ui.home.HomeViewModel
+import uk.udemy.recordshop.ui.screens.addOrEditAlbum.AddOrEditAlbumScreen
+import uk.udemy.recordshop.ui.screens.addOrEditAlbum.AddOrEditAlbumViewModel
+import uk.udemy.recordshop.ui.screens.home.HomeScreen
+import uk.udemy.recordshop.ui.screens.home.HomeViewModel
 import uk.udemy.recordshop.ui.navigation.Screens
 import uk.udemy.recordshop.ui.navigation.Tabs
-import uk.udemy.recordshop.ui.viewAlbum.ViewAlbumScreen
-import uk.udemy.recordshop.ui.viewAlbum.ViewAlbumViewModel
+import uk.udemy.recordshop.ui.screens.viewAlbum.ViewAlbumScreen
+import uk.udemy.recordshop.ui.screens.viewAlbum.ViewAlbumViewModel
 
 fun NavGraphBuilder.homeGraph(
     navController: NavController,

@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.artist
+package uk.udemy.recordshop.ui.screens.artist.artist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

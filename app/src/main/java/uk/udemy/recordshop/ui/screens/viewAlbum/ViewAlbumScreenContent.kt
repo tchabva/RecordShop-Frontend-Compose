@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.viewAlbum
+package uk.udemy.recordshop.ui.screens.viewAlbum
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
