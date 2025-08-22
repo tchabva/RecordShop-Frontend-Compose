@@ -7,8 +7,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import uk.udemy.recordshop.ui.screens.artist.artist.ArtistScreen
-import uk.udemy.recordshop.ui.screens.artist.artist.ArtistViewModel
+import uk.udemy.recordshop.ui.screens.artist.ArtistScreen
+import uk.udemy.recordshop.ui.screens.artist.ArtistViewModel
 import uk.udemy.recordshop.ui.screens.artists.ArtistsScreen
 import uk.udemy.recordshop.ui.screens.artists.ArtistsViewModel
 import uk.udemy.recordshop.ui.navigation.Screens
