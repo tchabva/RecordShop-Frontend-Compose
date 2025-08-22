@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.navigation
+package uk.udemy.recordshop.ui.navigation.navgraphs
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -11,6 +11,8 @@ import uk.udemy.recordshop.ui.artist.ArtistScreen
 import uk.udemy.recordshop.ui.artist.ArtistViewModel
 import uk.udemy.recordshop.ui.artists.ArtistsScreen
 import uk.udemy.recordshop.ui.artists.ArtistsViewModel
+import uk.udemy.recordshop.ui.navigation.Screens
+import uk.udemy.recordshop.ui.navigation.Tabs
 
 fun NavGraphBuilder.artistGraph(
     navController: NavController
@@ -26,7 +28,7 @@ fun NavGraphBuilder.artistGraph(
             )
         }
 
-        composable<Screens.Artist> {backStackEntry ->
+        composable<Screens.Artist> { backStackEntry ->
             val artistScreen: Screens.Artist = backStackEntry.toRoute()
             val viewModel = hiltViewModel<ArtistViewModel>()
 
