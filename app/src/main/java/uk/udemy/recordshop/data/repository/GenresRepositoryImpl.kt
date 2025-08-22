@@ -35,7 +35,24 @@ class GenresRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getGenreWithAlbums(genreId: Long): NetworkResponse<GenreAndAlbums> {
-        TODO("Not yet implemented")
+        try {
+            val response = api.getGenresWithAlbumsById(genreId)
+            val responseCode = response.code()
+
+            return if (responseCode == 200) {
+                Log.i(TAG, "Successful Genres With Albums Retrieval By ID: ${response.body()}")
+                NetworkResponse.Success(response.body()!!)
+            }else {
+                Log.e(TAG, "Failed Retrieval of Genres with Albums: Code = $responseCode")
+                NetworkResponse.Failed(
+                    message = response.message() ?: "",
+                    code = responseCode
+                )
+            }
+        }catch (e: Throwable) {
+            Log.wtf(TAG, "Network Error", e)
+            return NetworkResponse.Exception(e)
+        }
     }
 
     companion object {
