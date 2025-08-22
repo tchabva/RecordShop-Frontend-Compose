@@ -12,3 +12,14 @@ data class Album(
     var dateCreated: String?,
     var dateModified: String?,
 )
+
+data class ArtistAndAlbums(
+    val id: Long,
+    val artistName: String,
+    val albums: List<Album>
+)
+
+data class ArtistDTO(
+    val id: Long,
+    val artistName: String
+)

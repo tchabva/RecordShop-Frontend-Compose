@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.artist
+package uk.udemy.recordshop.ui.screens.artist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

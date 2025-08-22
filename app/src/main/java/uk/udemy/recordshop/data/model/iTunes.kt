@@ -5,3 +5,8 @@ data class ItunesAlbum(
     val collectionName: String,
     var artworkUrl100: String
 )
+
+data class ItunesResponse(
+    val resultCount: Int,
+    val results: List<ItunesAlbum>
+)

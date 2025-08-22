@@ -1,6 +1,6 @@
 @file:Suppress("KotlinConstantConditions")
 
-package uk.udemy.recordshop.ui.viewAlbum
+package uk.udemy.recordshop.ui.screens.viewAlbum
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable

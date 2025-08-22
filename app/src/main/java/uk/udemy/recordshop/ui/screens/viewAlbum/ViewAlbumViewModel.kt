@@ -1,4 +1,4 @@
-package uk.udemy.recordshop.ui.viewAlbum
+package uk.udemy.recordshop.ui.screens.viewAlbum
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

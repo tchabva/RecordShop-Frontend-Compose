@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package uk.udemy.recordshop.ui.artists
+package uk.udemy.recordshop.ui.screens.artists
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
