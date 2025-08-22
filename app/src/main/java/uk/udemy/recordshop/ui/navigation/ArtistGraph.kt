@@ -36,7 +36,9 @@ fun NavGraphBuilder.artistGraph(
 
             ArtistScreen(
                 viewModel = viewModel,
-                onAlbumItemClick = { /*TODO*/ }
+                onAlbumItemClick = { albumId ->
+                    navController.navigate(Screens.ViewAlbum(albumId))
+                }
             )
         }
     }
