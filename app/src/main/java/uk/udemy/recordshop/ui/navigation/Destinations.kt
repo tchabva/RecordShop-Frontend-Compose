@@ -45,7 +45,8 @@ sealed interface Screens {
     companion object{
         val screensWithoutBottomNav = listOf(
             ViewAlbum::class,
-            AddOrEditAlbum::class
+            AddOrEditAlbum::class,
+            Artist::class
         )
 
         val screensWithTopAppBar = listOf(

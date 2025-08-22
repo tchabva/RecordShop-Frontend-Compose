@@ -1,5 +1,6 @@
 package uk.udemy.recordshop.ui.common
 
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -15,7 +16,7 @@ fun FloatingActionButtonTemplate(
     onClick: () -> Unit,
 
     ){
-    androidx.compose.material3.FloatingActionButton(
+    FloatingActionButton(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surface,
         onClick = {
