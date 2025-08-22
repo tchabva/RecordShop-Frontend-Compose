@@ -31,7 +31,7 @@ class AddOrEditAlbumViewModel @Inject constructor(
 
     // Method for retrieving album artwork from the iTunes URL.
     private suspend fun getItunesAlbum(artist: String, albumTitle: String): String? {
-        var artworkUrl: String? = null
+        var artworkUrl: String?
         when (val networkResponse =
             itunesRepository.getAlbumArtwork("${artist.trim()} ${albumTitle.trim()}")) {
             is NetworkResponse.Exception -> {
@@ -294,7 +294,7 @@ class AddOrEditAlbumViewModel @Inject constructor(
             try {
                 LocalDate.parse(releaseDate)
                 true
-            } catch (e: DateTimeException) {
+            } catch (_: DateTimeException) {
                 false
             }
         } else {
