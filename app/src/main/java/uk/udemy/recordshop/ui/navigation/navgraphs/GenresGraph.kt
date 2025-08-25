@@ -8,7 +8,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import uk.udemy.recordshop.ui.navigation.Screens
 import uk.udemy.recordshop.ui.navigation.Tabs
@@ -46,12 +45,9 @@ fun NavGraphBuilder.genresGraph(
                     navController.navigate(Screens.ViewAlbum(albumId))
                 },
                 onTryAgainButtonClicked = {
-
                     coroutineScope.launch {
                         viewModel.getGenreWithAlbums(genreId = genreScreen.genreId)
                     }
-
-
                 }
             )
         }
