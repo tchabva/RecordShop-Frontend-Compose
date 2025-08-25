@@ -10,6 +10,7 @@ import androidx.navigation.toRoute
 import uk.udemy.recordshop.ui.navigation.Screens
 import uk.udemy.recordshop.ui.navigation.Tabs
 import uk.udemy.recordshop.ui.screens.genre.GenreScreen
+import uk.udemy.recordshop.ui.screens.genre.GenreViewModel
 import uk.udemy.recordshop.ui.screens.genres.GenresScreen
 import uk.udemy.recordshop.ui.screens.genres.GenresViewModel
 
@@ -29,13 +30,18 @@ fun NavGraphBuilder.genresGraph(
 
         composable<Screens.Genre> { backStackEntry ->
             val genreScreen: Screens.Genre = backStackEntry.toRoute()
-//            val viewModel = hiltViewModel<GenreViewModel>()
+            val viewModel = hiltViewModel<GenreViewModel>()
 
             LaunchedEffect(genreScreen.genreId) {
-//                viewModel.getGenreWithAlbums(genreId = genreScreen.genreId)
+                viewModel.getGenreWithAlbums(genreId = genreScreen.genreId)
             }
 
-            GenreScreen()
+            GenreScreen(
+                viewModel = viewModel,
+                onAlbumItemClicked = { albumId ->
+                    navController.navigate(Screens.ViewAlbum(albumId))
+                }
+            )
         }
     }
 }
