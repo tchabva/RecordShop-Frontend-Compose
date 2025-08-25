@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
+import kotlinx.coroutines.CoroutineScope
 import uk.udemy.recordshop.ui.screens.artist.ArtistScreen
 import uk.udemy.recordshop.ui.screens.artist.ArtistViewModel
 import uk.udemy.recordshop.ui.screens.artists.ArtistsScreen
@@ -15,7 +16,8 @@ import uk.udemy.recordshop.ui.navigation.Screens
 import uk.udemy.recordshop.ui.navigation.Tabs
 
 fun NavGraphBuilder.artistGraph(
-    navController: NavController
+    navController: NavController,
+    coroutineScope: CoroutineScope
 ) {
     navigation<Tabs.Artists>(startDestination = Screens.Artists) {
         composable<Screens.Artists> {
