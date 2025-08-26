@@ -24,8 +24,7 @@ fun GenreScreenContent(
     when (state) {
         is GenreViewModel.State.Error -> {
             DefaultErrorScreen(
-                responseCode = state.responseCode,
-                errorMessage = state.error
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
@@ -42,7 +41,6 @@ fun GenreScreenContent(
 
         is GenreViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.error,
                 onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }

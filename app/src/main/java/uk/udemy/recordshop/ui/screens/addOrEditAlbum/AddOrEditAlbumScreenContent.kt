@@ -42,8 +42,7 @@ fun AddOrEditAlbumScreenContent(
 
         is AddOrEditAlbumViewModel.State.Error -> {
             DefaultErrorScreen(
-                responseCode = state.responseCode,
-                errorMessage = state.error
+                onTryAgainButtonClicked = { /*TODO*/ }
             )
         }
 
@@ -53,7 +52,6 @@ fun AddOrEditAlbumScreenContent(
 
         is AddOrEditAlbumViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.error,
                 onTryAgainButtonClicked = { /*TODO*/ }
             )
         }

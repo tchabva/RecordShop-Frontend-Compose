@@ -30,8 +30,7 @@ fun HomeScreenContent(
     when (state) {
         is HomeViewModel.State.Error -> {
             DefaultErrorScreen(
-                responseCode = state.responseCode ?: 0,
-                errorMessage = state.errorMessage
+                onTryAgainButtonClicked = { /*TODO*/ }
             )
         }
 
@@ -50,7 +49,6 @@ fun HomeScreenContent(
 
         is HomeViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.errorMessage,
                 onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }

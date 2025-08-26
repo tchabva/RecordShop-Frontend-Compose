@@ -45,14 +45,12 @@ fun ViewAlbumScreenContent(
 
         is ViewAlbumViewModel.State.Error -> {
             DefaultErrorScreen(
-                responseCode = state.responseCode,
-                errorMessage = state.error
+                onTryAgainButtonClicked = { /*TODO*/ }
             )
         }
 
         is ViewAlbumViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.error,
                 onTryAgainButtonClicked = { /*TODO*/ }
             )
         }
