@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uk.udemy.recordshop.R
 
-// TODO add to other screens
 @Composable
 fun DefaultErrorScreen(
     onTryAgainButtonClicked: () -> Unit
