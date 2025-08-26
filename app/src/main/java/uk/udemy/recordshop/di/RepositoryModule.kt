@@ -6,6 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import uk.udemy.recordshop.data.repository.ArtistsRepository
 import uk.udemy.recordshop.data.repository.ArtistsRepositoryImpl
+import uk.udemy.recordshop.data.repository.GenresRepository
+import uk.udemy.recordshop.data.repository.GenresRepositoryImpl
 import uk.udemy.recordshop.data.repository.ItunesRepository
 import uk.udemy.recordshop.data.repository.ItunesRepositoryImpl
 import uk.udemy.recordshop.data.repository.RecordsRepositoryImpl
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindsArtistsRepository(
         artistsRepositoryImpl: ArtistsRepositoryImpl
     ): ArtistsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsGenresRepository(
+        genresRepositoryImpl: GenresRepositoryImpl
+    ): GenresRepository
 }

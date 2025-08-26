@@ -23,3 +23,14 @@ data class ArtistDTO(
     val id: Long,
     val artistName: String
 )
+
+data class GenreDTO(
+    val id: Long,
+    val genre: String
+)
+
+data class GenreAndAlbums(
+    val id: Long,
+    val genre: String,
+    val albums: List<Album>
+)

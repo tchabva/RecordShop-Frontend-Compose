@@ -35,11 +35,13 @@ fun NavigationGraph(
 
     // The nested Artists Tab NavGraph
     artistGraph(
-        navController = navController
+        navController = navController,
+        coroutineScope = coroutineScope
     )
 
     // The nested Genres Tab NavGraph
     genresGraph(
-        navController = navController
+        navController = navController,
+        coroutineScope = coroutineScope
     )
 }

@@ -1,18 +1,33 @@
 package uk.udemy.recordshop.ui.screens.genres
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun GenresScreen(){
+fun GenresScreen(
+    viewModel: GenresViewModel,
+    onGenreItemClicked: (Long) -> Unit
+) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Text("Genres Screen")
+    val state = viewModel.state.collectAsStateWithLifecycle()
+    val onRefresh: () -> Unit = {
+        viewModel.getGenres()
     }
+
+    // Events Observer
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                is GenresViewModel.Event.GenreItemClicked -> onGenreItemClicked(event.genreId)
+            }
+        }
+    }
+
+    GenresScreensContent(
+        state = state.value,
+        onRefresh = onRefresh,
+        onGenreItemClicked = viewModel::onGenreItemClicked,
+        onTryAgainButtonClicked = viewModel::onTryAgainButtonClicked
+    )
 }
