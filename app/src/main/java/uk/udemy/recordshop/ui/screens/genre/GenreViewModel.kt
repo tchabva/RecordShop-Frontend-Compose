@@ -24,33 +24,38 @@ class GenreViewModel @Inject constructor(
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow()
     val events: SharedFlow<Event> = _events
 
+    private var currentGenreId: Long? = null
+
     private suspend fun emitEvent(event: Event) {
         _events.emit(event)
     }
 
     // Retrieves the Genre and its Albums from the Backend using the GenreId
-    suspend fun getGenreWithAlbums(genreId: Long) {
-        when (val networkResponse = repository.getGenreWithAlbums(genreId)) {
-            is NetworkResponse.Exception -> {
-                _state.value =
-                    State.NetworkError(
-                        error = networkResponse.exception.message ?: ""
-                    )
-            }
+    fun getGenreWithAlbums(genreId: Long) {
+        currentGenreId = genreId
+        viewModelScope.launch {
+            when (val networkResponse = repository.getGenreWithAlbums(genreId)) {
+                is NetworkResponse.Exception -> {
+                    _state.value =
+                        State.NetworkError(
+                            error = networkResponse.exception.message ?: ""
+                        )
+                }
 
-            is NetworkResponse.Failed -> {
-                _state.value =
-                    State.Error(
-                        responseCode = networkResponse.code!!,
-                        error = networkResponse.message
-                    )
-            }
+                is NetworkResponse.Failed -> {
+                    _state.value =
+                        State.Error(
+                            responseCode = networkResponse.code!!,
+                            error = networkResponse.message
+                        )
+                }
 
-            is NetworkResponse.Success -> {
-                _state.value =
-                    State.Loaded(
-                        data = networkResponse.data
-                    )
+                is NetworkResponse.Success -> {
+                    _state.value =
+                        State.Loaded(
+                            data = networkResponse.data
+                        )
+                }
             }
         }
     }
@@ -64,6 +69,14 @@ class GenreViewModel @Inject constructor(
             )
         }
         Log.i(TAG, "Clicked on Album with the Id $albumId")
+    }
+
+    fun onTryAgainButtonClicked(){
+        _state.value = State.Loading
+        viewModelScope.launch {
+            emitEvent(Event.TryAgainButtonClicked)
+            Log.i(TAG, "Try Again Button Clicked")
+        }
     }
 
     sealed interface State {
@@ -82,6 +95,7 @@ class GenreViewModel @Inject constructor(
 
     sealed interface Event {
         data class AlbumItemClicked(val albumId: Long) : Event
+        data object TryAgainButtonClicked : Event
     }
 
     companion object {
