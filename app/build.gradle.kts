@@ -15,6 +15,7 @@ kotlin {
         freeCompilerArgs.addAll(
             listOf(
                 "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                "-opt-in=com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi"
             )
         )
     }
