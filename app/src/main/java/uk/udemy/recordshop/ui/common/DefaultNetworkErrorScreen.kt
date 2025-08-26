@@ -3,6 +3,7 @@ package uk.udemy.recordshop.ui.common
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -16,9 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uk.udemy.recordshop.R
 
-// TODO add to other screens
 @Composable
-fun DefaultNetworkErrorScreen(errorMessage: String?, onTryAgainButtonClicked: () -> Unit) {
+fun DefaultNetworkErrorScreen(onTryAgainButtonClicked: () -> Unit) {
 
     Column(
         modifier = Modifier
@@ -30,14 +30,13 @@ fun DefaultNetworkErrorScreen(errorMessage: String?, onTryAgainButtonClicked: ()
         Text(
             textAlign = TextAlign.Center,
             fontSize = 24.sp,
-            text = stringResource(
-                R.string.network_error_occurred,
-                errorMessage ?: stringResource(R.string.unknown_error)
-            )
+            text = stringResource(R.string.network_error_occurred)
         )
 
         Button(
-            modifier = Modifier.padding(vertical = 16.dp),
+            modifier = Modifier
+                .padding(vertical = 16.dp)
+                .fillMaxWidth(.75f),
             onClick = onTryAgainButtonClicked
         ) {
             Text(text = "Try Again")
@@ -47,9 +46,8 @@ fun DefaultNetworkErrorScreen(errorMessage: String?, onTryAgainButtonClicked: ()
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultNetworkErrorScreenPreview(){
+fun DefaultNetworkErrorScreenPreview() {
     DefaultNetworkErrorScreen(
-        errorMessage = "Unknown Error",
-        onTryAgainButtonClicked ={}
+        onTryAgainButtonClicked = {}
     )
 }
