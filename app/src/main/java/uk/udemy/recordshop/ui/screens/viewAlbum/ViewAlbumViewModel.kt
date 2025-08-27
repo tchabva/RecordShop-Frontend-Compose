@@ -110,6 +110,7 @@ class ViewAlbumViewModel @Inject constructor(
     }
 
     fun onTryAgainButtonClicked(){
+        _state.value = State.Loading
         viewModelScope.launch {
             emitEvent(Event.TryAgainButtonClicked)
         }
