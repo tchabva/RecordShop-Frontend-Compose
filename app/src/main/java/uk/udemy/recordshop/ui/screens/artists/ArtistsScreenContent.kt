@@ -28,7 +28,7 @@ fun ArtistsScreenContent(
     when (state) {
         is ArtistsViewModel.State.Error -> {
             DefaultErrorScreen(
-                onTryAgainButtonClicked = { /*TODO*/ }
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
