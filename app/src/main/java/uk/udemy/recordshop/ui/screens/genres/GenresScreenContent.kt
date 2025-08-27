@@ -23,7 +23,7 @@ fun GenresScreensContent(
     when (state) {
         is GenresViewModel.State.Error -> {
             DefaultErrorScreen(
-                onTryAgainButtonClicked = { /*TODO*/ }
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
