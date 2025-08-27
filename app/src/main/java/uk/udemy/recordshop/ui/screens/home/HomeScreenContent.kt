@@ -30,7 +30,7 @@ fun HomeScreenContent(
     when (state) {
         is HomeViewModel.State.Error -> {
             DefaultErrorScreen(
-                onTryAgainButtonClicked = { /*TODO*/ }
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
