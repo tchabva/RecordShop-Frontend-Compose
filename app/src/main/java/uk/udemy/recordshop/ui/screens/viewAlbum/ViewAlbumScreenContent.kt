@@ -35,7 +35,8 @@ fun ViewAlbumScreenContent(
     onDeleteFabClicked: () -> Unit,
     onEditFabClicked: (Long) -> Unit,
     onDismiss: () -> Unit,
-    onDeleteAlbumConfirmed: (Long) -> Unit
+    onDeleteAlbumConfirmed: (Long) -> Unit,
+    onTryAgainButtonClicked: () -> Unit
 ) {
     when (state) {
         is ViewAlbumViewModel.State.Loading -> {
@@ -44,13 +45,13 @@ fun ViewAlbumScreenContent(
 
         is ViewAlbumViewModel.State.Error -> {
             DefaultErrorScreen(
-                onTryAgainButtonClicked = { /*TODO*/ }
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
         is ViewAlbumViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                onTryAgainButtonClicked = { /*TODO*/ }
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
@@ -75,7 +76,7 @@ fun ViewAlbumScreenLoaded(
     onDismiss: () -> Unit,
     onDeleteAlbumConfirmed: (Long) -> Unit
 
-){
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -223,5 +224,6 @@ fun ViewAlbumScreenContentPreview() {
         onEditFabClicked = {},
         onDismiss = {},
         onDeleteAlbumConfirmed = {},
+        onTryAgainButtonClicked = {},
     )
 }

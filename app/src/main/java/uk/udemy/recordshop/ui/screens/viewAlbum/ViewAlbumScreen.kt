@@ -8,12 +8,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun ViewAlbumScreen(
     viewModel: ViewAlbumViewModel,
     onEditFabClicked: (Long) -> Unit,
-    onAlbumDeleted: () -> Unit
+    onAlbumDeleted: () -> Unit,
+    onTryAgainButtonClicked: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -33,6 +35,8 @@ fun ViewAlbumScreen(
                 ViewAlbumViewModel.Event.DeleteAlbumSuccessful -> {
                     onAlbumDeleted()
                 }
+
+                ViewAlbumViewModel.Event.TryAgainButtonClicked -> onTryAgainButtonClicked()
             }
         }
     }
@@ -48,5 +52,6 @@ fun ViewAlbumScreen(
             viewModel.deleteAlbum(albumId)
             viewModel.dismissDeleteAlbumDialog()
         },
+        onTryAgainButtonClicked = viewModel::onTryAgainButtonClicked,
     )
 }
