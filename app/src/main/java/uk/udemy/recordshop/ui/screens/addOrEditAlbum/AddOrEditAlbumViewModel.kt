@@ -29,6 +29,10 @@ class AddOrEditAlbumViewModel @Inject constructor(
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow()
     val events: SharedFlow<Event> = _events
 
+    private suspend fun emitEvent(event: Event) {
+        _events.emit(event)
+    }
+
     // Method for retrieving album artwork from the iTunes URL.
     private suspend fun getItunesAlbum(artist: String, albumTitle: String): String? {
         var artworkUrl: String?
@@ -282,10 +286,6 @@ class AddOrEditAlbumViewModel @Inject constructor(
                 )
             }
         }
-    }
-
-    private suspend fun emitEvent(event: Event) {
-        _events.emit(event)
     }
 
     // The Validation for the Release Date TextField input
