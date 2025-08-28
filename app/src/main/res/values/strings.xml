@@ -10,7 +10,7 @@
     <string name="delete_album_dialog_txt">Are you sure you want to delete this album?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="network_error_occurred">Network Error Occurred: \n%1$s</string>
-    <string name="error_occurred">Error Occurred\nCode: %1$s\n%2$s</string>
+    <string name="network_error_occurred">A Network Error Occurred</string>
+    <string name="error_occurred">Oops!\nSomething went wrong</string>
     <string name="unknown_error">Unknown Error</string>
 </resources>

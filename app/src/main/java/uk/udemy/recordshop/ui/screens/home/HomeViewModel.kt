@@ -91,7 +91,7 @@ class HomeViewModel @Inject constructor(
     fun onTryAgainButtonClicked(){
         _state.value = State.Loading
         viewModelScope.launch {
-            delay(400) // To allow time for Progress Indicator to display
+            delay(1000) // To allow time for Progress Indicator to display
             Log.i(TAG, "Try Again Button Clicked")
             getAlbums()
         }

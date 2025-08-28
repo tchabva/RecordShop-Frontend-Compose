@@ -10,7 +10,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun AddOrEditAlbumScreen(
     viewModel: AddOrEditAlbumViewModel,
     navigateToHomeGraph: () -> Unit,
-    albumSuccessfullyUpdated: () -> Unit
+    albumSuccessfullyUpdated: () -> Unit,
+    onTryAgainButtonClicked: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -68,6 +69,8 @@ fun AddOrEditAlbumScreen(
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
+                AddOrEditAlbumViewModel.Event.TryAgainButtonClicked -> onTryAgainButtonClicked()
             }
         }
     }
@@ -76,6 +79,7 @@ fun AddOrEditAlbumScreen(
     AddOrEditAlbumScreenContent(
         state = state.value,
         addAlbum = viewModel::addAlbum,
-        updateAlbum = viewModel::updateAlbum
+        updateAlbum = viewModel::updateAlbum,
+        onTryAgainButtonClicked = viewModel::onTryAgainButtonClicked
     )
 }

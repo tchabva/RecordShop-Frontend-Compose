@@ -29,7 +29,8 @@ import java.util.Locale
 fun AddOrEditAlbumScreenContent(
     state: AddOrEditAlbumViewModel.State,
     addAlbum: () -> Unit,
-    updateAlbum: () -> Unit
+    updateAlbum: () -> Unit,
+    onTryAgainButtonClicked: () -> Unit
 ) {
 
     when (state) {
@@ -42,8 +43,7 @@ fun AddOrEditAlbumScreenContent(
 
         is AddOrEditAlbumViewModel.State.Error -> {
             DefaultErrorScreen(
-                responseCode = state.responseCode,
-                errorMessage = state.error
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
@@ -53,8 +53,7 @@ fun AddOrEditAlbumScreenContent(
 
         is AddOrEditAlbumViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.error,
-                onTryAgainButtonClicked = { /*TODO*/ }
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
@@ -394,7 +393,8 @@ fun AddAlbumPreview() {
     AddOrEditAlbumScreenContent(
         state = AddOrEditAlbumViewModel.State.AddAlbum(),
         addAlbum = {},
-        updateAlbum = {}
+        updateAlbum = {},
+        onTryAgainButtonClicked = {},
     )
 }
 
@@ -430,6 +430,7 @@ fun EditAlbumPreview() {
             isLoading = false
         ),
         addAlbum = {},
-        updateAlbum = {}
+        updateAlbum = {},
+        onTryAgainButtonClicked = {},
     )
 }

@@ -28,8 +28,7 @@ fun ArtistsScreenContent(
     when (state) {
         is ArtistsViewModel.State.Error -> {
             DefaultErrorScreen(
-                responseCode = state.responseCode ?: 0,
-                errorMessage = state.errorMessage
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
@@ -47,7 +46,6 @@ fun ArtistsScreenContent(
 
         is ArtistsViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.errorMessage,
                 onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }

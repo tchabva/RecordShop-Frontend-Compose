@@ -19,7 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import uk.udemy.recordshop.R
@@ -36,7 +35,8 @@ fun ViewAlbumScreenContent(
     onDeleteFabClicked: () -> Unit,
     onEditFabClicked: (Long) -> Unit,
     onDismiss: () -> Unit,
-    onDeleteAlbumConfirmed: (Long) -> Unit
+    onDeleteAlbumConfirmed: (Long) -> Unit,
+    onTryAgainButtonClicked: () -> Unit
 ) {
     when (state) {
         is ViewAlbumViewModel.State.Loading -> {
@@ -45,15 +45,13 @@ fun ViewAlbumScreenContent(
 
         is ViewAlbumViewModel.State.Error -> {
             DefaultErrorScreen(
-                responseCode = state.responseCode,
-                errorMessage = state.error
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
         is ViewAlbumViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                errorMessage = state.error,
-                onTryAgainButtonClicked = { /*TODO*/ }
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
@@ -70,7 +68,6 @@ fun ViewAlbumScreenContent(
 }
 
 // Composable for the View Album Screen Loaded State
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ViewAlbumScreenLoaded(
     state: ViewAlbumViewModel.State.Loaded,
@@ -79,7 +76,7 @@ fun ViewAlbumScreenLoaded(
     onDismiss: () -> Unit,
     onDeleteAlbumConfirmed: (Long) -> Unit
 
-){
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -227,5 +224,6 @@ fun ViewAlbumScreenContentPreview() {
         onEditFabClicked = {},
         onDismiss = {},
         onDeleteAlbumConfirmed = {},
+        onTryAgainButtonClicked = {},
     )
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -28,6 +29,10 @@ class AddOrEditAlbumViewModel @Inject constructor(
 
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow()
     val events: SharedFlow<Event> = _events
+
+    private suspend fun emitEvent(event: Event) {
+        _events.emit(event)
+    }
 
     // Method for retrieving album artwork from the iTunes URL.
     private suspend fun getItunesAlbum(artist: String, albumTitle: String): String? {
@@ -284,10 +289,6 @@ class AddOrEditAlbumViewModel @Inject constructor(
         }
     }
 
-    private suspend fun emitEvent(event: Event) {
-        _events.emit(event)
-    }
-
     // The Validation for the Release Date TextField input
     private fun isReleaseDateValid(releaseDate: String): Boolean {
         return if (releaseDate.matches(Regex("^\\d{4}-\\d{2}-\\d{2}"))) {
@@ -300,6 +301,15 @@ class AddOrEditAlbumViewModel @Inject constructor(
         } else {
             false
         }
+    }
+
+    fun onTryAgainButtonClicked() {
+        _state.value = State.Loading
+        viewModelScope.launch {
+            delay(1000)
+            emitEvent(Event.TryAgainButtonClicked)
+        }
+        Log.i(TAG, "Try Again Button Clicked")
     }
 
     sealed interface State {
@@ -337,6 +347,7 @@ class AddOrEditAlbumViewModel @Inject constructor(
         data object AlbumUpdatedSuccessfully : Event
         data class AlbumUpdateFailed(val message: String, val responseCode: Int? = null) : Event
         data class NetworkErrorOccurred(val message: String) : Event
+        data object TryAgainButtonClicked : Event
     }
 
     companion object {

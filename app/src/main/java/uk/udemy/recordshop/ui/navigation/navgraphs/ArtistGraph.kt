@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import uk.udemy.recordshop.ui.screens.artist.ArtistScreen
 import uk.udemy.recordshop.ui.screens.artist.ArtistViewModel
 import uk.udemy.recordshop.ui.screens.artists.ArtistsScreen
@@ -42,6 +43,11 @@ fun NavGraphBuilder.artistGraph(
                 viewModel = viewModel,
                 onAlbumItemClick = { albumId ->
                     navController.navigate(Screens.ViewAlbum(albumId))
+                },
+                onTryAgainButtonClicked = {
+                    coroutineScope.launch {
+                        viewModel.getArtistWithAlbums(artistId = artistScreen.artistId)
+                    }
                 }
             )
         }

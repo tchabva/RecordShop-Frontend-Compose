@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -24,6 +25,10 @@ class ViewAlbumViewModel @Inject constructor(
 
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow()
     val events: SharedFlow<Event> = _events
+
+    private suspend fun emitEvent(event: Event) {
+        _events.emit(event)
+    }
 
     // Retrieves the Album from the Backend using the Album Id
     suspend fun getAlbumById(albumId: Long) {
@@ -93,20 +98,25 @@ class ViewAlbumViewModel @Inject constructor(
         }
     }
 
-    fun showDeleteAlbumDialog(){
+    fun showDeleteAlbumDialog() {
         _state.value = (state.value as State.Loaded).copy(
             showDeleteAlbumDialog = true
         )
     }
 
-    fun dismissDeleteAlbumDialog(){
+    fun dismissDeleteAlbumDialog() {
         _state.value = (state.value as State.Loaded).copy(
             showDeleteAlbumDialog = false
         )
     }
 
-    private suspend fun emitEvent(event: Event) {
-        _events.emit(event)
+    fun onTryAgainButtonClicked() {
+        _state.value = State.Loading
+        viewModelScope.launch {
+            delay(1000)
+            emitEvent(Event.TryAgainButtonClicked)
+        }
+        Log.i(TAG, "Try Again Button Clicked")
     }
 
     sealed interface State {
@@ -126,6 +136,7 @@ class ViewAlbumViewModel @Inject constructor(
     sealed interface Event {
         data object DeleteAlbumSuccessful : Event
         data class DeleteAlbumFailed(val responseCode: Int?, val error: String) : Event
+        data object TryAgainButtonClicked : Event
     }
 
     companion object {

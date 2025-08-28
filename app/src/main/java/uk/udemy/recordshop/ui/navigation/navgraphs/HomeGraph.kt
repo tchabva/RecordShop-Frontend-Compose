@@ -62,6 +62,11 @@ fun NavGraphBuilder.homeGraph(
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar("Album Deleted")
                     }
+                },
+                onTryAgainButtonClicked = {
+                    coroutineScope.launch {
+                        viewModel.getAlbumById(albumId = viewAlbum.albumId)
+                    }
                 }
             )
         }
@@ -98,7 +103,14 @@ fun NavGraphBuilder.homeGraph(
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar("Album Updated Successfully")
                     }
-                }
+                },
+                onTryAgainButtonClicked = {
+                    if (editAlbum.albumId != null) {
+                        coroutineScope.launch {
+                            viewModel.getAlbumById(editAlbum.albumId)
+                        }
+                    }
+                },
             )
         }
     }

@@ -11,8 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-// TODO Add to other Screens
-fun DefaultProgressIndicator(){
+fun DefaultProgressIndicator() {
     Box(
         modifier = Modifier
             .fillMaxSize()
