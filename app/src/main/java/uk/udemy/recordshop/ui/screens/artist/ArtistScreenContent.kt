@@ -19,13 +19,14 @@ import uk.udemy.recordshop.ui.common.DefaultProgressIndicator
 @Composable
 fun ArtistScreenContent(
     state: ArtistViewModel.State,
-    onAlbumItemClicked: (Long) -> Unit
+    onAlbumItemClicked: (Long) -> Unit,
+    onTryAgainButtonClicked: () -> Unit
 ) {
 
     when (state) {
         is ArtistViewModel.State.Error -> {
             DefaultErrorScreen(
-                onTryAgainButtonClicked = { /*TODO*/ }
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
 
@@ -42,7 +43,7 @@ fun ArtistScreenContent(
 
         is ArtistViewModel.State.NetworkError -> {
             DefaultNetworkErrorScreen(
-                onTryAgainButtonClicked = { /*TODO*/ }
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
     }
@@ -71,6 +72,5 @@ fun ArtistScreenLoaded(
                 onAlbumItemClicked(albumId)
             }
         )
-
     }
 }
