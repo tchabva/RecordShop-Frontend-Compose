@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -302,6 +303,15 @@ class AddOrEditAlbumViewModel @Inject constructor(
         }
     }
 
+    fun onTryAgainButtonClicked() {
+        _state.value = State.Loading
+        viewModelScope.launch {
+            delay(1000)
+            emitEvent(Event.TryAgainButtonClicked)
+        }
+        Log.i(TAG, "Try Again Button Clicked")
+    }
+
     sealed interface State {
 
         data object Loading : State
@@ -337,6 +347,7 @@ class AddOrEditAlbumViewModel @Inject constructor(
         data object AlbumUpdatedSuccessfully : Event
         data class AlbumUpdateFailed(val message: String, val responseCode: Int? = null) : Event
         data class NetworkErrorOccurred(val message: String) : Event
+        data object TryAgainButtonClicked : Event
     }
 
     companion object {
