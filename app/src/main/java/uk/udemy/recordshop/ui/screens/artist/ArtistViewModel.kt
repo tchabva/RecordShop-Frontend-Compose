@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -66,6 +67,15 @@ class ArtistViewModel @Inject constructor(
         Log.i(TAG, "Clicked on Album with the Id $albumId")
     }
 
+    fun onTryAgainButtonClicked() {
+        _state.value = State.Loading
+        viewModelScope.launch {
+            delay(1000)
+            emitEvent(Event.TryAgainButtonClicked)
+        }
+        Log.i(TAG, "Try Again Button Clicked")
+    }
+
     sealed interface State {
         data object Loading : State
 
@@ -82,6 +92,7 @@ class ArtistViewModel @Inject constructor(
 
     sealed interface Event {
         data class AlbumItemClicked(val albumId: Long) : Event
+        data object TryAgainButtonClicked : Event
     }
 
     companion object {
