@@ -24,6 +24,10 @@ class ArtistViewModel @Inject constructor(
     private val _events: MutableSharedFlow<Event> = MutableSharedFlow()
     val events: SharedFlow<Event> = _events
 
+    private suspend fun emitEvent(event: Event) {
+        _events.emit(event)
+    }
+
     // Retrieves the Artist and their Albums from the Backend using the Artist Id
     suspend fun getArtistWithAlbums(artistId: Long) {
         when (val networkResponse = repository.getArtistWithAlbums(artistId)) {
@@ -60,10 +64,6 @@ class ArtistViewModel @Inject constructor(
             )
         }
         Log.i(TAG, "Clicked on Album with the Id $albumId")
-    }
-
-    private suspend fun emitEvent(event: Event) {
-        _events.emit(event)
     }
 
     sealed interface State {
