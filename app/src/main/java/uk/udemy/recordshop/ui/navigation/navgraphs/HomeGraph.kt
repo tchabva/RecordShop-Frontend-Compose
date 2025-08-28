@@ -103,7 +103,14 @@ fun NavGraphBuilder.homeGraph(
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar("Album Updated Successfully")
                     }
-                }
+                },
+                onTryAgainButtonClicked = {
+                    if (editAlbum.albumId != null) {
+                        coroutineScope.launch {
+                            viewModel.getAlbumById(editAlbum.albumId)
+                        }
+                    }
+                },
             )
         }
     }
