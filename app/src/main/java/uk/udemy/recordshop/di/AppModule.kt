@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import uk.udemy.recordshop.BuildConfig
 import uk.udemy.recordshop.data.remote.ArtistsApi
 import uk.udemy.recordshop.data.remote.GenresApi
 import uk.udemy.recordshop.data.remote.ItunesApi
@@ -22,8 +23,7 @@ Allows for creation of singletons for the APIs which can then be injected where 
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    private const val BASE_URL_RECORDSHOP_BACKEND = "http://192.168.50.167:8080/api/v1/"
-    //    private const val BASE_URL_RECORDSHOP_BACKEND = "http://10.0.2.2:8080/api/v1/"
+    private const val BASE_URL_RECORDSHOP_BACKEND = BuildConfig.BASE_URL_BACKEND_WIRELESS
     private const val BASE_URL_ITUNES = "https://itunes.apple.com/"
     private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
