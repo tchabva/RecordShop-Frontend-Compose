@@ -1,11 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -33,6 +35,40 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Load properties
+        val properties = Properties()
+        val localPropsFile = project.rootProject.file("local.properties")
+
+        if (localPropsFile.exists()) {
+            properties.load(localPropsFile.inputStream())
+        }
+
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+        buildConfigField(
+            "String",
+            "BASE_URL_BACKEND_WIRELESS",
+            "\"${properties.getProperty("base.url.backend.wireless")}\""
+        )
+
+        resValue(
+            "string",
+            "wireless_ip",
+            properties.getProperty("wireless.ip")
+        )
+
+        // Generate network security config during configuration phase
+        val templateFile = file("src/main/res/xml/network_security_config_template.xml")
+        val targetFile = file("src/main/res/xml/network_security_config.xml")
+
+        if (templateFile.exists() && localPropsFile.exists()) {
+            val wirelessIp = properties.getProperty("wireless.ip") ?: "192.168.1.100"
+            val content = templateFile.readText().replace("WIRELESS_IP_PLACEHOLDER", wirelessIp)
+            targetFile.parentFile.mkdirs()
+            targetFile.writeText(content)
+            println("✅ Generated network_security_config.xml with IP: $wirelessIp")
+        }
     }
 
     buildTypes {
@@ -52,6 +88,12 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+
+    ksp {
+        arg("dagger.fastInit", "enabled")
+        arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
     }
 }
 
@@ -89,7 +131,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Kotlin Serialization
@@ -99,15 +141,4 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     implementation(libs.androidx.material.icons.extended)
-
-}
-
-kapt {
-    correctErrorTypes = true
-    arguments {
-        arg("dagger.fastInit", "enabled")
-        arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
-        arg("dagger.hilt.android.internal.projectType", "app")
-        arg("dagger.hilt.internal.useAggregatingRootProcessor", "true")
-    }
 }
