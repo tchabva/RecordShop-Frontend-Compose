@@ -6,7 +6,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -65,6 +66,11 @@ android {
         compose = true
         buildConfig = true
     }
+
+    ksp {
+        arg("dagger.fastInit", "enabled")
+        arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
+    }
 }
 
 dependencies {
@@ -101,7 +107,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Kotlin Serialization
@@ -111,15 +117,4 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     implementation(libs.androidx.material.icons.extended)
-
-}
-
-kapt {
-    correctErrorTypes = true
-    arguments {
-        arg("dagger.fastInit", "enabled")
-        arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
-        arg("dagger.hilt.android.internal.projectType", "app")
-        arg("dagger.hilt.internal.useAggregatingRootProcessor", "true")
-    }
 }
