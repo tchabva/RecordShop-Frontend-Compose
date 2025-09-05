@@ -1,7 +1,5 @@
-import dagger.hilt.android.plugin.util.capitalize
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
-import kotlin.text.replace
 
 plugins {
     alias(libs.plugins.android.application)
