@@ -51,7 +51,9 @@ sealed interface Screens {
         )
 
         val screensWithTopAppBar = listOf(
-            AddOrEditAlbum::class
+            AddOrEditAlbum::class,
+            Artist::class,
+            Genre::class
         )
     }
 }
