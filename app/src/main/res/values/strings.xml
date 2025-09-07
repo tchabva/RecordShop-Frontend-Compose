@@ -4,7 +4,7 @@
     <string name="album_artwork">%1$s Album Artwork</string>
     <string name="release_date">Release Date: %1$s</string>
     <string name="delete_album_fab">Delete Album</string>
-    <string name="price_text">Price: %1$s</string>
+    <string name="price_text">Price: £%1$s</string>
     <string name="stock_text">Stock: %1$s</string>
     <string name="delete_album">Delete Album</string>
     <string name="delete_album_dialog_txt">Are you sure you want to delete this album?</string>
