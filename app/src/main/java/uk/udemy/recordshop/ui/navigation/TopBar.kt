@@ -25,7 +25,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun TopBar(
     navController: NavController,
-    artistName: String? = null
+    artistName: String? = null,
+    genreName: String? = null
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -45,6 +46,10 @@ fun TopBar(
 
         currentDestination?.hasRoute(Screens.Artist::class) == true -> {
             artistName ?: "Artist"
+        }
+
+        currentDestination?.hasRoute(Screens.Genre::class) == true -> {
+            genreName ?: "Genre"
         }
 
         else -> ""

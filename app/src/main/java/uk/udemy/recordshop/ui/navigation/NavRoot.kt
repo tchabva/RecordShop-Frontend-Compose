@@ -21,10 +21,11 @@ fun NavRoot() {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    // Shared state for artist name
+    // Shared states for artist and genre names
     var artistName by remember { mutableStateOf<String?>(null) }
+    var genreName by remember { mutableStateOf<String?>(null) }
 
-    // Reset artist name when navigating away from Artist screen
+    // Resets artist and genre name when navigating away from Artist or Genre screen
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
@@ -32,9 +33,17 @@ fun NavRoot() {
         artistName = null
     }
 
+    if (currentDestination?.hasRoute(Screens.Genre::class) != true) {
+        genreName = null
+    }
+
     Scaffold(
         topBar = {
-            TopBar(navController = navController, artistName = artistName)
+            TopBar(
+                navController = navController,
+                artistName = artistName,
+                genreName = genreName,
+            )
         },
 
         bottomBar = { BottomNav(navController) },
@@ -46,7 +55,8 @@ fun NavRoot() {
             innerPadding = innerPadding,
             snackbarHostState = snackbarHostState,
             coroutineScope = scope,
-            onArtistNameChanged = { name -> artistName = name }
+            onArtistNameChanged = { name -> artistName = name },
+            onGenreNameChanged = { genre -> genreName = genre }
         )
     }
 }

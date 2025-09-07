@@ -19,7 +19,8 @@ fun NavigationGraph(
     innerPadding: PaddingValues,
     snackbarHostState: SnackbarHostState,
     coroutineScope: CoroutineScope,
-    onArtistNameChanged: (String?) -> Unit = {}
+    onArtistNameChanged: (String?) -> Unit = {},
+    onGenreNameChanged: (String?) -> Unit = {}
 ) = NavHost(
     modifier = modifier.padding(innerPadding),
     navController = navController,
@@ -44,6 +45,7 @@ fun NavigationGraph(
     // The nested Genres Tab NavGraph
     genresGraph(
         navController = navController,
-        coroutineScope = coroutineScope
+        coroutineScope = coroutineScope,
+        onGenreNameChanged = onGenreNameChanged,
     )
 }
