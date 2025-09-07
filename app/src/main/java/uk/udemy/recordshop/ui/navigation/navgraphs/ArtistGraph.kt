@@ -18,7 +18,8 @@ import uk.udemy.recordshop.ui.navigation.Tabs
 
 fun NavGraphBuilder.artistGraph(
     navController: NavController,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    onArtistNameChanged: (String?) -> Unit = {}
 ) {
     navigation<Tabs.Artists>(startDestination = Screens.Artists) {
         composable<Screens.Artists> {
@@ -48,7 +49,8 @@ fun NavGraphBuilder.artistGraph(
                     coroutineScope.launch {
                         viewModel.getArtistWithAlbums(artistId = artistScreen.artistId)
                     }
-                }
+                },
+                artistScreenTitle = onArtistNameChanged
             )
         }
     }

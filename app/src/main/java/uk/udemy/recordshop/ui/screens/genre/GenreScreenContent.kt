@@ -19,7 +19,8 @@ import uk.udemy.recordshop.ui.common.DefaultProgressIndicator
 fun GenreScreenContent(
     state: GenreViewModel.State,
     onAlbumItemClicked: (Long) -> Unit,
-    onTryAgainButtonClicked: () -> Unit
+    onTryAgainButtonClicked: () -> Unit,
+    genreTitle: (String) -> Unit
 ) {
     when (state) {
         is GenreViewModel.State.Error -> {
@@ -33,6 +34,8 @@ fun GenreScreenContent(
                 state = state,
                 onAlbumItemClicked = onAlbumItemClicked
             )
+            // For the Genre title in the Top App Bar
+            genreTitle(state.data.genre)
         }
 
         GenreViewModel.State.Loading -> {
@@ -57,12 +60,6 @@ private fun GenreScreenContentLoaded(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(
-            style = MaterialTheme.typography.titleMedium,
-            fontSize = 30.sp,
-            fontStyle = FontStyle.Italic,
-            text = state.data.genre
-        )
         AlbumsList(
             albums = state.data.albums,
             navigateToAlbumDetail = { albumId ->

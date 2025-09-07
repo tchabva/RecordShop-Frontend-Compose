@@ -4,9 +4,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import uk.udemy.recordshop.ui.navigation.navgraphs.NavigationGraph
 
@@ -16,9 +21,29 @@ fun NavRoot() {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
+    // Shared states for artist and genre names
+    var artistName by remember { mutableStateOf<String?>(null) }
+    var genreName by remember { mutableStateOf<String?>(null) }
+
+    // Resets artist and genre name when navigating away from Artist or Genre screen
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    if (currentDestination?.hasRoute(Screens.Artist::class) != true) {
+        artistName = null
+    }
+
+    if (currentDestination?.hasRoute(Screens.Genre::class) != true) {
+        genreName = null
+    }
+
     Scaffold(
         topBar = {
-            TopBar(navController)
+            TopBar(
+                navController = navController,
+                artistName = artistName,
+                genreName = genreName,
+            )
         },
 
         bottomBar = { BottomNav(navController) },
@@ -29,7 +54,9 @@ fun NavRoot() {
             navController = navController,
             innerPadding = innerPadding,
             snackbarHostState = snackbarHostState,
-            coroutineScope = scope
+            coroutineScope = scope,
+            onArtistNameChanged = { name -> artistName = name },
+            onGenreNameChanged = { genre -> genreName = genre }
         )
     }
 }

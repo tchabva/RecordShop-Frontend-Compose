@@ -18,7 +18,8 @@ import uk.udemy.recordshop.ui.screens.genres.GenresViewModel
 
 fun NavGraphBuilder.genresGraph(
     navController: NavController,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    onGenreNameChanged: (String?) -> Unit = {}
 ) {
     navigation<Tabs.Genres>(startDestination = Screens.Genres) {
         composable<Screens.Genres> {
@@ -48,7 +49,8 @@ fun NavGraphBuilder.genresGraph(
                     coroutineScope.launch {
                         viewModel.getGenreWithAlbums(genreId = genreScreen.genreId)
                     }
-                }
+                },
+                genreTitle = onGenreNameChanged,
             )
         }
     }
