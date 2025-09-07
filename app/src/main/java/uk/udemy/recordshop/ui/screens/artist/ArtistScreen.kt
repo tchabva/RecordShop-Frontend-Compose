@@ -8,7 +8,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun ArtistScreen(
     viewModel: ArtistViewModel,
     onAlbumItemClick: (Long) -> Unit,
-    onTryAgainButtonClicked: () -> Unit
+    onTryAgainButtonClicked: () -> Unit,
+    artistScreenTitle: (String) -> Unit
 ){
 
     val state = viewModel.state.collectAsStateWithLifecycle()
@@ -26,6 +27,7 @@ fun ArtistScreen(
     ArtistScreenContent(
         state = state.value,
         onAlbumItemClicked = viewModel::onAlbumItemClicked,
-        onTryAgainButtonClicked = viewModel::onTryAgainButtonClicked
+        onTryAgainButtonClicked = viewModel::onTryAgainButtonClicked,
+        artistTitle = artistScreenTitle,
     )
 }
