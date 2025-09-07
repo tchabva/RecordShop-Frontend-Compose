@@ -32,11 +32,11 @@ The application requires the backend service to function properly:
   <!-- Row 1 -->
   <tr>
     <td style="text-align:center">
-      <img src="screenshots/home_screen.png" alt="Home Screen" width="1080"/>
+      <img src="assets/home_screen.png" alt="Home Screen" width="1080"/>
       <p><em>Record Shop Home Screen</em></p>
     </td>
     <td style="text-align:center">
-      <img src="screenshots/home_screen_dark.png" alt="Home Screen Dark Mode" width="1080"/>
+      <img src="assets/home_screen_dark.png" alt="Home Screen Dark Mode" width="1080"/>
       <p><em>Record Shop Home Screen Dark Mode</em></p>
     </td>
   </tr>
@@ -44,11 +44,11 @@ The application requires the backend service to function properly:
   <!-- Row 2 -->
   <tr>
     <td style="text-align:center">
-      <img src="screenshots/add_album_screen.png" alt="Add Album Screen" width="1080"/>
+      <img src="assets/add_album_screen.png" alt="Add Album Screen" width="1080"/>
       <p><em>Add Album Screen</em></p>
     </td>
     <td style="text-align:center">
-      <img src="screenshots/add_album_screen_dark.png" alt="Add Album Screen Dark Mode" width="1080"/>
+      <img src="assets/add_album_screen_dark.png" alt="Add Album Screen Dark Mode" width="1080"/>
       <p><em>Add Album Screen Dark Mode</em></p>
     </td>
   </tr>
@@ -56,11 +56,11 @@ The application requires the backend service to function properly:
 <!-- Row 3 -->
   <tr>
     <td style="text-align:center">
-      <img src="screenshots/view_album.png" alt="View Album Screen" width="1080"/>
+      <img src="assets/view_album.png" alt="View Album Screen" width="1080"/>
       <p><em>View Album Screen</em></p>
     </td>
     <td style="text-align:center">
-      <img src="screenshots/view_album_dark.png" alt="View Album Screen Dark Mode" width="1080"/>
+      <img src="assets/view_album_dark.png" alt="View Album Screen Dark Mode" width="1080"/>
       <p><em>View Album Screen Dark Mode</em></p>
     </td>
   </tr>
@@ -68,11 +68,11 @@ The application requires the backend service to function properly:
   <!-- Row 4 -->
   <tr>
     <td style="text-align:center">
-      <img src="screenshots/view_album_delete_album_dialog.png" alt="View Album Screen Delete Dialog" width="1080"/>
+      <img src="assets/view_album_delete_album_dialog.png" alt="View Album Screen Delete Dialog" width="1080"/>
       <p><em>View Album Screen Delete Album Dialog</em></p>
     </td>
     <td style="text-align:center">
-      <img src="screenshots/view_album_delete_album_dialog_dark.png" alt="View Album Screen Delete Album Dialog" width="1080"/>
+      <img src="assets/view_album_delete_album_dialog_dark.png" alt="View Album Screen Delete Album Dialog" width="1080"/>
       <p><em>View Album Screen Delete Album Dialog Dark Mode</em></p>
     </td>
   </tr>
@@ -80,11 +80,11 @@ The application requires the backend service to function properly:
 <!-- Row 5 -->
   <tr>
     <td style="text-align:center">
-      <img src="screenshots/edit_album_screen.png" alt="Edit Album Screen " width="1080"/>
+      <img src="assets/edit_album_screen.png" alt="Edit Album Screen " width="1080"/>
       <p><em>Edit Album Screen</em></p>
     </td>
     <td style="text-align:center">
-      <img src="screenshots/edit_album_screen_dark.png" alt="Edit Album Screen Dark Mode" width="1080"/>
+      <img src="assets/edit_album_screen_dark.png" alt="Edit Album Screen Dark Mode" width="1080"/>
       <p><em>Edit Album Screen Dark Mode</em></p>
     </td>
   </tr>
