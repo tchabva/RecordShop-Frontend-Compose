@@ -46,7 +46,8 @@ sealed interface Screens {
         val screensWithoutBottomNav = listOf(
             ViewAlbum::class,
             AddOrEditAlbum::class,
-            Artist::class
+            Artist::class,
+            Genre::class
         )
 
         val screensWithTopAppBar = listOf(
