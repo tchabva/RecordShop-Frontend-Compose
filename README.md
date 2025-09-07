@@ -10,6 +10,23 @@ This application provides a digital platform for browsing, searching, and managi
 - Responsive UI for different screen sizes
 - Smooth animations and transitions
 
+## Tech Stack 🛠️
+### Frontend:
+- Kotlin
+- Jetpack Compose
+- MVVM Architecture
+- Material Design Components
+- Dependency Injection: Hilt
+- Networking: Retrofit, Kotlin Coroutines
+- Image Loading: Glide Compose
+- Navigation: Compose Navigation
+### Backend:
+The application requires the backend service to function properly:
+- [Record Shop Backend](https://github.com/tchabva/recordshopbackend)
+- Built with Spring Boot using Java
+- RESTful API design
+- Postgres Database Integration
+
 ## Screenshots
 <table>
   <!-- Row 1 -->
@@ -73,22 +90,6 @@ This application provides a digital platform for browsing, searching, and managi
   </tr>
 </table>
 
-## Tech Stack 🛠️
-### Frontend:
-- Kotlin
-- Jetpack Compose
-- MVVM Architecture
-- Material Design Components
-- Dependency Injection: Hilt
-- Networking: Retrofit, Kotlin Coroutines
-- Image Loading: Glide Compose
-- Navigation: Compose Navigation
-### Backend:
-The application requires the backend service to function properly:
-- [Record Shop Backend](https://github.com/tchabva/recordshopbackend)
-- Built with Spring Boot using Java
-- RESTful API design
-- Postgres Database Integration
 ## Getting Started
 ### Prerequisites ⚙️
 1. Android Studio Flamingo or newer
