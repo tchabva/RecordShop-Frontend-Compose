@@ -14,15 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import uk.udemy.recordshop.R
 import uk.udemy.recordshop.data.model.Album
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun AlbumItem(
     album: Album,
@@ -73,15 +72,18 @@ fun AlbumItem(
                 )
                 Text(
                     color = Color.Black,
-                    text = "Release Date: ${album.releaseDate}"
+                    text = stringResource(
+                        id = R.string.release_date,
+                        album.releaseDate
+                    ),
                 )
                 Text(
                     color = Color.Black,
-                    text = "Price: £${album.price}"
+                    text = stringResource(id = R.string.price_text, album.price),
                 )
                 Text(
                     color = Color.Black,
-                    text = "Stock: ${album.stock}"
+                    text = stringResource(id = R.string.stock_text, album.stock),
                 )
             }
         }
