@@ -126,7 +126,7 @@ The application requires the backend service to function properly:
 <!-- Row 5 -->
   <tr>
     <td style="text-align:center">
-       />
+      <img src="" alt="" width=""/>
       <p><em></em></p>
     </td>
     <td style="text-align:center">
@@ -138,7 +138,7 @@ The application requires the backend service to function properly:
       <p><em>Genres Screen Dark Mode</em></p>
     </td>
     <td style="text-align:center">
-        />
+      <img src="" alt="" width=""/>
       <p><em></em></p>
     </td>
   </tr>
