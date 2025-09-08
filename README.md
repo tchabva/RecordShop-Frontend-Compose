@@ -63,19 +63,7 @@ The application requires the backend service to function properly:
     </td>
   </tr>
 
-  <!-- Row 2 -->
-  <tr>
-    <td style="text-align:center">
-      <img src="assets/add_album_screen.png" alt="Add Album Screen" width="1080"/>
-      <p><em>Add Album Screen</em></p>
-    </td>
-    <td style="text-align:center">
-      <img src="assets/add_album_screen_dark.png" alt="Add Album Screen Dark Mode" width="1080"/>
-      <p><em>Add Album Screen Dark Mode</em></p>
-    </td>
-  </tr>
-
-<!-- Row 3 -->
+<!-- Row 2 -->
   <tr>
     <td style="text-align:center">
       <img src="assets/view_album.png" alt="View Album Screen" width="1080"/>
@@ -85,10 +73,6 @@ The application requires the backend service to function properly:
       <img src="assets/view_album_dark.png" alt="View Album Screen Dark Mode" width="1080"/>
       <p><em>View Album Screen Dark Mode</em></p>
     </td>
-  </tr>
-
-  <!-- Row 4 -->
-  <tr>
     <td style="text-align:center">
       <img src="assets/view_album_delete_album_dialog.png" alt="View Album Screen Delete Dialog" width="1080"/>
       <p><em>View Album Screen Delete Album Dialog</em></p>
@@ -99,7 +83,7 @@ The application requires the backend service to function properly:
     </td>
   </tr>
 
-<!-- Row 5 -->
+<!-- Row 3 -->
   <tr>
     <td style="text-align:center">
       <img src="assets/edit_album_screen.png" alt="Edit Album Screen " width="1080"/>
@@ -108,6 +92,54 @@ The application requires the backend service to function properly:
     <td style="text-align:center">
       <img src="assets/edit_album_screen_dark.png" alt="Edit Album Screen Dark Mode" width="1080"/>
       <p><em>Edit Album Screen Dark Mode</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="assets/artists_screen.png" alt="Artists Screen" width="1080"/>
+      <p><em>Artists Screen</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="assets/artists_screen_dark.png" alt="Artists Screen Dark Mode" width="1080"/>
+      <p><em>Artists Screen Dark Mode</em></p>
+    </td>
+  </tr>
+
+<!-- Row 4 -->
+  <tr>
+    <td style="text-align:center">
+      <img src="assets/artist_screen.png" alt="Artist Screen" width="1080"/>
+      <p><em>Artist Screen</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="assets/artist_screen_dark.png" alt="Artist Screen Dark Mode" width="1080"/>
+      <p><em>Artist Screen Dark Mode</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="assets/genres_screen.png" alt="Genres Screen" width="1080"/>
+      <p><em>Genres Screen</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="assets/genres_screen_dark.png" alt="Genres Screen Dark Mode" width="1080"/>
+      <p><em>Genres Screen Dark Mode</em></p>
+    </td>
+  </tr>
+
+<!-- Row 5 -->
+  <tr>
+    <td style="text-align:center">
+       />
+      <p><em></em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="assets/genre_screen.png" alt="Genre Screen" width="1080"/>
+      <p><em>Genre Screen</em></p>
+    </td>
+    <td style="text-align:center">
+      <img src="assets/genre_screen_dark.png" alt="Genre Screen Dark Mode" width="1080"/>
+      <p><em>Genres Screen Dark Mode</em></p>
+    </td>
+    <td style="text-align:center">
+        />
+      <p><em></em></p>
     </td>
   </tr>
 </table>
